@@ -9,8 +9,14 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- fit stage ---------- */
 const stage = $('#stage');
-function fit() { const port = innerWidth / innerHeight < .85; document.body.classList.toggle('portrait', port); const W = port ? 900 : 1600, H = port ? 1600 : 900; stage.style.transform = `scale(${Math.min(innerWidth / W, innerHeight / H)})`; }
-addEventListener('resize', fit); fit();
+function fit() {
+  const vw = window.visualViewport ? visualViewport.width : innerWidth, vh = window.visualViewport ? visualViewport.height : innerHeight;
+  const port = vw / vh < .85; document.body.classList.toggle('portrait', port);
+  const W = port ? 900 : 1600, H = port ? 1600 : 900;
+  stage.style.transform = `translate(-50%,-50%) scale(${Math.min(vw / W, vh / H)})`;
+}
+addEventListener('resize', fit); addEventListener('orientationchange', () => setTimeout(fit, 250));
+window.visualViewport && visualViewport.addEventListener('resize', fit); fit();
 
 /* ---------- toast ---------- */
 let tt; function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('on'), 2200); }
@@ -56,6 +62,11 @@ function ui() {
   updateNotes();
 }
 $('#bNext').onclick = next; $('#bPrev').onclick = prev;
+/* swipe on touch screens: swipe left = next (RTL reading), swipe right = back */
+let tx = 0, ty = 0;
+addEventListener('touchstart', e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+  if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) { dx < 0 ? next() : prev(); } }, { passive: true });
 
 /* ---------- keyboard: presentation clickers send PageDown/PageUp or arrows ---------- */
 addEventListener('keydown', e => {

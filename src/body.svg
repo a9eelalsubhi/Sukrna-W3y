@@ -1,0 +1,19 @@
+<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="خريطة الجسم ومضاعفات السكري">
+<defs><linearGradient id="skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4FB3FF" stop-opacity=".55"/><stop offset="1" stop-color="#1B1F5E" stop-opacity=".55"/></linearGradient></defs>
+<g fill="url(#skin)" stroke="rgba(255,255,255,.35)" stroke-width="2">
+ <circle cx="180" cy="78" r="50"/>
+ <path d="M160 124h40v20h-40z"/>
+ <path d="M112 150c0-8 8-14 18-14h100c10 0 18 6 18 14l6 170c0 12-8 20-20 20h-108c-12 0-20-8-20-20z"/>
+ <path d="M112 156c-20 6-30 18-34 40l-24 170c-2 14 14 18 18 6l30-150z"/>
+ <path d="M248 156c20 6 30 18 34 40l24 170c2 14-14 18-18 6l-30-150z"/>
+ <path d="M128 336h46l-6 240c0 14-30 14-30 0z"/>
+ <path d="M186 336h46l-10 240c0 14-30 14-30 0z"/>
+ <ellipse cx="150" cy="592" rx="26" ry="14"/><ellipse cx="210" cy="592" rx="26" ry="14"/>
+</g>
+<g class="organ" data-o="eye"><circle class="pulse" cx="180" cy="70" r="26"/><g fill="#fff"><ellipse cx="162" cy="70" rx="10" ry="6"/><ellipse cx="198" cy="70" rx="10" ry="6"/></g><g fill="#1B1F5E"><circle cx="162" cy="70" r="3.5"/><circle cx="198" cy="70" r="3.5"/></g></g>
+<g class="organ" data-o="tooth"><circle class="pulse" cx="180" cy="104" r="20"/><path d="M166 100q14 12 28 0" fill="#fff" stroke="#FF5DB1" stroke-width="3"/></g>
+<g class="organ" data-o="heart"><circle class="pulse" cx="200" cy="200" r="34"/><path d="M200 222s-24-13-24-31a12 12 0 0 1 24-7 12 12 0 0 1 24 7c0 18-24 31-24 31z" fill="#FF5A6E"/></g>
+<g class="organ" data-o="kidney"><circle class="pulse" cx="180" cy="285" r="40"/><path d="M160 268c-12 0-16 10-16 18s4 20 16 20 10-8 8-12-4-6 0-12 4-14-8-14z" fill="#B0475F"/><path d="M200 268c12 0 16 10 16 18s-4 20-16 20-10-8-8-12 4-6 0-12-4-14 8-14z" fill="#B0475F"/></g>
+<g class="organ" data-o="nerve"><circle class="pulse" cx="66" cy="372" r="28"/><path d="M70 350l-12 22h10l-4 18 14-24h-10z" fill="#FFD54F"/><path d="M286 350l-12 22h10l-4 18 14-24h-10z" fill="#FFD54F" opacity=".7"/></g>
+<g class="organ" data-o="foot"><circle class="pulse" cx="150" cy="592" r="30"/><circle cx="150" cy="592" r="8" fill="#FF5A6E"/></g>
+</svg>

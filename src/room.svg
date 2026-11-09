@@ -1,0 +1,101 @@
+<svg viewBox="0 0 900 590" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="غرفة نوم ليلًا فيها علامات السكري">
+<defs>
+ <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1A2470"/><stop offset="1" stop-color="#121A55"/></linearGradient>
+ <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#25307E"/><stop offset="1" stop-color="#1A2366"/></linearGradient>
+ <radialGradient id="lamp" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFD98A" stop-opacity=".55"/><stop offset="1" stop-color="#FFD98A" stop-opacity="0"/></radialGradient>
+ <linearGradient id="doorLight" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFF1B8"/><stop offset="1" stop-color="#FFD36B"/></linearGradient>
+</defs>
+<rect width="900" height="590" fill="url(#wall)"/>
+<rect y="430" width="900" height="160" fill="url(#floor)"/>
+<path d="M0 430h900" stroke="#3A47A0" stroke-width="3"/>
+<!-- window -->
+<rect x="360" y="60" width="200" height="160" rx="14" fill="#0A0F3A" stroke="#3E4CA8" stroke-width="8"/>
+<path d="M460 60v160M360 140h200" stroke="#3E4CA8" stroke-width="6"/>
+<circle cx="520" cy="100" r="20" fill="#FFF6D6"/><circle cx="530" cy="94" r="18" fill="#0A0F3A"/>
+<g fill="#fff"><circle cx="390" cy="90" r="2"/><circle cx="420" cy="180" r="1.6"/><circle cx="500" cy="170" r="2"/><circle cx="440" cy="110" r="1.4"/></g>
+<path d="M350 52h220" stroke="#5A67C7" stroke-width="6" stroke-linecap="round"/>
+<path d="M352 56c10 70 0 120-6 176h34c-8-50-14-110-10-176z" fill="#CC338B" opacity=".75"/>
+<path d="M568 56c-10 70 0 120 6 176h-34c8-50 14-110 10-176z" fill="#CC338B" opacity=".75"/>
+
+<!-- bathroom door (frequent urination) -->
+<g class="hot" data-k="toilet">
+ <circle class="halo" cx="120" cy="250" r="118"/>
+ <rect x="40" y="110" width="160" height="320" rx="6" fill="#0E1446"/>
+ <path d="M40 110 L120 128 L120 430 L40 430 Z" fill="url(#doorLight)" opacity=".9"/>
+ <path d="M120 128 L200 110 V430 L120 430Z" fill="#3B4AB0"/>
+ <circle cx="134" cy="280" r="6" fill="#FFD36B"/>
+ <rect x="140" y="160" width="46" height="30" rx="6" fill="#fff"/><text x="163" y="182" text-anchor="middle" font-size="17" font-weight="900" fill="#1B1F5E">WC</text>
+ <path d="M60 470 l40 0" stroke="#FFD36B" stroke-width="0"/>
+ <!-- wall clock 3am -->
+ <circle cx="270" cy="120" r="40" fill="#fff"/><circle cx="270" cy="120" r="34" fill="none" stroke="#1B1F5E" stroke-width="3"/>
+ <path d="M270 120V96M270 120h18" stroke="#CC338B" stroke-width="5" stroke-linecap="round"/>
+ <text x="270" y="186" text-anchor="middle" font-size="18" fill="#FFD98A" font-weight="700">٣ فجرًا… للمرة الرابعة!</text>
+</g>
+
+<!-- bed -->
+<rect x="560" y="300" width="320" height="110" rx="16" fill="#3047B8"/>
+<rect x="840" y="230" width="34" height="200" rx="10" fill="#22339A"/>
+<rect x="566" y="290" width="300" height="40" rx="18" fill="#EAF0FF"/>
+<rect x="760" y="262" width="96" height="42" rx="18" fill="#fff"/>
+<path d="M560 318 h290 a20 20 0 0 1 20 20 v52 H560z" fill="#CC338B"/>
+<path d="M560 340 h300" stroke="#E5469E" stroke-width="6"/>
+<rect x="568" y="408" width="14" height="30" fill="#22339A"/><rect x="852" y="408" width="14" height="30" fill="#22339A"/>
+
+<!-- fatigue: zzz + low battery phone on pillow side -->
+<g class="hot" data-k="tired">
+ <circle class="halo" cx="790" cy="200" r="78"/>
+ <text x="760" y="230" font-size="34" font-weight="900" fill="#A9C7FF">Z</text><text x="790" y="196" font-size="28" font-weight="900" fill="#A9C7FF">z</text><text x="814" y="168" font-size="22" font-weight="900" fill="#A9C7FF">z</text>
+ <rect x="700" y="160" width="46" height="76" rx="9" fill="#0B1030" stroke="#7C8BE0" stroke-width="3"/>
+ <rect x="710" y="190" width="26" height="14" rx="3" fill="none" stroke="#FF5A6E" stroke-width="3"/><rect x="736" y="194" width="3" height="6" fill="#FF5A6E"/><rect x="712" y="192" width="5" height="10" fill="#FF5A6E"/>
+ <text x="723" y="226" text-anchor="middle" font-size="12" fill="#fff">مرهق</text>
+</g>
+
+<!-- nightstand + thirst -->
+<rect x="440" y="330" width="110" height="100" rx="10" fill="#22339A"/><rect x="450" y="370" width="90" height="6" rx="3" fill="#3B4AB0"/>
+<circle cx="495" cy="300" r="70" fill="url(#lamp)"/>
+<g class="hot" data-k="thirst">
+ <circle class="halo" cx="492" cy="300" r="66"/>
+ <path d="M452 330 l4 -40 h16 l4 40z" fill="rgba(180,220,255,.35)" stroke="#BFE0FF" stroke-width="2"/>
+ <path d="M478 330 l4 -40 h16 l4 40z" fill="rgba(180,220,255,.35)" stroke="#BFE0FF" stroke-width="2"/>
+ <path d="M504 330 l4 -40 h16 l4 40z" fill="rgba(180,220,255,.35)" stroke="#BFE0FF" stroke-width="2"/>
+ <rect x="530" y="268" width="20" height="62" rx="6" fill="rgba(140,200,255,.5)" stroke="#BFE0FF" stroke-width="2"/><rect x="535" y="260" width="10" height="10" rx="2" fill="#4FB3FF"/>
+</g>
+
+<!-- desk with blurry book + glasses (vision) -->
+<rect x="230" y="330" width="170" height="16" rx="6" fill="#3B4AB0"/><rect x="240" y="346" width="12" height="84" fill="#2A3796"/><rect x="378" y="346" width="12" height="84" fill="#2A3796"/>
+<g class="hot" data-k="vision">
+ <circle class="halo" cx="316" cy="296" r="62"/>
+ <rect x="262" y="280" width="110" height="48" rx="6" fill="#FFF8E7"/>
+ <g filter="blur(1.6px)" style="filter:blur(1.6px)"><path d="M272 292h40M272 302h36M272 312h40M324 292h38M324 302h30M324 312h36" stroke="#1B1F5E" stroke-width="3"/></g>
+ <g fill="none" stroke="#fff" stroke-width="4"><circle cx="296" cy="262" r="14"/><circle cx="334" cy="262" r="14"/><path d="M310 262h10M282 258l-14-6M348 258l14-6"/></g>
+</g>
+
+<!-- wound note -->
+<g class="hot" data-k="wound">
+ <circle class="halo" cx="690" cy="96" r="70"/>
+ <rect x="628" y="50" width="124" height="96" rx="8" fill="#FFE27A" transform="rotate(-4 690 98)"/>
+ <text x="690" y="84" text-anchor="middle" font-size="15" font-weight="900" fill="#5A3A00" transform="rotate(-4 690 98)">جرح من أسبوعين</text>
+ <text x="690" y="104" text-anchor="middle" font-size="15" font-weight="900" fill="#5A3A00" transform="rotate(-4 690 98)">ما التأم!</text>
+ <g transform="translate(690 126) rotate(-30)"><rect x="-34" y="-11" width="68" height="22" rx="11" fill="#F2B48A"/><rect x="-12" y="-11" width="24" height="22" fill="#E59B72"/><circle cx="-4" cy="-4" r="1.6" fill="#B06A45"/><circle cx="4" cy="4" r="1.6" fill="#B06A45"/></g>
+</g>
+
+<!-- scale (weight loss) -->
+<g class="hot" data-k="weight">
+ <circle class="halo" cx="330" cy="500" r="64"/>
+ <rect x="280" y="470" width="100" height="62" rx="14" fill="#EAF0FF"/>
+ <rect x="296" y="480" width="68" height="24" rx="5" fill="#13204F"/>
+ <text x="330" y="498" text-anchor="middle" font-size="16" font-weight="900" fill="#2FD39A" direction="ltr">-6 kg</text>
+ <path d="M318 512 l12 12 l12 -12" fill="none" stroke="#FF5A6E" stroke-width="4" stroke-linecap="round"/>
+</g>
+
+<!-- slippers + tingling (nerve) -->
+<g class="hot" data-k="nerve">
+ <circle class="halo" cx="640" cy="500" r="68"/>
+ <ellipse cx="620" cy="510" rx="24" ry="44" fill="#4FB3FF" transform="rotate(-12 620 510)"/>
+ <ellipse cx="668" cy="508" rx="24" ry="44" fill="#4FB3FF" transform="rotate(12 668 508)"/>
+ <path d="M604 486 h34" stroke="#fff" stroke-width="8" stroke-linecap="round" transform="rotate(-12 620 510)"/>
+ <path d="M652 484 h34" stroke="#fff" stroke-width="8" stroke-linecap="round" transform="rotate(12 668 508)"/>
+ <g fill="#FFD54F"><path d="M588 460l6 10-8 2 8 12"/><path d="M700 456l-6 10 8 2-8 12"/></g>
+ <g stroke="#FFD54F" stroke-width="3" fill="none" stroke-linecap="round"><path d="M586 458l8 12-9 3 9 12"/><path d="M702 454l-8 12 9 3-9 12"/></g>
+</g>
+</svg>

@@ -1,0 +1,281 @@
+<!-- 0 COVER -->
+<section class="slide" data-title="البداية">
+  <div class="cover">
+    <div>
+      <span class="eyebrow">حملة توعوية · كلية الطب بجامعة أم القرى</span>
+      <h1 style="margin-top:14px">بخطوة <em>وعي</em><br>نواجه السكري</h1>
+      <p class="sub">رحلة قصيرة نفهم فيها السكري، ونكتشف علاماته، ونتعلّم كيف نتصرّف… ونلعب شوي.</p>
+      <div class="team">
+        <span class="pill">إشراف <b>د. صفاء يحيى منيسي عيد</b></span>
+        <span class="pill"><b>د. فوز فيصل العتيبي</b></span>
+        <span class="pill"><b>د. سارة ثامر الحلواني</b></span>
+        <span class="pill"><b>د. نوراء محمد آل درويش</b></span>
+      </div>
+    </div>
+    <div>{{COVERLOGO}}</div>
+  </div>
+  <template class="note">رحّب بالحضور. عرّف بالحملة وأنها بالتعاون بين كلية الطب وإدارة العمل التطوعي والمسؤولية المجتمعية. اذكر أن العرض فيه أنشطة وأسئلة وجوائز، فخلّهم مستعدين للمشاركة.</template>
+</section>
+
+<!-- 1 NUMBERS -->
+<section class="slide" data-title="خمّن الرقم" data-steps="3">
+  <span class="eyebrow">نشاط ١ · خمّن الرقم</span>
+  <h2>كم شخص يعيش مع <em>السكري</em>؟</h2>
+  <p class="lead">قبل ما نكشف الأرقام: كل واحد يخمّن بصوت عالي. الأقرب يكسب!</p>
+  <div class="stats">
+    <div class="stat hidden" data-reveal-step="1" data-count="500" data-suffix="M+">
+      <div class="ring"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center"><div class="ibox"><svg class="icon"><use href="#i-family"/></svg></div><span class="pill">عالميًا</span></div>
+      <div><div class="big"><span class="num">???</span></div><div class="lbl">أكثر من ٥٠٠ مليون مصاب حول العالم</div></div>
+    </div>
+    <div class="stat hidden" data-reveal-step="2" data-count="5.3" data-suffix="M">
+      <div class="ring"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center"><div class="ibox"><svg class="icon"><use href="#i-heart"/></svg></div><span class="pill">في المملكة</span></div>
+      <div><div class="big"><span class="num">???</span></div><div class="lbl">حوالي ٥٫٣ مليون مصاب في المملكة العربية السعودية</div></div>
+    </div>
+    <div class="stat hidden" data-reveal-step="3" data-count="90" data-suffix="%">
+      <div class="ring"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center"><div class="ibox"><svg class="icon"><use href="#i-search"/></svg></div><span class="pill">النوع الثاني</span></div>
+      <div><div class="big"><span class="num">???</span></div><div class="lbl">نحو ٩٠٪ من الحالات في المملكة من النوع الثاني… وهو الذي نقدر نقلّل خطره بنمط حياتنا</div></div>
+    </div>
+  </div>
+  <div class="guess"><span class="act"><svg class="icon"><use href="#i-hand"/></svg>دور الجمهور</span>كل ضغطة على «التالي» تكشف رقمًا. والكشف المبكر يبدأ بالفحص قبل ظهور الأعراض.</div>
+  <template class="note">اطلب من الجمهور تخمين عدد المصابين عالميًا، ثم اكشف الرقم. كرر مع رقم المملكة. الرسالة: النوع الثاني هو الأغلب، وأغلب عوامل خطره قابلة للتغيير، ولهذا الكشف المبكر مهم: يكتشف المرض قبل الأعراض ويبدأ العلاج في الوقت المناسب.</template>
+</section>
+
+<!-- 2 INSULIN KEY -->
+<section class="slide" data-title="الإنسولين: المفتاح" data-steps="2">
+  <div class="cols" style="grid-template-columns:.85fr 1.15fr">
+    <div>
+      <span class="eyebrow">العلم ببساطة</span>
+      <h2>الإنسولين هو <em>المفتاح</em></h2>
+      <p class="lead">السكري اضطراب مزمن ينتج عن <b style="color:#fff">نقص الإنسولين أو مقاومته</b>، فيتراكم الجلوكوز في الدم بدل ما يدخل الخلايا ويصير طاقة.</p>
+      <div class="modes">
+        <button class="mode on" data-mode="normal">الجسم السليم</button>
+        <button class="mode" data-mode="t1">النوع الأول</button>
+        <button class="mode" data-mode="t2">النوع الثاني</button>
+      </div>
+      <div class="explain" id="keyExplain"></div>
+    </div>
+    <div class="scene"><svg id="keyScene" viewBox="0 0 800 560" width="100%" height="100%"></svg></div>
+  </div>
+  <template class="note">اشرح أن الأكل يرفع الجلوكوز، فيستشعره البنكرياس ويفرز الإنسولين. الإنسولين مثل المفتاح يفتح باب الخلية ليدخل السكر. بعدها يخزّن الكبد الجلوكوز على شكل جليكوجين، وتخزّن الخلايا الدهنية الزائد. «التالي» يعرض النوع الأول (لا توجد مفاتيح) ثم الثاني (القفل لا يستجيب جيدًا).</template>
+</section>
+
+<!-- 3 WHO AM I -->
+<section class="slide" data-title="من أنا؟" data-steps="3">
+  <span class="eyebrow">نشاط ٢ · من أنا؟</span>
+  <h2>ثلاث شخصيات… <em>خمّن نوع السكري</em></h2>
+  <p class="lead">اقرأ الأدلة، وخلّ الجمهور يحدد النوع قبل الكشف.</p>
+  <div class="whos">
+    <div class="who" data-reveal-step="1">
+      <span class="q">الشخصية الأولى</span>
+      <ul><li>جهازي المناعي هاجم خلايا بيتا في البنكرياس</li><li>غالبًا أظهر في الطفولة أو المراهقة</li><li>لا علاقة لي بالسمنة أو نمط الحياة</li><li>أحتاج الإنسولين مدى الحياة</li></ul>
+      <button class="rv">اكشف الإجابة</button>
+      <div class="ans"><b>النوع الأول</b>مرض مناعي ذاتي ينعدم فيه إفراز الإنسولين. علاجه الأساسي الإنسولين بالحقن أو المضخة، مع قياس السكر وحساب الكربوهيدرات.</div>
+    </div>
+    <div class="who" data-reveal-step="2">
+      <span class="q">الشخصية الثانية</span>
+      <ul><li>الأكثر شيوعًا، نحو ٩٠٪ من الحالات</li><li>جسمي لا يستخدم الإنسولين بكفاءة</li><li>قد أبدأ بهدوء وبلا أعراض لسنوات</li><li>الوزن الزائد وقلة الحركة يساعدونني</li></ul>
+      <button class="rv">اكشف الإجابة</button>
+      <div class="ans"><b>النوع الثاني</b>مقاومة للإنسولين ونقص تدريجي في إنتاجه. يبدأ علاجه بتعديل نمط الحياة، ثم الأدوية الفموية مثل الميتفورمين، والإنسولين عند الحاجة.</div>
+    </div>
+    <div class="who" data-reveal-step="3">
+      <span class="q">الشخصية الثالثة</span>
+      <ul><li>أظهر بسبب هرمونات المشيمة</li><li>أظهر في فترة معيّنة فقط</li><li>غالبًا أختفي بعد الولادة</li><li>لكني أرفع خطر النوع الثاني لاحقًا</li></ul>
+      <button class="rv">اكشف الإجابة</button>
+      <div class="ans"><b>سكري الحمل</b>ارتفاع الجلوكوز أثناء الحمل. يحتاج متابعة لأنه يزيد مخاطر الحمل، ويرفع احتمال الإصابة بالنوع الثاني مستقبلًا.</div>
+    </div>
+  </div>
+  <template class="note">اقرأ أدلة كل شخصية واطلب من الجمهور التخمين، ثم اكشف. أكّد أن النوع الأول ليس بسبب الأكل أو السمنة، وأن النوع الثاني قد يبدأ بلا أعراض، ولهذا الفحص الدوري مهم.</template>
+</section>
+
+<!-- 4 RISK -->
+<section class="slide" data-title="هل أنا معرّض؟">
+  <span class="eyebrow">نشاط ٣ · اختبر خطرك</span>
+  <h2>متى لازم <em>تفحص السكر</em>؟</h2>
+  <p class="lead">من عمر ٣٥ سنة فأكثر حتى لو ما ظهرت أعراض، وقبل هذا العمر إذا عندك أحد عوامل الخطر. اضغط على ما ينطبق عليك:</p>
+  <div class="risk">
+    <div class="factors" id="factors">
+      <button class="factor"><span class="ibox"><svg class="icon"><use href="#i-hourglass"/></svg></span><span>العمر ٣٥ سنة فأكثر<small>يزيد الخطر مع التقدم بالعمر</small></span></button>
+      <button class="factor"><span class="ibox"><svg class="icon"><use href="#i-dna"/></svg></span><span>أحد الوالدين أو الإخوة مصاب<small>الوراثة والتاريخ العائلي</small></span></button>
+      <button class="factor"><span class="ibox"><svg class="icon"><use href="#i-scale"/></svg></span><span>زيادة الوزن أو السمنة<small>خاصة حول البطن</small></span></button>
+      <button class="factor"><span class="ibox"><svg class="icon"><use href="#i-sofa"/></svg></span><span>قلة الحركة<small>رياضة أقل من ٣ مرات أسبوعيًا</small></span></button>
+      <button class="factor"><span class="ibox"><svg class="icon"><use href="#i-burger"/></svg></span><span>نظام غذائي غير صحي<small>غني بالسكريات والدهون</small></span></button>
+      <button class="factor"><span class="ibox"><svg class="icon"><use href="#i-preg"/></svg></span><span>سكري حمل سابق<small>أو ولادة طفل وزنه أكثر من ٤ كجم</small></span></button>
+      <button class="factor"><span class="ibox"><svg class="icon"><use href="#i-bp"/></svg></span><span>ارتفاع الضغط أو الكوليسترول<small>من عوامل الخطر المعروفة</small></span></button>
+      <button class="factor"><span class="ibox"><svg class="icon"><use href="#i-shield"/></svg></span><span>متلازمة تكيّس المبايض<small>ترتبط بمقاومة الإنسولين</small></span></button>
+    </div>
+    <div class="meter">
+      <svg class="gaugeR" viewBox="0 0 250 150"><path d="M25 130a100 100 0 0 1 200 0" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="22" stroke-linecap="round"/><path id="riskArc" d="M25 130a100 100 0 0 1 200 0" fill="none" stroke="url(#rg)" stroke-width="22" stroke-linecap="round" pathLength="1" stroke-dasharray="0 1"/><defs><linearGradient id="rg"><stop offset="0" stop-color="#2FD39A"/><stop offset=".5" stop-color="#FFB547"/><stop offset="1" stop-color="#FF5A6E"/></linearGradient></defs><text x="125" y="122" text-anchor="middle" fill="#fff" font-size="46" font-weight="900" id="riskN">0</text></svg>
+      <div class="verdict" id="riskV">اضغط على العوامل لتشوف النتيجة</div>
+      <div class="note">نشاط توعوي وليس تشخيصًا. التشخيص يكون بالتحليل وعند الطبيب.</div>
+    </div>
+  </div>
+  <template class="note">اطلب متطوعًا من الجمهور يجاوب، أو خلّ الجميع يعدّون على أصابعهم. الرسالة: عامل واحد يكفي لتفحص مبكرًا. الفحص بسيط: سكر صائم أو سكر تراكمي.</template>
+</section>
+
+<!-- 5 SYMPTOMS HUNT -->
+<section class="slide" data-title="اكتشف الأعراض">
+  <span class="eyebrow">نشاط ٤ · اكتشف العلامات في الصورة</span>
+  <h2>في هذي الغرفة <em>٧ علامات</em>… من يلقاها؟</h2>
+  <div class="hunt">
+    <div class="room">{{ROOM}}</div>
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px"><span class="act"><svg class="icon"><use href="#i-search"/></svg>اضغط على العلامة</span><span class="score"><span id="huntN">0</span>/7</span></div>
+      <div class="found-list" id="foundList">
+        <div class="fl" data-k="thirst"><span class="n">١</span>عطش شديد</div>
+        <div class="fl" data-k="toilet"><span class="n">٢</span>كثرة التبول خاصة ليلًا</div>
+        <div class="fl" data-k="vision"><span class="n">٣</span>تشوّش الرؤية</div>
+        <div class="fl" data-k="wound"><span class="n">٤</span>بطء التئام الجروح</div>
+        <div class="fl" data-k="weight"><span class="n">٥</span>نزول الوزن دون سبب</div>
+        <div class="fl" data-k="tired"><span class="n">٦</span>تعب وإرهاق دائم</div>
+        <div class="fl" data-k="nerve"><span class="n">٧</span>تنميل ووخز في القدمين</div>
+      </div>
+      <p class="lead" style="font-size:17px;margin-top:12px">وأيضًا: جوع دائم، جفاف وحكة في الجلد، التهابات متكررة واحمرار اللثة. وجود الأعراض يستدعي مراجعة الطبيب للتأكد.</p>
+    </div>
+  </div>
+  <template class="note">خلّ الجمهور يدلّك على العلامات في الصورة، واضغط عليها. النوع الأول تظهر أعراضه بسرعة، والثاني يتطور ببطء وقد لا تظهر أعراضه. الرائحة الفاكهية في النفس مع القيء علامة خطر (حماض كيتوني).</template>
+</section>
+
+<!-- 6 NUMBERS -->
+<section class="slide" data-title="اقرأ الجهاز">
+  <span class="eyebrow">نشاط ٥ · اقرأ الجهاز</span>
+  <h2>طبيعي؟ ما قبل السكري؟ <em>أو سكري؟</em></h2>
+  <div class="gm">
+    <div style="padding-top:10px"><div class="device"><div class="screen"><div class="val" id="gVal">95</div><div class="u" id="gUnit">mg/dL</div><div class="tag" id="gTag">صائم</div></div><div class="btns"><i></i><i></i></div><div class="strip"></div></div></div>
+    <div>
+      <div class="tabs" id="gTabs"><button class="tab on" data-t="fast">السكر الصائم</button><button class="tab" data-t="post">بعد الأكل بساعتين</button><button class="tab" data-t="a1c">السكر التراكمي HbA1c</button></div>
+      <div class="range"><div class="bar" id="gBar"></div><div class="ticks" id="gTicks"></div><input type="range" id="gRange" aria-label="قراءة السكر"></div>
+      <div class="verdict2" id="gVerdict"></div>
+      <div class="legend" id="gLegend"></div>
+      <div class="challenge"><button class="nbtn primary" id="gChallenge" style="height:46px;font-size:17px">قراءة عشوائية</button><button class="nbtn" id="gShow" style="height:46px;font-size:17px">اكشف التصنيف</button><span>اعرض قراءة وخلّ الجمهور يصوّت قبل الكشف</span></div>
+    </div>
+  </div>
+  <template class="note">ما قبل السكري مرحلة يكون فيها السكر أعلى من الطبيعي وأقل من حد التشخيص (صائم ١٠٠–١٢٥، تراكمي ٥٫٧–٦٫٤٪). وهي فرصة ذهبية: تعديل نمط الحياة قد يرجّع السكر للطبيعي. المرضى غالبًا يستهدفون HbA1c أقل من ٧٪. الصائم يعني ٨ ساعات بدون أكل.</template>
+</section>
+
+<!-- 7 EMERGENCY -->
+<section class="slide" data-title="تصرّف صح" data-steps="2">
+  <span class="eyebrow">نشاط ٦ · أنت المسعف</span>
+  <h2>هبوط السكر: <em>ماذا تفعل؟</em></h2>
+  <div class="em">
+    <div class="story">
+      <div class="who2"><div class="avatar"><svg viewBox="0 0 84 84" width="84" height="84"><circle cx="42" cy="34" r="16" fill="#FFE1C4"/><path d="M18 78c2-16 12-24 24-24s22 8 24 24" fill="#fff"/><path d="M26 30c0-12 7-18 16-18s16 6 16 18c-4-6-10-8-16-8s-12 2-16 8z" fill="#3A2A20"/><circle cx="36" cy="35" r="1.8" fill="#333"/><circle cx="48" cy="35" r="1.8" fill="#333"/><path d="M37 43q5 3 10 0" stroke="#333" stroke-width="2" fill="none"/><path d="M58 26q3 4 0 8M61 22q4 6 0 13" stroke="#7CC6FF" stroke-width="2" fill="none"/></svg></div>
+        <p>«أبو فهد» مريض سكري، أخذ جرعته وتأخر على الأكل. الآن <b>يتعرّق ويرتجف</b>، ويحس بجوع ودوخة، وقلبه سريع. <b>وهو واعٍ.</b> ماذا تعطيه أولًا؟</p></div>
+      <div class="chips" id="hypoChips">
+        <button class="chip" data-ok="1">كوب عصير أو ٣ تمرات</button>
+        <button class="chip" data-ok="0" data-why="الإنسولين يخفض السكر أكثر، وهذا خطير جدًا الآن.">جرعة إنسولين</button>
+        <button class="chip" data-ok="0" data-why="الماء لا يرفع السكر. يحتاج سكريات سريعة.">ماء فقط</button>
+        <button class="chip" data-ok="0" data-why="الانتظار قد يوصله لفقدان الوعي.">ينتظر لين وقت الأكل</button>
+      </div>
+      <div class="feedback" id="hypoFb">اختر إجابة…</div>
+      <div class="alert reveal" data-step="2"><b>إذا فقد الوعي:</b> لا تعطه أي شيء بالفم (حتى لا يختنق)، واتصل بالإسعاف <b>997</b> فورًا، وضعه على جانبه، وراقب التنفس والنبض. ويُحقن بالجلوكاجون إن توفر.</div>
+    </div>
+    <div class="story">
+      <h3 style="font-size:30px">قاعدة <span style="color:var(--pink2)">١٥ × ١٥</span></h3>
+      <div class="rule">
+        <svg class="clock" viewBox="0 0 200 200"><circle cx="100" cy="100" r="84" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="16"/><circle id="clockArc" cx="100" cy="100" r="84" fill="none" stroke="#FF5DB1" stroke-width="16" stroke-linecap="round" pathLength="1" stroke-dasharray="0 1" transform="rotate(-90 100 100)"/><text x="100" y="98" text-anchor="middle" font-size="54" font-weight="900" fill="#fff" id="clockT">15</text><text x="100" y="128" text-anchor="middle" font-size="18" fill="#AEB7DA">دقيقة</text></svg>
+        <div class="steps15">
+          <div><b>١</b>تناول ١٥ غرام سكريات سريعة</div>
+          <div><b>٢</b>انتظر ١٥ دقيقة ثم أعد القياس</div>
+          <div><b>٣</b>ما زال منخفضًا؟ كرّر ١٥ غرام</div>
+          <div><b>٤</b>بعد التحسّن: وجبة خفيفة فيها نشويات وبروتين</div>
+        </div>
+      </div>
+      <button class="nbtn" id="clockGo" style="height:44px;font-size:16px;margin-top:6px">شغّل العدّاد التوضيحي</button>
+      <div class="alert reveal" data-step="1" style="background:rgba(255,181,71,.12);border-color:rgba(255,181,71,.5)"><b style="color:#FFD08A">وعند ارتفاع السكر:</b> اشرب ماء كثير، والتزم بجرعتك دون زيادة من نفسك، وتجنب السكريات. إذا تجاوز ٣٠٠ ملغ/دل أو ظهر غثيان وقيء أو رائحة أسيتون، راجع الطوارئ فورًا (احتمال حماض كيتوني).</div>
+    </div>
+  </div>
+  <template class="note">اسأل الجمهور: ماذا تعطيه؟ واضغط على اختيارهم. ثم اشرح قاعدة ١٥×١٥. «التالي» يكشف التعامل مع ارتفاع السكر، ثم التعامل مع فقدان الوعي. أكّد: لا شيء بالفم لفاقد الوعي.</template>
+</section>
+
+<!-- 8 COMPLICATIONS -->
+<section class="slide" data-title="المضاعفات" data-steps="6">
+  <span class="eyebrow">ماذا يحدث لو أهملناه؟</span>
+  <h2>السكري يمسّ <em>الجسم كله</em></h2>
+  <div class="body">
+    <div class="bodyfig">{{BODY}}</div>
+    <div>
+      <div class="ocards" id="ocards">
+        <div class="ocard" data-o="eye"><span class="ibox"><svg class="icon"><use href="#i-eye"/></svg></span><div><h3>العين</h3><p>اعتلال الشبكية قد يصل لفقدان البصر</p></div></div>
+        <div class="ocard" data-o="tooth"><span class="ibox"><svg class="icon"><use href="#i-tooth"/></svg></span><div><h3>الفم والأسنان</h3><p>التهاب واحمرار وتورّم اللثة</p></div></div>
+        <div class="ocard" data-o="heart"><span class="ibox"><svg class="icon"><use href="#i-heart"/></svg></span><div><h3>القلب والأوعية</h3><p>جلطات وارتفاع ضغط وتصلّب الشرايين</p></div></div>
+        <div class="ocard" data-o="kidney"><span class="ibox"><svg class="icon"><use href="#i-kidney"/></svg></span><div><h3>الكلى</h3><p>اعتلال الكلى قد يؤدي إلى الفشل الكلوي</p></div></div>
+        <div class="ocard" data-o="nerve"><span class="ibox"><svg class="icon"><use href="#i-nerve"/></svg></span><div><h3>الأعصاب</h3><p>خدر وألم ووخز في الأطراف</p></div></div>
+        <div class="ocard" data-o="foot"><span class="ibox"><svg class="icon"><use href="#i-foot"/></svg></span><div><h3>القدم السكري</h3><p>ضعف الإحساس وبطء الالتئام، وقد تصل للبتر</p></div></div>
+      </div>
+      <h3 style="font-size:24px;margin-top:20px">العناية بالقدم كل يوم</h3>
+      <div class="foot">
+        <span class="pill">افحص قدميك يوميًا</span><span class="pill">اغسلها وجفّف ما بين الأصابع</span><span class="pill">رطّب الجلد</span><span class="pill">اعتنِ بالأظافر</span><span class="pill">حذاء مريح ولا تمشِ حافيًا</span><span class="pill">أي جرح؟ راجع الطبيب فورًا</span>
+      </div>
+    </div>
+  </div>
+  <template class="note">اضغط على الأعضاء أو استخدم «التالي» لإبرازها بالترتيب. السبب: ارتفاع السكر لفترات طويلة يتلف الأوعية الدموية والأعصاب. الخبر الجيد: ضبط السكر والفحوصات الدورية تمنع أغلبها أو تكشفها مبكرًا.</template>
+</section>
+
+<!-- 9 MYTHS -->
+<section class="slide" data-title="صح أم خطأ">
+  <span class="eyebrow">نشاط ٧ · صح أم خطأ؟</span>
+  <h2>صوّتوا… ثم <em>اقلبوا البطاقة</em></h2>
+  <div class="myths" id="myths"></div>
+  <template class="note">اقرأ العبارة، واطلب رفع اليد لمن يرى أنها صح، ثم لمن يراها خطأ. اضغط البطاقة لقلبها. ركّز على: الأنسولين لا يسبب الإدمان، والأعشاب ليست علاجًا، والرياضة مفيدة لمريض السكري.</template>
+</section>
+
+<!-- 10 LIVING -->
+<section class="slide" data-title="رمضان والحج والسفر">
+  <span class="eyebrow">نشاط ٨ · جهّز الشنطة</span>
+  <h2>مريض السكري في <em>رمضان والحج والسفر</em></h2>
+  <div class="living">
+    <div>
+      <div class="ltabs" id="ltabs"><button class="tab on" data-l="ramadan"><svg class="icon" style="width:20px;height:20px;vertical-align:-4px"><use href="#i-moon"/></svg> رمضان</button><button class="tab" data-l="hajj"><svg class="icon" style="width:20px;height:20px;vertical-align:-4px"><use href="#i-kaaba"/></svg> الحج</button><button class="tab" data-l="travel"><svg class="icon" style="width:20px;height:20px;vertical-align:-4px"><use href="#i-plane"/></svg> السفر</button></div>
+      <div class="tips" id="tips"></div>
+    </div>
+    <div class="bag">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span class="act"><svg class="icon"><use href="#i-hand"/></svg>اختر ما يدخل الشنطة</span><span class="score" style="font-size:30px"><span id="bagN">0</span>/6</span></div>
+      <div class="bagzone"><svg viewBox="0 0 260 200"><rect x="40" y="60" width="180" height="134" rx="28" fill="#CC338B"/><rect x="40" y="60" width="180" height="40" rx="20" fill="#E5469E"/><path d="M95 60V40a12 12 0 0 1 12-12h46a12 12 0 0 1 12 12v20" fill="none" stroke="#E5469E" stroke-width="12"/><rect x="118" y="120" width="24" height="24" rx="4" fill="#fff"/><path d="M130 124v16M122 132h16" stroke="#CC338B" stroke-width="4"/></svg><div class="packed" id="packed"></div></div>
+      <div class="items" id="items" style="grid-template-columns:repeat(3,1fr)"></div>
+      <div class="feedback" id="bagFb" style="min-height:30px"></div>
+    </div>
+  </div>
+  <template class="note">اختر التبويب حسب الموسم. في نشاط الشنطة، الجمهور يقرر ماذا يدخل. الخاطئ: كمية كبيرة من الحلويات، حذاء جديد ضيق (يجرح القدم)، أعشاب بدل الدواء. قبل رمضان لازم مراجعة الطبيب لمعرفة إمكانية الصيام وضبط الجرعات.</template>
+</section>
+
+<!-- 11 PREVENTION -->
+<section class="slide" data-title="الوقاية" data-steps="5">
+  <span class="eyebrow">بخطوة وعي</span>
+  <h2>٥ خطوات <em>تحميك</em></h2>
+  <div class="path">
+    <svg class="road" viewBox="0 0 1470 330" preserveAspectRatio="none"><path id="roadPath" d="M1420 250 C1250 250 1230 90 1060 90 S840 250 700 250 S480 90 330 90 S120 250 40 250" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="14" stroke-linecap="round" stroke-dasharray="2 26"/><path id="roadDone" d="M1420 250 C1250 250 1230 90 1060 90 S840 250 700 250 S480 90 330 90 S120 250 40 250" fill="none" stroke="#FF5DB1" stroke-width="6" stroke-linecap="round" pathLength="1" stroke-dasharray="0 1" style="transition:stroke-dasharray .9s"/></svg>
+    <div class="stepn reveal" data-step="1" style="right:0;top:126px"><div class="disc"><svg class="icon"><use href="#i-scale"/></svg></div><b>١. وزن صحي</b><small>حتى نزول بسيط في الوزن يفرق</small></div>
+    <div class="stepn reveal" data-step="2" style="right:290px;top:-12px"><div class="disc"><svg class="icon"><use href="#i-walk"/></svg></div><b>٢. تحرّك بانتظام</b><small>٣٠ دقيقة يوميًا على الأقل</small></div>
+    <div class="stepn reveal" data-step="3" style="right:610px;top:126px"><div class="disc"><svg class="icon"><use href="#i-plate"/></svg></div><b>٣. غذاء متوازن</b><small>أقل سكريات ودهون مشبعة</small></div>
+    <div class="stepn reveal" data-step="4" style="right:910px;top:-12px"><div class="disc"><svg class="icon"><use href="#i-nosmoke"/></svg></div><b>٤. أقلع عن التدخين</b><small>يحمي قلبك وأوعيتك</small></div>
+    <div class="stepn reveal" data-step="5" style="right:1210px;top:126px"><div class="disc" style="background:linear-gradient(140deg,var(--pink),#7A1E5A)"><svg class="icon"><use href="#i-search"/></svg></div><b>٥. افحص دوريًا</b><small>خاصة بعد سن ٣٥ أو مع عوامل الخطر</small></div>
+  </div>
+  <h3 style="font-size:24px;margin-top:6px">والمصاب؟ فحوصاته الدورية:</h3>
+  <div class="checks">
+    <div class="check"><span class="ibox"><svg class="icon"><use href="#i-meter"/></svg></span><b>السكر التراكمي</b><small>كل ٣–٦ أشهر</small></div>
+    <div class="check"><span class="ibox"><svg class="icon"><use href="#i-eye"/></svg></span><b>فحص العين</b><small>سنويًا</small></div>
+    <div class="check"><span class="ibox"><svg class="icon"><use href="#i-kidney"/></svg></span><b>وظائف الكلى</b><small>سنويًا</small></div>
+    <div class="check"><span class="ibox"><svg class="icon"><use href="#i-heart"/></svg></span><b>الكوليسترول</b><small>سنويًا</small></div>
+    <div class="check"><span class="ibox"><svg class="icon"><use href="#i-foot"/></svg></span><b>فحص القدمين</b><small>كل زيارة</small></div>
+    <div class="check"><span class="ibox"><svg class="icon"><use href="#i-bp"/></svg></span><b>الضغط والوزن</b><small>كل مراجعة</small></div>
+  </div>
+  <template class="note">كل ضغطة «التالي» تضيف خطوة على الطريق، وهذا شعار الحملة: بخطوة وعي. ثم اعرض الفحوصات الدورية للمصابين. أوقات المتابعة تقريبية ويحددها الطبيب حسب الحالة.</template>
+</section>
+
+<!-- 12 END -->
+<section class="slide" data-title="الختام">
+  <div class="end">
+    <div>
+      <span class="eyebrow">شكرًا لحسن استماعكم</span>
+      <h2 style="font-size:72px">جاهزين <em>للتحدي</em>؟</h2>
+      <p class="lead">عجلة الأسئلة: نلفّ، يطلع سؤال، وأسرع إجابة صحيحة تكسب.</p>
+      <button class="wheelbtn" id="bWheel2"><svg class="icon"><use href="#i-wheel"/></svg>افتح عجلة الأسئلة</button>
+      <div class="sources">المصادر: وزارة الصحة السعودية (moh.gov.sa) · منظمة الصحة العالمية (WHO) · مراكز السيطرة على الأمراض (CDC) · الجمعية الأمريكية للسكري (ADA) · محاضرة داء السكري للدكتورة صفاء يحيى منيسي.</div>
+    </div>
+    <div><img src="assets/logos/sukkarna-white.svg" alt="سكّرنا وعي" style="width:100%;filter:drop-shadow(0 30px 60px rgba(0,115,207,.4))"></div>
+  </div>
+  <template class="note">اشكر الحضور والمشرفة وفريق العمل. افتح عجلة الأسئلة وابدأ المسابقة. لكل سؤال: لُفّ، اقرأ السؤال، انتظر الإجابات، ثم اضغط «إظهار الإجابة»، و«إجابة صحيحة» للاحتفال.</template>
+</section>

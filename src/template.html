@@ -46,11 +46,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 .ttl{font-size:17px;color:var(--muted)}
 .ttl b{color:#fff;font-family:var(--serif);font-size:22px;margin-inline-end:6px}
 .ctrl{display:flex;align-items:center;gap:12px}
-.nextc{position:relative;width:82px;height:82px;border-radius:50%;border:none;background:linear-gradient(140deg,var(--pink2),var(--pink));box-shadow:0 14px 34px rgba(204,51,139,.45);display:grid;place-items:center}
+.nextc{position:relative;width:82px;height:82px;border-radius:50%;border:none;background:linear-gradient(140deg,var(--pink2),var(--pink));box-shadow:0 12px 26px rgba(4,6,30,.45);display:grid;place-items:center}
 .nextc svg.icon{width:34px;height:34px;stroke-width:2.4}
 .nextc .ring{position:absolute;inset:-9px;width:100px;height:100px;transform:rotate(-90deg)}
 .nextc .ring circle{fill:none;stroke-width:4}
-.nextc.restart{background:linear-gradient(140deg,var(--sky),var(--true));box-shadow:0 14px 34px rgba(0,115,207,.45)}
+.nextc.restart{background:linear-gradient(140deg,var(--sky),var(--true));box-shadow:0 12px 26px rgba(4,6,30,.45)}
 .ghost{width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:transparent;display:grid;place-items:center;color:var(--muted)}
 .ghost svg{width:20px;height:20px}
 .ghost:disabled{opacity:.3}
@@ -63,8 +63,6 @@ button{font:inherit;color:inherit;cursor:pointer}
 .slide{position:absolute;inset:96px 0 100px 0;padding:10px 64px 0;display:none}
 .slide.active{display:flex;flex-direction:column;justify-content:center;padding-bottom:24px;animation:slideIn .7s cubic-bezier(.2,.8,.2,1)}
 @keyframes slideIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:17px;font-weight:700;color:var(--pink2);letter-spacing:.01em}
-.eyebrow::before{content:"";width:26px;height:3px;border-radius:3px;background:currentColor}
 h1,h2,h3{margin:0;font-family:var(--serif);font-weight:900;line-height:1.25;text-wrap:balance}
 h2{font-size:58px;margin-top:6px}
 h2 em{font-style:normal;color:var(--pink2)}
@@ -281,7 +279,7 @@ input[type=range]{width:100%;margin-top:18px;accent-color:var(--pink2);height:30
 /* notes */
 .notes{position:fixed;bottom:0;inset-inline:0;max-height:40vh;overflow:auto;background:#0D1240;border-top:1px solid var(--line);padding:18px 28px;font-size:18px;line-height:1.8;z-index:90;display:none}
 .notes.open{display:block}
-.notes h4{margin:0 0 6px;color:var(--pink2);font-size:15px}
+.notes h3{margin:0 0 6px;color:var(--pink2);font-size:15px}
 .toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%);background:#fff;color:var(--galactic);padding:12px 20px;border-radius:14px;font-weight:700;font-size:16px;z-index:130;opacity:0;transition:.3s;pointer-events:none}
 .toast.on{opacity:1}
 .help{position:fixed;inset:0;display:none;place-items:center;background:rgba(4,6,24,.8);z-index:110}
@@ -361,7 +359,6 @@ kbd{font-family:inherit;background:rgba(255,255,255,.12);border-radius:6px;paddi
 /* ---------- v3: cover hero + signs ---------- */
 .coverslide.active{justify-content:center;align-items:center}
 .hero{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
-.halo{position:absolute;width:760px;height:760px;left:50%;top:44%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(0,115,207,.32),rgba(204,51,139,.10) 60%,transparent);pointer-events:none}
 .herologo{position:relative;width:min(980px,100%)}
 .herologo svg{width:100%;display:block;overflow:visible}
 .hero .sub{position:relative;font-size:26px;color:#C9D0EE;margin-top:6px;max-width:44ch;line-height:1.6}
@@ -401,7 +398,7 @@ body.portrait .lead{font-size:20px}
 body.portrait .cols,body.portrait .cover,body.portrait .end,body.portrait .em,body.portrait .living,
 body.portrait .risk,body.portrait .gm,body.portrait .body,body.portrait .statsrow,body.portrait .hunt{grid-template-columns:1fr;gap:18px}
 /* cover */
-body.portrait .halo{width:620px;height:620px}
+
 body.portrait .hero .sub{font-size:24px}
 /* numbers */
 body.portrait .stats{grid-template-columns:1fr;gap:14px}
@@ -578,7 +575,7 @@ body.portrait .roommore{grid-column:1/-1}
 </div></div>
 
 <canvas id="confetti"></canvas>
-<aside class="notes" id="notes"><h4 id="notesT"></h4><div id="notesB"></div></aside>
+<aside class="notes" id="notes"><h3 id="notesT"></h3><div id="notesB"></div></aside>
 <div class="toast" id="toast"></div>
 
 

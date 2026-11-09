@@ -9,7 +9,7 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- fit stage ---------- */
 const stage = $('#stage');
-function fit() { stage.style.transform = `scale(${Math.min(innerWidth / 1600, innerHeight / 900)})`; }
+function fit() { const port = innerWidth / innerHeight < .85; document.body.classList.toggle('portrait', port); const W = port ? 900 : 1600, H = port ? 1600 : 900; stage.style.transform = `scale(${Math.min(innerWidth / W, innerHeight / H)})`; }
 addEventListener('resize', fit); fit();
 
 /* ---------- toast ---------- */
@@ -72,22 +72,43 @@ function toggleNotes() { $('#notes').classList.toggle('open'); updateNotes(); }
 function updateNotes() { const n = $('template.note', slides[cur]); $('#notesT').textContent = `نص المتحدث · ${slides[cur].dataset.title}`; $('#notesB').textContent = n ? n.content.textContent.trim() : ''; }
 $('#bFull').onclick = toggleFull; $('#bNotes').onclick = toggleNotes;
 
-/* ---------- 0 cover: logo draws itself ---------- */
+/* ---------- 0 cover: logo intro + balanced loop (GSAP timeline) ---------- */
 (function cover() {
-  const svg = $('#coverLogo'); if (!svg) return;
-  const out = $('#cvOut', svg), duo = $('#cvDuo', svg), wr = $('#cvWipe', svg), wm = $('#cvWm', svg), dr = $('#cvDrop', svg), dm = $('#cvDropMask', svg), tag = $('#cvTag', svg);
-  const bo = x => { const n = 7.5625, d = 2.75; if (x < 1 / d) return n * x * x; if (x < 2 / d) return n * (x -= 1.5 / d) * x + .75; if (x < 2.5 / d) return n * (x -= 2.25 / d) * x + .9375; return n * (x -= 2.625 / d) * x + .984375; };
-  let raf;
-  function render(t) {
-    out.style.strokeDashoffset = 1 - easeIO(clamp((t - .15) / 1.75)); duo.style.strokeDashoffset = 1 - easeIO(clamp(t / 1.5));
-    const w = ease(clamp((t - 1.5) / 1.2)); wr.setAttribute('x', 560 - 560 * w); wr.setAttribute('width', 560 * w); wm.style.opacity = .2 + .8 * w;
-    const f = clamp((t - 2.6) / .9); dr.setAttribute('transform', `translate(0 ${-180 * (1 - bo(f))})`); dr.style.opacity = f > 0 ? Math.min(1, f * 4) : 0;
-    dm.style.strokeWidth = 18 * clamp((t - 3.1) / .3);
-    const q = ease(clamp((t - 3.5) / .8)); tag.style.opacity = q; tag.setAttribute('transform', `translate(0 ${14 * (1 - q)})`);
+  const svg = $('#coverLogo'); if (!svg || !window.gsap) return;
+  const q = id => $('#' + id, svg);
+  const out = q('cvOut'), duo = q('cvDuo'), wr = q('cvWipe'), wm = q('cvWm'), dr = q('cvDrop'), dm = q('cvDropMask'), tag = q('cvTag'), shine = q('cvShine'), rip = q('cvRipple');
+  let intro, loop, placed = false;
+  function place() { if (placed) return; const bb = dr.getBBox(); if (!bb.width) return; rip.setAttribute('cx', bb.x + bb.width / 2); rip.setAttribute('cy', bb.y + bb.height * .72); placed = true; }
+  function build() {
+    intro && intro.kill(); loop && loop.kill(); place();
+    gsap.set(dr, { transformOrigin: '50% 100%' });
+    gsap.set(out, { strokeDashoffset: 1 }); gsap.set(duo, { strokeDashoffset: 1 }); gsap.set(wr, { attr: { x: 560, width: 0 } });
+    gsap.set(wm, { opacity: .2 }); gsap.set(dr, { y: -180, opacity: 0, scaleY: 1 }); gsap.set(dm, { strokeWidth: 0 }); gsap.set(tag, { opacity: 0, y: 14 });
+    gsap.set(shine, { attr: { 'stroke-dasharray': '0.07 1', 'stroke-dashoffset': 0.07 }, opacity: 0 }); gsap.set(rip, { attr: { r: 14 }, opacity: 0 });
+    loop = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 1.6, defaults: { ease: 'sine.inOut' } })
+      .to(shine, { opacity: .9, duration: .3 }, 0)
+      .to(shine, { attr: { 'stroke-dashoffset': -1 }, duration: 2.8, ease: 'power1.inOut' }, 0)
+      .to(shine, { opacity: 0, duration: .3 }, 2.5)
+      .addLabel('drip', 2.9)
+      .to(dr, { y: -26, scaleY: 1.08, duration: .45, ease: 'power2.out' }, 'drip')
+      .to(dr, { y: 0, scaleY: 1, duration: .7, ease: 'bounce.out' }, 'drip+=.45')
+      .fromTo(rip, { attr: { r: 12 }, opacity: .8 }, { attr: { r: 46 }, opacity: 0, duration: 1.1, ease: 'power2.out' }, 'drip+=.8')
+      .to(svg, { y: -6, duration: 1.4 }, 0).to(svg, { y: 0, duration: 1.4 }, 1.4);
+    intro = gsap.timeline({ defaults: { ease: 'power3.inOut' }, onComplete: () => { if (!reduce) loop.play(0); } })
+      .to(duo, { strokeDashoffset: 0, duration: 1.5 }, 0)
+      .to(out, { strokeDashoffset: 0, duration: 1.75 }, .15)
+      .addLabel('word', 1.5)
+      .to(wr, { attr: { x: 0, width: 560 }, duration: 1.2, ease: 'power3.out' }, 'word')
+      .to(wm, { opacity: 1, duration: 1.2, ease: 'power3.out' }, 'word')
+      .addLabel('drop', 2.6)
+      .to(dr, { opacity: 1, duration: .2, ease: 'none' }, 'drop')
+      .to(dr, { y: 0, duration: .9, ease: 'bounce.out' }, 'drop')
+      .to(dm, { strokeWidth: 18, duration: .3, ease: 'power2.out' }, 'drop+=.5')
+      .to(tag, { opacity: 1, y: 0, duration: .8, ease: 'power3.out' }, 'drop+=.9');
   }
   hooks[0] = {
-    enter() { cancelAnimationFrame(raf); if (reduce) { render(9); return; } const t0 = performance.now(); (function loop(n) { const t = (n - t0) / 1000; render(t); if (t < 4.5) raf = requestAnimationFrame(loop); })(t0); },
-    leave() { cancelAnimationFrame(raf); }
+    enter() { build(); if (reduce) intro.progress(1); },
+    leave() { intro && intro.kill(); loop && loop.kill(); gsap.set(svg, { y: 0 }); }
   };
 })();
 
@@ -180,16 +201,11 @@ hooks[4] = { step(s) { $('#riskHand').style.display = s >= 5 ? 'none' : ''; } };
 /* ---------- 3 who am I ---------- */
 hooks[3] = { step(s) { $$('.who').forEach(w => w.classList.toggle('open', +w.dataset.revealStep <= s)); } };
 
-/* ---------- 5 symptom hunt ---------- */
-(function hunt() {
-  const order = ['thirst', 'toilet', 'vision', 'wound', 'weight', 'tired', 'nerve'];
-  hooks[5] = { step(s) {
-    order.forEach((k, i) => { const on = i < s, now = i === s - 1;
-      const h = $(`.room .hot[data-k="${k}"]`), f = $(`.fl[data-k="${k}"]`);
-      h.classList.toggle('found', on); h.classList.toggle('now', now); f.classList.toggle('found', on); f.classList.toggle('now', now); });
-    $('#huntN').textContent = ar(s); if (s === 7) celebrate();
-  } };
-})();
+/* ---------- 5 signs: highlight a card, then reveal its name ---------- */
+hooks[5] = { step(s) {
+  $$('.sign[data-i]').forEach(c => { const i = +c.dataset.i; c.classList.toggle('found', i < s); c.classList.toggle('cur', i === s); });
+  $('#huntN').textContent = ar(s); if (s === 7) celebrate();
+} };
 
 /* ---------- 6 glucose meter: show reading, then reveal ---------- */
 (function meter() {

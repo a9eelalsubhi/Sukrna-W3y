@@ -1,12 +1,10 @@
 <!-- 0 COVER -->
-<section class="slide" data-title="البداية">
-  <div class="cover">
-    <div>
-      <div style="width:520px;max-width:100%">{{COVERLOGO}}</div>
-      <span class="eyebrow" style="margin-top:22px">حملة توعوية · كلية الطب بجامعة أم القرى</span>
-      <p class="sub">نفهم السكري، نكتشف علاماته، ونعرف كيف نتصرّف… <b style="color:#fff">خطوة بخطوة.</b></p>
-    </div>
-    <div class="coverimg"><img class="photo soft" src="assets/img/cover-doctors.webp" alt="طبيب وطبيبة يحملان جهاز قياس السكر وقلم إنسولين"></div>
+<section class="slide coverslide" data-title="البداية">
+  <div class="hero">
+    <div class="halo"></div>
+    <div class="herologo">{{COVERLOGO}}</div>
+    <h1 class="sr">سكّرنا وعي: بخطوة وعي نواجه السكري</h1>
+    <p class="sub">حملة توعوية من كلية الطب بجامعة أم القرى · نفهم السكري، نكتشف علاماته، ونعرف كيف نتصرّف</p>
   </div>
   <template class="note">رحّب بالحضور. عرّف بالحملة وأنها بالتعاون بين كلية الطب وإدارة العمل التطوعي والمسؤولية المجتمعية. قل: العرض فيه أسئلة وأنشطة، فخلّكم جاهزين للمشاركة.</template>
 </section>
@@ -106,27 +104,21 @@
   <template class="note">كل «التالي» يعرض عاملين. اطلب من الحضور رفع اليد إذا انطبق عليهم أي عامل. في الأخير: عامل واحد يكفي ليفحص الشخص سكره مبكرًا.</template>
 </section>
 
-<!-- 5 SYMPTOMS HUNT -->
+<!-- 5 SIGNS -->
 <section class="slide" data-title="اكتشف العلامات" data-steps="7">
-  <span class="eyebrow">نشاط · اكتشف العلامات في الصورة</span>
-  <h2>في هذي الغرفة <em>٧ علامات</em>… من يلقاها؟</h2>
-  <div class="hunt">
-    <div class="room panel">{{ROOM}}</div>
-    <div>
-      <div class="huntscore"><span>قولوا العلامة بصوت عالي</span><span class="score"><span id="huntN">٠</span>/٧</span></div>
-      <div class="found-list" id="foundList">
-        <div class="fl" data-k="thirst"><span class="n">١</span>عطش شديد</div>
-        <div class="fl" data-k="toilet"><span class="n">٢</span>كثرة التبول خاصة ليلًا</div>
-        <div class="fl" data-k="vision"><span class="n">٣</span>تشوّش الرؤية</div>
-        <div class="fl" data-k="wound"><span class="n">٤</span>بطء التئام الجروح</div>
-        <div class="fl" data-k="weight"><span class="n">٥</span>نزول الوزن دون سبب</div>
-        <div class="fl" data-k="tired"><span class="n">٦</span>تعب وإرهاق دائم</div>
-        <div class="fl" data-k="nerve"><span class="n">٧</span>تنميل ووخز في القدمين</div>
-      </div>
-      <p class="lead" style="font-size:17px;margin-top:12px">وأيضًا: جوع دائم، جفاف وحكة في الجلد، التهابات متكررة. وجود الأعراض يستدعي مراجعة الطبيب.</p>
-    </div>
+  <span class="eyebrow">نشاط · وش العلامة؟</span>
+  <h2>سبع علامات للسكري… <em>من يعرفها؟</em></h2>
+  <div class="signs">
+      <figure class="sign" data-i="0"><img src="assets/img/sign-thirst.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">عطش شديد</span></figcaption></figure>
+      <figure class="sign" data-i="1"><img src="assets/img/sign-urination.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">كثرة التبول خاصة ليلًا</span></figcaption></figure>
+      <figure class="sign" data-i="2"><img src="assets/img/sign-vision.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">تشوّش الرؤية</span></figcaption></figure>
+      <figure class="sign" data-i="3"><img src="assets/img/sign-wound.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">بطء التئام الجروح</span></figcaption></figure>
+      <figure class="sign" data-i="4"><img src="assets/img/sign-weight.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">نزول الوزن دون سبب</span></figcaption></figure>
+      <figure class="sign" data-i="5"><img src="assets/img/sign-fatigue.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">تعب وإرهاق دائم</span></figcaption></figure>
+      <figure class="sign" data-i="6"><img src="assets/img/sign-tingling.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">تنميل ووخز في القدمين</span></figcaption></figure>
+      <div class="sign more"><b>وأيضًا</b><p>جوع دائم، جفاف وحكة في الجلد، التهابات متكررة واحمرار اللثة.</p><p class="doc">وجود الأعراض يستدعي مراجعة الطبيب للتأكد.</p><div class="score"><span id="huntN">٠</span>/٧</div></div>
   </div>
-  <template class="note">خلّ الحضور يقولون العلامات اللي يشوفونها. كل «التالي» يكشف علامة في الصورة. النوع الأول تظهر أعراضه بسرعة، والثاني يتطور ببطء وقد لا تظهر أعراضه.</template>
+  <template class="note">البطاقة المضيئة هي الحالية: اسأل الحضور «وش العلامة اللي في الصورة؟»، وبعد ما يجاوبون «التالي» يكشفها. النوع الأول تظهر أعراضه بسرعة، والثاني يتطور ببطء وقد لا تظهر أعراضه.</template>
 </section>
 
 <!-- 6 NUMBERS -->

@@ -358,6 +358,100 @@ kbd{font-family:inherit;background:rgba(255,255,255,.12);border-radius:6px;paddi
 .restartnote{margin-top:24px;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:16px;background:rgba(79,179,255,.14);color:#CFE6FF;font-size:17px;font-weight:700}
 .restartnote svg{width:22px;height:22px}
 .sources{color:#C2C9E6}
+/* ---------- v3: cover hero + signs ---------- */
+.coverslide.active{justify-content:center;align-items:center}
+.hero{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
+.halo{position:absolute;width:760px;height:760px;left:50%;top:44%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(0,115,207,.32),rgba(204,51,139,.10) 60%,transparent);pointer-events:none}
+.herologo{position:relative;width:min(980px,100%)}
+.herologo svg{width:100%;display:block;overflow:visible}
+.hero .sub{position:relative;font-size:26px;color:#C9D0EE;margin-top:6px;max-width:44ch;line-height:1.6}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.signs{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:22px}
+.sign{margin:0;position:relative;border-radius:26px;overflow:hidden;background:#0C1145;height:300px;display:flex;flex-direction:column;transition:transform .4s,box-shadow .4s,opacity .4s}
+.sign img{width:100%;flex:1;min-height:0;object-fit:cover;object-position:50% 30%}
+.sign figcaption{padding:12px 14px;font-size:20px;font-weight:700;background:#161C63;min-height:58px;display:flex;align-items:center;gap:10px}
+.sign .sa{display:none}
+.sign .sq{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.1);font-family:var(--serif);font-size:20px;flex:none}
+.sign.found .sa{display:inline}
+.sign.found .sq{background:var(--good);color:#06301F;font-size:0}
+.sign.found .sq::before{content:"✓";font-size:18px}
+.sign.found figcaption{background:linear-gradient(90deg,rgba(47,211,154,.22),#161C63)}
+.sign.cur{box-shadow:0 0 0 4px var(--warn);transform:translateY(-6px)}
+.sign.cur figcaption{color:var(--warn)}
+.sign:not(.found):not(.cur):not(.more){opacity:.72}
+.sign.more{padding:22px;justify-content:center;gap:10px;background:linear-gradient(165deg,#22145A,#0C1145)}
+.sign.more b{font-family:var(--serif);font-size:30px}
+.sign.more p{margin:0;font-size:18px;line-height:1.6;color:#C9D0EE}
+.sign.more .doc{color:var(--warn);font-weight:700}
+.sign.more .score{font-family:var(--serif);font-size:40px;font-weight:900;margin-top:auto}
+/* ---------- portrait (vertical) stage 900x1600 ---------- */
+body.portrait #stage{width:900px;height:1600px}
+body.portrait .topbar{height:110px;padding:0 32px}
+body.portrait .brand img{height:50px}
+body.portrait .partners{gap:16px}
+body.portrait .partners img{height:56px}
+body.portrait .bottombar{height:132px;padding:0 32px}
+body.portrait .nextlbl{display:none}
+body.portrait .drops{gap:6px}
+body.portrait .ttl{font-size:15px}
+body.portrait .slide{inset:110px 0 132px 0;padding:6px 36px 0}
+body.portrait .bignum{font-size:110px;left:30px;top:10px}
+body.portrait h2{font-size:46px}
+body.portrait .lead{font-size:20px}
+body.portrait .cols,body.portrait .cover,body.portrait .end,body.portrait .em,body.portrait .living,
+body.portrait .risk,body.portrait .gm,body.portrait .body,body.portrait .statsrow,body.portrait .hunt{grid-template-columns:1fr;gap:18px}
+/* cover */
+body.portrait .halo{width:620px;height:620px}
+body.portrait .hero .sub{font-size:24px}
+/* numbers */
+body.portrait .stats{grid-template-columns:1fr;gap:14px}
+body.portrait .stat{min-height:0;padding:22px;flex-direction:row;align-items:center;gap:18px}
+body.portrait .stat-top{flex-direction:column;gap:8px}
+body.portrait .stat .big{font-size:80px;text-align:right}
+body.portrait .famimg{width:300px;margin-inline:auto;order:-1}
+/* insulin */
+body.portrait .scene{height:520px}
+body.portrait .explain{min-height:0}
+/* who */
+body.portrait .whos{grid-template-columns:1fr;gap:14px;margin-top:16px}
+body.portrait .who{min-height:0;display:grid;grid-template-columns:150px 1fr;column-gap:16px;padding:16px}
+body.portrait .whoimg{width:150px;height:150px;grid-row:span 3;margin:0}
+body.portrait .who ul{gap:4px}
+body.portrait .who li{font-size:17px}
+body.portrait .who .qmark{height:52px;font-size:34px;margin-top:8px}
+body.portrait .who .ans{font-size:16px;padding:12px}
+/* risk */
+body.portrait .meter{min-height:280px}
+/* signs */
+body.portrait .signs{grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
+body.portrait .sign{height:248px}
+body.portrait .cols{grid-template-columns:1fr!important}
+body.portrait .sign.more{height:auto}
+/* meter */
+body.portrait .gm .device{transform:scale(.72);margin-bottom:-120px}
+/* emergency */
+body.portrait .story{padding:20px}
+/* body */
+body.portrait .bodyfig{height:380px}
+body.portrait .ocards{grid-template-columns:repeat(2,1fr)}
+body.portrait .footrow img{width:110px;height:110px}
+/* myths */
+body.portrait .myths{grid-template-columns:repeat(2,1fr);gap:14px}
+body.portrait .myth{height:220px}
+/* living */
+body.portrait .liverow{grid-template-columns:150px 1fr}
+body.portrait .liverow img{width:150px;height:150px}
+/* prevention */
+body.portrait .path{height:auto;display:flex;flex-direction:column;gap:10px;margin-top:14px}
+body.portrait .path svg.road{display:none}
+body.portrait .stepn{position:static!important;width:auto;flex-direction:row;text-align:start;gap:16px}
+body.portrait .stepn img.disc{width:96px;height:96px}
+body.portrait .stepn b,body.portrait .stepn small{background:none;padding:0}
+body.portrait .stepn.reveal:not(.shown){opacity:.18}
+body.portrait .checks{grid-template-columns:repeat(3,1fr)}
+/* end */
+body.portrait .endimg img{max-width:420px}
+body.portrait .end h2{font-size:58px!important}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -460,6 +554,7 @@ kbd{font-family:inherit;background:rgba(255,255,255,.12);border-radius:6px;paddi
 <div class="toast" id="toast"></div>
 
 
+<script src="assets/js/gsap.min.js"></script>
 <script>
 {{SCRIPT}}
 </script>

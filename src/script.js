@@ -201,11 +201,34 @@ hooks[4] = { step(s) { $('#riskHand').style.display = s >= 5 ? 'none' : ''; } };
 /* ---------- 3 who am I ---------- */
 hooks[3] = { step(s) { $$('.who').forEach(w => w.classList.toggle('open', +w.dataset.revealStep <= s)); } };
 
-/* ---------- 5 signs: highlight a card, then reveal its name ---------- */
-hooks[5] = { step(s) {
-  $$('.sign[data-i]').forEach(c => { const i = +c.dataset.i; c.classList.toggle('found', i < s); c.classList.toggle('cur', i === s); });
-  $('#huntN').textContent = ar(s); if (s === 7) celebrate();
-} };
+/* ---------- 5 the room: spotlight one sign per Next ---------- */
+(function room() {
+  const sc = $('#scene3d'); if (!sc) return;
+  const holes = JSON.parse('[' + sc.dataset.holes + ']');
+  const hole = $('#spotHole'), ring = $('#spotRing'), dim = $('#spotDim');
+  const names = $$('.pin', sc).map(p => $('.pl b', p).textContent);
+  let cur = { x: 768, y: 512, r: 0 }, raf;
+  function moveTo(t, show) {
+    cancelAnimationFrame(raf); const from = { ...cur }, t0 = performance.now(), D = reduce ? 1 : 650;
+    (function loop(n) { const p = ease(clamp((n - t0) / D));
+      cur = { x: from.x + (t.x - from.x) * p, y: from.y + (t.y - from.y) * p, r: from.r + (t.r - from.r) * p };
+      for (const el of [hole, ring]) { el.setAttribute('cx', cur.x); el.setAttribute('cy', cur.y); el.setAttribute('r', cur.r); }
+      if (p < 1) raf = requestAnimationFrame(loop); })(t0);
+    dim.style.transition = 'opacity .5s'; dim.setAttribute('opacity', show ? 1 : 0); ring.setAttribute('opacity', show ? 1 : 0);
+  }
+  hooks[5] = {
+    step(s) {
+      $$('.pin', sc).forEach(p => { const i = +p.dataset.i; p.classList.toggle('found', i < s); p.classList.toggle('cur', i === s - 1); });
+      $('#huntN').textContent = ar(s);
+      $('#roomFound').innerHTML = names.slice(0, s).map((n, i) => `<li class="${i === s - 1 ? 'now' : ''}"><b>${ar(i + 1)}</b>${n}</li>`).join('');
+      $('#roomAsk').textContent = s === 0 ? 'كم علامة تشوفون؟ قولوها بصوت عالي' : s < 7 ? 'وش العلامة اللي بعدها؟' : 'لقيتوها كلها!';
+      if (s === 0) moveTo({ x: 768, y: 512, r: 0 }, false);
+      else { const [x, y, r] = holes[s - 1]; moveTo({ x, y, r: r * 1.15 }, s < 7 || true); }
+      if (s === 7) { celebrate(); setTimeout(() => moveTo({ x: 768, y: 512, r: 1100 }, false), 900); }
+    },
+    leave() { cancelAnimationFrame(raf); }
+  };
+})();
 
 /* ---------- 6 glucose meter: show reading, then reveal ---------- */
 (function meter() {

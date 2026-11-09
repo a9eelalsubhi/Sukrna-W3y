@@ -452,6 +452,34 @@ body.portrait .checks{grid-template-columns:repeat(3,1fr)}
 /* end */
 body.portrait .endimg img{max-width:420px}
 body.portrait .end h2{font-size:58px!important}
+/* ---------- room scene ---------- */
+.roomwrap{display:grid;grid-template-columns:1fr 330px;gap:22px;margin-top:16px;align-items:start}
+.scene3d{position:relative;width:100%;max-width:880px;aspect-ratio:3/2;border-radius:28px;overflow:hidden;justify-self:end}
+.scene3d img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.scene3d .spot{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.pin{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;opacity:0;transition:opacity .4s,transform .4s;pointer-events:none;z-index:2}
+.pin .pn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-weight:900;font-size:20px;background:var(--good);color:#06301F;box-shadow:0 0 0 4px rgba(5,7,32,.6);flex:none}
+.pin .pl{display:none;flex-direction:column;background:rgba(9,12,52,.92);border-radius:16px;padding:8px 14px;white-space:nowrap}
+.pin .pl b{font-size:20px}
+.pin .pl small{font-size:14px;color:#C9D0EE}
+.pin.found{opacity:1}
+.pin.cur{z-index:3}
+.pin.cur .pn{background:var(--warn);color:#3A2600;width:48px;height:48px;font-size:24px}
+.pin.cur .pl{display:flex;animation:pop .45s}
+.roomside{display:flex;flex-direction:column;gap:12px}
+.roomcount{font-family:var(--serif);font-weight:900;font-size:84px;line-height:1}
+.roomcount small{font-size:40px;color:var(--muted)}
+.roomask{margin:0;font-size:21px;font-weight:700;color:var(--warn);line-height:1.5}
+.roomfound{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.roomfound li{display:flex;align-items:center;gap:10px;font-size:19px;padding:9px 12px;border-radius:14px;background:linear-gradient(165deg,#161C63,#0C1145);animation:pop .4s}
+.roomfound li b{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--good);color:#06301F;font-size:15px;flex:none}
+.roomfound li.now b{background:var(--warn);color:#3A2600}
+.roommore{margin:4px 0 0;font-size:15px;color:var(--muted);line-height:1.6}
+body.portrait .roomwrap{grid-template-columns:1fr}
+body.portrait .scene3d{max-width:none}
+body.portrait .roomside{display:grid;grid-template-columns:auto 1fr;column-gap:18px;align-items:start}
+body.portrait .roomfound{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr}
+body.portrait .roommore{grid-column:1/-1}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>

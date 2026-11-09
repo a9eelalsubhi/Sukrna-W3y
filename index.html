@@ -452,6 +452,34 @@ body.portrait .checks{grid-template-columns:repeat(3,1fr)}
 /* end */
 body.portrait .endimg img{max-width:420px}
 body.portrait .end h2{font-size:58px!important}
+/* ---------- room scene ---------- */
+.roomwrap{display:grid;grid-template-columns:1fr 330px;gap:22px;margin-top:16px;align-items:start}
+.scene3d{position:relative;width:100%;max-width:880px;aspect-ratio:3/2;border-radius:28px;overflow:hidden;justify-self:end}
+.scene3d img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.scene3d .spot{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.pin{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;opacity:0;transition:opacity .4s,transform .4s;pointer-events:none;z-index:2}
+.pin .pn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-weight:900;font-size:20px;background:var(--good);color:#06301F;box-shadow:0 0 0 4px rgba(5,7,32,.6);flex:none}
+.pin .pl{display:none;flex-direction:column;background:rgba(9,12,52,.92);border-radius:16px;padding:8px 14px;white-space:nowrap}
+.pin .pl b{font-size:20px}
+.pin .pl small{font-size:14px;color:#C9D0EE}
+.pin.found{opacity:1}
+.pin.cur{z-index:3}
+.pin.cur .pn{background:var(--warn);color:#3A2600;width:48px;height:48px;font-size:24px}
+.pin.cur .pl{display:flex;animation:pop .45s}
+.roomside{display:flex;flex-direction:column;gap:12px}
+.roomcount{font-family:var(--serif);font-weight:900;font-size:84px;line-height:1}
+.roomcount small{font-size:40px;color:var(--muted)}
+.roomask{margin:0;font-size:21px;font-weight:700;color:var(--warn);line-height:1.5}
+.roomfound{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.roomfound li{display:flex;align-items:center;gap:10px;font-size:19px;padding:9px 12px;border-radius:14px;background:linear-gradient(165deg,#161C63,#0C1145);animation:pop .4s}
+.roomfound li b{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--good);color:#06301F;font-size:15px;flex:none}
+.roomfound li.now b{background:var(--warn);color:#3A2600}
+.roommore{margin:4px 0 0;font-size:15px;color:var(--muted);line-height:1.6}
+body.portrait .roomwrap{grid-template-columns:1fr}
+body.portrait .scene3d{max-width:none}
+body.portrait .roomside{display:grid;grid-template-columns:auto 1fr;column-gap:18px;align-items:start}
+body.portrait .roomfound{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr}
+body.portrait .roommore{grid-column:1/-1}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -650,21 +678,30 @@ body.portrait .end h2{font-size:58px!important}
   <template class="note">كل «التالي» يعرض عاملين. اطلب من الحضور رفع اليد إذا انطبق عليهم أي عامل. في الأخير: عامل واحد يكفي ليفحص الشخص سكره مبكرًا.</template>
 </section>
 
-<!-- 5 SIGNS -->
+<!-- 5 SIGNS: the room -->
 <section class="slide" data-title="اكتشف العلامات" data-steps="7">
-  <span class="eyebrow">نشاط · وش العلامة؟</span>
-  <h2>سبع علامات للسكري… <em>من يعرفها؟</em></h2>
-  <div class="signs">
-      <figure class="sign" data-i="0"><img src="assets/img/sign-thirst.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">عطش شديد</span></figcaption></figure>
-      <figure class="sign" data-i="1"><img src="assets/img/sign-urination.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">كثرة التبول خاصة ليلًا</span></figcaption></figure>
-      <figure class="sign" data-i="2"><img src="assets/img/sign-vision.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">تشوّش الرؤية</span></figcaption></figure>
-      <figure class="sign" data-i="3"><img src="assets/img/sign-wound.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">بطء التئام الجروح</span></figcaption></figure>
-      <figure class="sign" data-i="4"><img src="assets/img/sign-weight.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">نزول الوزن دون سبب</span></figcaption></figure>
-      <figure class="sign" data-i="5"><img src="assets/img/sign-fatigue.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">تعب وإرهاق دائم</span></figcaption></figure>
-      <figure class="sign" data-i="6"><img src="assets/img/sign-tingling.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">تنميل ووخز في القدمين</span></figcaption></figure>
-      <div class="sign more"><b>وأيضًا</b><p>جوع دائم، جفاف وحكة في الجلد، التهابات متكررة واحمرار اللثة.</p><p class="doc">وجود الأعراض يستدعي مراجعة الطبيب للتأكد.</p><div class="score"><span id="huntN">٠</span>/٧</div></div>
+  <span class="eyebrow">نشاط · اكتشف العلامات في الغرفة</span>
+  <h2>في هذي الغرفة <em>٧ علامات</em> للسكري… من يلقاها؟</h2>
+  <div class="roomwrap">
+    <div class="scene3d" id="scene3d" data-holes="[255,560,125],[1250,250,190],[960,245,115],[830,722,80],[1385,700,230],[650,200,95],[690,905,170]">
+      <img src="assets/img/room-scene.webp" alt="رجل في غرفة نومه ليلًا تظهر عليه علامات السكري">
+      <svg class="spot" viewBox="0 0 1536 1024" preserveAspectRatio="none" aria-hidden="true"><defs><mask id="spotMask"><rect width="1536" height="1024" fill="#fff"/><circle id="spotHole" cx="768" cy="512" r="0" fill="#000"/></mask></defs><rect width="1536" height="1024" fill="rgba(5,7,32,.62)" mask="url(#spotMask)" id="spotDim" opacity="0"/><circle id="spotRing" cx="768" cy="512" r="0" fill="none" stroke="#FFD54F" stroke-width="6" opacity="0"/></svg>
+      <div class="pin" data-i="0" style="left:16.60%;top:68.73%"><span class="pn">١</span><span class="pl"><b>عطش شديد</b><small>كاسات فاضية وقارورة… وما زال يشرب</small></span></div>
+      <div class="pin" data-i="1" style="left:81.38%;top:45.75%"><span class="pn">٢</span><span class="pl"><b>كثرة التبول ليلًا</b><small>الساعة ٣ فجرًا، وباب الحمام مفتوح</small></span></div>
+      <div class="pin" data-i="2" style="left:62.50%;top:36.84%"><span class="pn">٣</span><span class="pl"><b>تشوّش الرؤية</b><small>يبعد الجوال ويفرك عينه</small></span></div>
+      <div class="pin" data-i="3" style="left:54.04%;top:79.49%"><span class="pn">٤</span><span class="pl"><b>بطء التئام الجروح</b><small>لصقة على جرح ما التأم</small></span></div>
+      <div class="pin" data-i="4" style="left:90.17%;top:94.19%"><span class="pn">٥</span><span class="pl"><b>نزول الوزن دون سبب</b><small>حزام وبنطلون صاروا واسعين، والميزان تحت</small></span></div>
+      <div class="pin" data-i="5" style="left:42.32%;top:30.20%"><span class="pn">٦</span><span class="pl"><b>تعب وإرهاق دائم</b><small>هالات سوداء وقهوة في نص الليل</small></span></div>
+      <div class="pin" data-i="6" style="left:44.92%;top:69.29%"><span class="pn">٧</span><span class="pl"><b>تنميل ووخز في القدمين</b><small>شرارات حول أصابع القدم</small></span></div>
+    </div>
+    <div class="roomside">
+      <div class="roomcount"><span id="huntN">٠</span><small>/٧</small></div>
+      <p class="roomask" id="roomAsk">كم علامة تشوفون؟ قولوها بصوت عالي</p>
+      <ol class="roomfound" id="roomFound"></ol>
+      <p class="roommore">وأيضًا: جوع دائم، جفاف وحكة في الجلد، التهابات متكررة. وجود الأعراض يستدعي مراجعة الطبيب.</p>
+    </div>
   </div>
-  <template class="note">البطاقة المضيئة هي الحالية: اسأل الحضور «وش العلامة اللي في الصورة؟»، وبعد ما يجاوبون «التالي» يكشفها. النوع الأول تظهر أعراضه بسرعة، والثاني يتطور ببطء وقد لا تظهر أعراضه.</template>
+  <template class="note">اعرض الغرفة واسأل: كم علامة تشوفون؟ خلّ الحضور يأشرون ويقولون، وكل «التالي» يسلّط الضوء على علامة ويكتب اسمها. النوع الأول تظهر أعراضه بسرعة، والثاني يتطور ببطء وقد لا تظهر أعراضه.</template>
 </section>
 
 <!-- 6 NUMBERS -->
@@ -1053,11 +1090,34 @@ hooks[4] = { step(s) { $('#riskHand').style.display = s >= 5 ? 'none' : ''; } };
 /* ---------- 3 who am I ---------- */
 hooks[3] = { step(s) { $$('.who').forEach(w => w.classList.toggle('open', +w.dataset.revealStep <= s)); } };
 
-/* ---------- 5 signs: highlight a card, then reveal its name ---------- */
-hooks[5] = { step(s) {
-  $$('.sign[data-i]').forEach(c => { const i = +c.dataset.i; c.classList.toggle('found', i < s); c.classList.toggle('cur', i === s); });
-  $('#huntN').textContent = ar(s); if (s === 7) celebrate();
-} };
+/* ---------- 5 the room: spotlight one sign per Next ---------- */
+(function room() {
+  const sc = $('#scene3d'); if (!sc) return;
+  const holes = JSON.parse('[' + sc.dataset.holes + ']');
+  const hole = $('#spotHole'), ring = $('#spotRing'), dim = $('#spotDim');
+  const names = $$('.pin', sc).map(p => $('.pl b', p).textContent);
+  let cur = { x: 768, y: 512, r: 0 }, raf;
+  function moveTo(t, show) {
+    cancelAnimationFrame(raf); const from = { ...cur }, t0 = performance.now(), D = reduce ? 1 : 650;
+    (function loop(n) { const p = ease(clamp((n - t0) / D));
+      cur = { x: from.x + (t.x - from.x) * p, y: from.y + (t.y - from.y) * p, r: from.r + (t.r - from.r) * p };
+      for (const el of [hole, ring]) { el.setAttribute('cx', cur.x); el.setAttribute('cy', cur.y); el.setAttribute('r', cur.r); }
+      if (p < 1) raf = requestAnimationFrame(loop); })(t0);
+    dim.style.transition = 'opacity .5s'; dim.setAttribute('opacity', show ? 1 : 0); ring.setAttribute('opacity', show ? 1 : 0);
+  }
+  hooks[5] = {
+    step(s) {
+      $$('.pin', sc).forEach(p => { const i = +p.dataset.i; p.classList.toggle('found', i < s); p.classList.toggle('cur', i === s - 1); });
+      $('#huntN').textContent = ar(s);
+      $('#roomFound').innerHTML = names.slice(0, s).map((n, i) => `<li class="${i === s - 1 ? 'now' : ''}"><b>${ar(i + 1)}</b>${n}</li>`).join('');
+      $('#roomAsk').textContent = s === 0 ? 'كم علامة تشوفون؟ قولوها بصوت عالي' : s < 7 ? 'وش العلامة اللي بعدها؟' : 'لقيتوها كلها!';
+      if (s === 0) moveTo({ x: 768, y: 512, r: 0 }, false);
+      else { const [x, y, r] = holes[s - 1]; moveTo({ x, y, r: r * 1.15 }, s < 7 || true); }
+      if (s === 7) { celebrate(); setTimeout(() => moveTo({ x: 768, y: 512, r: 1100 }, false), 900); }
+    },
+    leave() { cancelAnimationFrame(raf); }
+  };
+})();
 
 /* ---------- 6 glucose meter: show reading, then reveal ---------- */
 (function meter() {

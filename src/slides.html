@@ -104,21 +104,30 @@
   <template class="note">كل «التالي» يعرض عاملين. اطلب من الحضور رفع اليد إذا انطبق عليهم أي عامل. في الأخير: عامل واحد يكفي ليفحص الشخص سكره مبكرًا.</template>
 </section>
 
-<!-- 5 SIGNS -->
+<!-- 5 SIGNS: the room -->
 <section class="slide" data-title="اكتشف العلامات" data-steps="7">
-  <span class="eyebrow">نشاط · وش العلامة؟</span>
-  <h2>سبع علامات للسكري… <em>من يعرفها؟</em></h2>
-  <div class="signs">
-      <figure class="sign" data-i="0"><img src="assets/img/sign-thirst.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">عطش شديد</span></figcaption></figure>
-      <figure class="sign" data-i="1"><img src="assets/img/sign-urination.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">كثرة التبول خاصة ليلًا</span></figcaption></figure>
-      <figure class="sign" data-i="2"><img src="assets/img/sign-vision.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">تشوّش الرؤية</span></figcaption></figure>
-      <figure class="sign" data-i="3"><img src="assets/img/sign-wound.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">بطء التئام الجروح</span></figcaption></figure>
-      <figure class="sign" data-i="4"><img src="assets/img/sign-weight.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">نزول الوزن دون سبب</span></figcaption></figure>
-      <figure class="sign" data-i="5"><img src="assets/img/sign-fatigue.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">تعب وإرهاق دائم</span></figcaption></figure>
-      <figure class="sign" data-i="6"><img src="assets/img/sign-tingling.webp" alt=""><figcaption><span class="sq">؟</span><span class="sa">تنميل ووخز في القدمين</span></figcaption></figure>
-      <div class="sign more"><b>وأيضًا</b><p>جوع دائم، جفاف وحكة في الجلد، التهابات متكررة واحمرار اللثة.</p><p class="doc">وجود الأعراض يستدعي مراجعة الطبيب للتأكد.</p><div class="score"><span id="huntN">٠</span>/٧</div></div>
+  <span class="eyebrow">نشاط · اكتشف العلامات في الغرفة</span>
+  <h2>في هذي الغرفة <em>٧ علامات</em> للسكري… من يلقاها؟</h2>
+  <div class="roomwrap">
+    <div class="scene3d" id="scene3d" data-holes="[255,560,125],[1250,250,190],[960,245,115],[830,722,80],[1385,700,230],[650,200,95],[690,905,170]">
+      <img src="assets/img/room-scene.webp" alt="رجل في غرفة نومه ليلًا تظهر عليه علامات السكري">
+      <svg class="spot" viewBox="0 0 1536 1024" preserveAspectRatio="none" aria-hidden="true"><defs><mask id="spotMask"><rect width="1536" height="1024" fill="#fff"/><circle id="spotHole" cx="768" cy="512" r="0" fill="#000"/></mask></defs><rect width="1536" height="1024" fill="rgba(5,7,32,.62)" mask="url(#spotMask)" id="spotDim" opacity="0"/><circle id="spotRing" cx="768" cy="512" r="0" fill="none" stroke="#FFD54F" stroke-width="6" opacity="0"/></svg>
+      <div class="pin" data-i="0" style="left:16.60%;top:68.73%"><span class="pn">١</span><span class="pl"><b>عطش شديد</b><small>كاسات فاضية وقارورة… وما زال يشرب</small></span></div>
+      <div class="pin" data-i="1" style="left:81.38%;top:45.75%"><span class="pn">٢</span><span class="pl"><b>كثرة التبول ليلًا</b><small>الساعة ٣ فجرًا، وباب الحمام مفتوح</small></span></div>
+      <div class="pin" data-i="2" style="left:62.50%;top:36.84%"><span class="pn">٣</span><span class="pl"><b>تشوّش الرؤية</b><small>يبعد الجوال ويفرك عينه</small></span></div>
+      <div class="pin" data-i="3" style="left:54.04%;top:79.49%"><span class="pn">٤</span><span class="pl"><b>بطء التئام الجروح</b><small>لصقة على جرح ما التأم</small></span></div>
+      <div class="pin" data-i="4" style="left:90.17%;top:94.19%"><span class="pn">٥</span><span class="pl"><b>نزول الوزن دون سبب</b><small>حزام وبنطلون صاروا واسعين، والميزان تحت</small></span></div>
+      <div class="pin" data-i="5" style="left:42.32%;top:30.20%"><span class="pn">٦</span><span class="pl"><b>تعب وإرهاق دائم</b><small>هالات سوداء وقهوة في نص الليل</small></span></div>
+      <div class="pin" data-i="6" style="left:44.92%;top:69.29%"><span class="pn">٧</span><span class="pl"><b>تنميل ووخز في القدمين</b><small>شرارات حول أصابع القدم</small></span></div>
+    </div>
+    <div class="roomside">
+      <div class="roomcount"><span id="huntN">٠</span><small>/٧</small></div>
+      <p class="roomask" id="roomAsk">كم علامة تشوفون؟ قولوها بصوت عالي</p>
+      <ol class="roomfound" id="roomFound"></ol>
+      <p class="roommore">وأيضًا: جوع دائم، جفاف وحكة في الجلد، التهابات متكررة. وجود الأعراض يستدعي مراجعة الطبيب.</p>
+    </div>
   </div>
-  <template class="note">البطاقة المضيئة هي الحالية: اسأل الحضور «وش العلامة اللي في الصورة؟»، وبعد ما يجاوبون «التالي» يكشفها. النوع الأول تظهر أعراضه بسرعة، والثاني يتطور ببطء وقد لا تظهر أعراضه.</template>
+  <template class="note">اعرض الغرفة واسأل: كم علامة تشوفون؟ خلّ الحضور يأشرون ويقولون، وكل «التالي» يسلّط الضوء على علامة ويكتب اسمها. النوع الأول تظهر أعراضه بسرعة، والثاني يتطور ببطء وقد لا تظهر أعراضه.</template>
 </section>
 
 <!-- 6 NUMBERS -->

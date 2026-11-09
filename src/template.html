@@ -28,32 +28,39 @@ button{font:inherit;color:inherit;cursor:pointer}
 .bgdrops{position:absolute;inset:0;pointer-events:none;opacity:.5}
 
 /* ---------- chrome ---------- */
-.topbar{position:absolute;inset:0 0 auto 0;height:86px;display:flex;align-items:center;justify-content:space-between;padding:0 44px;z-index:20}
-.brand{display:flex;align-items:center;gap:14px}
-.brand img{height:52px}
-.partners{display:flex;align-items:center;gap:22px}
-.partners img{height:54px;opacity:.95}
-.partners .sep{width:1px;height:40px;background:var(--line)}
-.tools{display:flex;gap:8px}
-.tool{height:40px;min-width:40px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--glass);display:flex;align-items:center;gap:8px;font-size:15px}
-.tool:hover{background:var(--glass2)}
-.tool svg{width:18px;height:18px}
-.bottombar{position:absolute;inset:auto 0 0 0;height:92px;display:flex;align-items:center;justify-content:space-between;padding:0 44px;z-index:20}
-.nav{display:flex;gap:10px;align-items:center}
-.nbtn{height:54px;padding:0 26px;border-radius:16px;border:1px solid var(--line);background:var(--glass);font-size:19px;font-weight:700;display:flex;align-items:center;gap:10px}
-.nbtn.primary{background:linear-gradient(135deg,var(--pink),#E5469E);border-color:transparent;box-shadow:0 10px 30px rgba(204,51,139,.35)}
-.nbtn:disabled{opacity:.35;cursor:default}
-.nbtn svg{width:20px;height:20px}
-.progress{display:flex;gap:7px;align-items:center}
-.progress i{width:26px;height:6px;border-radius:9px;background:rgba(255,255,255,.14);transition:.4s}
-.progress i.on{background:var(--sky)}
-.progress i.cur{width:46px;background:var(--pink2)}
-.hint{font-size:15px;color:var(--muted);min-width:250px;text-align:left}
-.credit{font-size:13px;color:var(--muted);text-align:center;line-height:1.4}
-.credit b{color:var(--ink);font-weight:700}
-
+.dots{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,.07) 1.2px,transparent 1.3px);background-size:34px 34px;-webkit-mask-image:radial-gradient(1000px 600px at 50% 40%,#000,transparent);mask-image:radial-gradient(1000px 600px at 50% 40%,#000,transparent)}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none}
+.topbar{position:absolute;inset:0 0 auto 0;height:96px;display:flex;align-items:center;justify-content:space-between;padding:0 54px;z-index:20}
+.brand img{height:58px}
+.partners{display:flex;align-items:center;gap:26px}
+.partners img{height:70px}
+.partners .sep{width:1px;height:46px;background:rgba(255,255,255,.18)}
+.bottombar{position:absolute;inset:auto 0 0 0;height:100px;display:flex;align-items:center;justify-content:space-between;padding:0 54px;z-index:20}
+.track{display:flex;align-items:center;gap:16px}
+.drops{display:flex;gap:9px;align-items:flex-end}
+.drops svg{width:14px;height:18px;transition:.4s}
+.drops svg path{fill:rgba(255,255,255,.16);transition:.4s}
+.drops svg.on path{fill:var(--sky)}
+.drops svg.cur{width:22px;height:28px}
+.drops svg.cur path{fill:var(--pink2)}
+.ttl{font-size:17px;color:var(--muted)}
+.ttl b{color:#fff;font-family:var(--serif);font-size:22px;margin-inline-end:6px}
+.ctrl{display:flex;align-items:center;gap:12px}
+.nextc{position:relative;width:82px;height:82px;border-radius:50%;border:none;background:linear-gradient(140deg,var(--pink2),var(--pink));box-shadow:0 14px 34px rgba(204,51,139,.45);display:grid;place-items:center}
+.nextc svg.icon{width:34px;height:34px;stroke-width:2.4}
+.nextc .ring{position:absolute;inset:-9px;width:100px;height:100px;transform:rotate(-90deg)}
+.nextc .ring circle{fill:none;stroke-width:4}
+.nextc.restart{background:linear-gradient(140deg,var(--sky),var(--true));box-shadow:0 14px 34px rgba(0,115,207,.45)}
+.ghost{width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:transparent;display:grid;place-items:center;color:var(--muted)}
+.ghost svg{width:20px;height:20px}
+.ghost:disabled{opacity:.3}
+.nextlbl{font-size:15px;color:var(--muted);max-width:230px;line-height:1.4}
+.bignum{position:absolute;left:54px;top:4px;font-family:var(--serif);font-weight:900;font-size:150px;line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.09);pointer-events:none}
+.panel{background:linear-gradient(165deg,#161C63,#0C1145);border-radius:30px;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 20px 50px rgba(0,0,0,.25)}
+.photo{display:block;object-fit:cover;-webkit-mask-image:radial-gradient(closest-side,#000 72%,transparent 100%);mask-image:radial-gradient(closest-side,#000 72%,transparent 100%)}
+.photo.soft{-webkit-mask-image:radial-gradient(70% 70% at 50% 45%,#000 60%,transparent 100%);mask-image:radial-gradient(70% 70% at 50% 45%,#000 60%,transparent 100%)}
 /* ---------- slides ---------- */
-.slide{position:absolute;inset:86px 0 92px 0;padding:18px 64px 0;display:none}
+.slide{position:absolute;inset:96px 0 100px 0;padding:10px 64px 0;display:none}
 .slide.active{display:flex;flex-direction:column;justify-content:center;padding-bottom:24px;animation:slideIn .7s cubic-bezier(.2,.8,.2,1)}
 @keyframes slideIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:17px;font-weight:700;color:var(--pink2);letter-spacing:.01em}
@@ -78,7 +85,7 @@ h2 .blue{color:var(--sky)}
 .cover{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center}
 .cover h1{font-size:76px}
 .cover h1 em{font-style:normal;color:var(--pink2)}
-.cover .sub{font-size:26px;color:var(--muted);margin-top:14px}
+.cover .sub{font-size:28px;color:var(--muted);margin-top:14px;line-height:1.6}
 .team{margin-top:34px;display:flex;flex-wrap:wrap;gap:10px}
 .team .pill{font-weight:400}
 .team .pill b{font-weight:700}
@@ -145,7 +152,7 @@ h2 .blue{color:var(--sky)}
 
 /* glucose meter */
 .gm{display:grid;grid-template-columns:.9fr 1.1fr;gap:34px;margin-top:22px;align-items:start}
-.device{position:relative;width:330px;height:520px;margin-inline:auto;border-radius:60px;background:linear-gradient(160deg,#2A6BD8,#173C8F);box-shadow:inset 0 0 0 10px rgba(255,255,255,.08),0 40px 80px rgba(0,0,0,.45);display:flex;flex-direction:column;align-items:center;padding-top:44px}
+.device{position:relative;width:300px;height:470px;transform:scale(.88);transform-origin:top center;margin-inline:auto;border-radius:60px;background:linear-gradient(160deg,#2A6BD8,#173C8F);box-shadow:inset 0 0 0 10px rgba(255,255,255,.08),0 40px 80px rgba(0,0,0,.45);display:flex;flex-direction:column;align-items:center;padding-top:44px}
 .screen{width:250px;height:200px;border-radius:26px;background:#CFE8D8;color:#11312A;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 6px 20px rgba(0,0,0,.25)}
 .screen .val{font-family:"Courier New",monospace;font-weight:900;font-size:84px;letter-spacing:-2px;direction:ltr}
 .screen .u{font-size:16px;font-weight:700;direction:ltr}
@@ -281,6 +288,76 @@ input[type=range]{width:100%;margin-top:18px;accent-color:var(--pink2);height:30
 .help.open{display:grid}
 .help .card{max-width:560px;font-size:18px;line-height:1.9}
 kbd{font-family:inherit;background:rgba(255,255,255,.12);border-radius:6px;padding:1px 8px;font-size:15px}
+
+/* ---------- v2 additions ---------- */
+.cover{grid-template-columns:1fr 1fr}
+.cover h1{font-size:64px}
+.coverimg img{width:100%;max-width:640px;margin-inline:auto;aspect-ratio:1}
+.statsrow{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:end;margin-top:20px}
+.statsrow .stats{margin-top:0}
+.famimg{width:100%;aspect-ratio:1}
+.stat-top{display:flex;justify-content:space-between;align-items:center}
+.stat .lbl{transition:.4s}
+.stat.hidden .lbl{color:var(--warn);font-weight:700}
+.mode,.tab{cursor:default}
+.who{padding-top:14px;min-height:540px;border:none}
+.whoimg{width:170px;height:170px;margin-inline:auto;margin-bottom:-6px}
+.who .ans{display:none}
+.who.open .ans{display:block}
+.who .qmark{margin-top:auto;height:86px;border-radius:18px;border:2px dashed rgba(255,255,255,.18);display:grid;place-items:center;font-family:var(--serif);font-size:54px;color:rgba(255,255,255,.35)}
+.who.open .qmark{display:none}
+.factor{opacity:.18;transform:none;border:none;background:linear-gradient(165deg,#161C63,#0C1145)}
+.factor.shown{opacity:1;box-shadow:0 0 0 2px var(--warn) inset}
+.factor.reveal{transform:none}
+.meter{justify-content:center;min-height:420px}
+.handwrap{display:flex;flex-direction:column;align-items:center;gap:10px;animation:wave 1.6s ease-in-out infinite;transform-origin:50% 90%}
+@keyframes wave{50%{transform:rotate(-12deg)}}
+.bigv{font-family:var(--serif);font-size:46px;font-weight:900;color:#fff;margin-bottom:6px}
+.huntscore{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:18px;color:var(--warn);font-weight:700}
+.room{border:none}
+.hot .halo{fill:rgba(255,213,79,0);stroke:rgba(255,213,79,0)}
+.hot.found .halo{fill:rgba(47,211,154,.16);stroke:var(--good);stroke-width:5}
+.hot.now .halo{animation:halo 1s ease-out}
+@keyframes halo{from{stroke-width:30;stroke-opacity:0}to{stroke-width:5;stroke-opacity:1}}
+.fl.now{transform:translateX(-8px)}
+.range{position:relative}
+.marker{position:absolute;top:-10px;width:6px;height:46px;border-radius:4px;background:#fff;box-shadow:0 0 0 3px var(--night);transition:left .8s cubic-bezier(.2,.8,.2,1);transform:translateX(-50%);display:none}
+.ticks{direction:ltr}
+.challenge{font-size:18px;color:var(--muted)}
+.challenge .rd{display:flex;gap:8px;align-items:center}
+.challenge .rd i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:900;background:rgba(255,255,255,.08)}
+.challenge .rd i.on{background:var(--pink)}
+.story{border:none}
+.emimg{position:relative;width:170px;height:170px;flex:none}
+.emimg img{position:absolute;inset:0;width:100%;height:100%;transition:opacity .8s}
+.chip{cursor:default}
+.chip.dim{opacity:.4;text-decoration:line-through}
+.alert.reveal,.feedback.reveal,.steps15.reveal{transform:none}
+.ocard{border:1px solid transparent}
+.footrow{display:flex;gap:16px;align-items:center;margin-top:16px}
+.footrow img{width:150px;height:150px;flex:none}
+.myth.cur .front{box-shadow:0 0 0 3px var(--warn) inset;animation:glow 1.4s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 0 3px var(--warn) inset,0 0 30px rgba(255,213,79,.35)}}
+.front{background:linear-gradient(165deg,#161C63,#0C1145);border:none}
+.living{grid-template-columns:1.1fr .9fr}
+.liverow{display:grid;grid-template-columns:210px 1fr;gap:14px;align-items:start;margin-top:14px}
+.liverow img{width:210px;height:210px;transition:opacity .4s}
+.liverow .tips{margin-top:0}
+.tip{background:linear-gradient(165deg,#161C63,#0C1145);border:none;font-size:18px;padding:12px 14px}
+.bag{border:none}
+.bagtop{display:flex;justify-content:space-between;align-items:center}
+.items{grid-template-columns:repeat(3,1fr)}
+.item{cursor:default;transition:.3s}
+.item.cur{box-shadow:0 0 0 3px var(--warn) inset;transform:scale(1.04)}
+.item.ok{opacity:.3}
+.item.no{border-color:var(--bad);background:rgba(255,90,110,.16);opacity:.6}
+.stepn img.disc{width:120px;height:120px;border-radius:50%;object-fit:cover;border:4px solid rgba(255,255,255,.2);box-shadow:0 14px 30px rgba(0,0,0,.35);background:#0C1145}
+.stepn:nth-of-type(5) img.disc{border-color:var(--pink2)}
+.check{border:none}
+.endimg img{width:100%;max-width:560px;aspect-ratio:1;margin-inline:auto}
+.restartnote{margin-top:24px;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:16px;background:rgba(79,179,255,.14);color:#CFE6FF;font-size:17px;font-weight:700}
+.restartnote svg{width:22px;height:22px}
+.sources{color:#C2C9E6}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -344,65 +421,44 @@ kbd{font-family:inherit;background:rgba(255,255,255,.12);border-radius:6px;paddi
  <symbol id="i-wheel" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/><circle cx="12" cy="12" r="2.5"/></symbol>
  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M8 13V5a1.5 1.5 0 0 1 3 0v6M11 10V3.5a1.5 1.5 0 0 1 3 0V11M14 10V5a1.5 1.5 0 0 1 3 0v7M17 9a1.5 1.5 0 0 1 3 0v4a8 8 0 0 1-8 8h-1a6 6 0 0 1-5-3l-3-5a1.5 1.5 0 0 1 2.5-1.5L8 14"/></symbol>
  <symbol id="i-lungs" viewBox="0 0 24 24"><path d="M12 3v8M12 11c-1 1-3 1-3 3v5a2 2 0 0 1-3 1c-2-1-3-4-3-8 0-3 2-6 4-6 1 0 2 1 2 2M12 11c1 1 3 1 3 3v5a2 2 0 0 0 3 1c2-1 3-4 3-8 0-3-2-6-4-6-1 0-2 1-2 2"/></symbol>
+ <symbol id="i-restart" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.5-5.8M4 4v5h5"/></symbol>
  <symbol id="i-pump" viewBox="0 0 24 24"><rect x="4" y="6" width="12" height="14" rx="3"/><rect x="7" y="9" width="6" height="4" rx="1"/><path d="M16 10h2a3 3 0 0 1 3 3v6"/></symbol>
  <symbol id="i-sensor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5"/><path d="M12 2v3M4 18l2-2M20 18l-2-2"/></symbol>
 </defs>
 </svg>
 
+<div class="dots"></div>
+<div class="blob" style="width:520px;height:520px;right:-140px;top:-160px;background:rgba(0,115,207,.35)"></div>
+<div class="blob" style="width:460px;height:460px;left:-160px;bottom:-200px;background:rgba(204,51,139,.25)"></div>
+<div class="bignum" id="bignum">٠١</div>
 <header class="topbar">
   <div class="brand"><img src="assets/logos/sukkarna-white.svg" alt="سكّرنا وعي"></div>
-  <div class="tools">
-    <button class="tool" id="bNotes" title="نص المتحدث (N)"><svg class="icon"><use href="#i-notes"/></svg>الملاحظات</button>
-    <button class="tool" id="bWheel" title="عجلة الأسئلة"><svg class="icon"><use href="#i-wheel"/></svg>عجلة الأسئلة</button>
-    <button class="tool" id="bFull" title="ملء الشاشة (F)"><svg class="icon"><use href="#i-full"/></svg>ملء الشاشة</button>
-    <button class="tool" id="bHelp" title="طريقة الاستخدام"><svg class="icon"><use href="#i-help"/></svg></button>
-  </div>
   <div class="partners">
-    <img src="assets/logos/moh.svg" alt="وزارة الصحة">
+    <img src="assets/logos/moh-white.svg" alt="وزارة الصحة">
     <span class="sep"></span>
-    <img src="assets/logos/volunteer-white.svg" alt="جامعة أم القرى — إدارة العمل التطوعي والمسؤولية المجتمعية">
+    <img src="assets/logos/volunteer-white.svg" alt="جامعة أم القرى، إدارة العمل التطوعي والمسؤولية المجتمعية">
   </div>
 </header>
 
 {{SLIDES}}
 
 <footer class="bottombar">
-  <div class="nav">
-    <button class="nbtn primary" id="bNext"><svg class="icon"><use href="#i-next"/></svg>التالي</button>
-    <button class="nbtn" id="bPrev">السابق<svg class="icon"><use href="#i-prev"/></svg></button>
+  <div class="track"><div class="drops" id="progress"></div><div class="ttl" id="ttl"></div></div>
+  <div class="ctrl">
+    <span class="nextlbl" id="hint"></span>
+    <button class="ghost" id="bNotes" title="نص المتحدث (N)"><svg class="icon"><use href="#i-notes"/></svg></button>
+    <button class="ghost" id="bFull" title="ملء الشاشة (F)"><svg class="icon"><use href="#i-full"/></svg></button>
+    <button class="ghost" id="bPrev" title="السابق"><svg class="icon"><use href="#i-prev"/></svg></button>
+    <button class="nextc" id="bNext" title="التالي"><svg class="ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" stroke="rgba(255,255,255,.15)"/><circle id="ringArc" cx="50" cy="50" r="46" stroke="#fff" pathLength="1" stroke-dasharray="0 1" stroke-linecap="round"/></svg><svg class="icon" id="nextIco"><use href="#i-next"/></svg></button>
   </div>
-  <div class="credit">كلية الطب · جامعة أم القرى<br>تصميم وتطوير <b>أصيل الصبحي</b></div>
-  <div class="progress" id="progress"></div>
-  <div class="hint" id="hint"></div>
 </footer>
 
 </div></div>
 
-<div class="modal" id="wheelModal" role="dialog" aria-modal="true" aria-label="عجلة الأسئلة">
-  <button class="tool close" id="wClose"><svg class="icon"><use href="#i-x"/></svg>إغلاق</button>
-  <div class="wheelbox">
-    <div class="wheelwrap"><div class="pointer"></div><svg id="wheel" viewBox="-200 -200 400 400"></svg><button class="spin" id="wSpin">لُفّ</button></div>
-    <div class="qpanel">
-      <div class="qk" id="qk">عجلة الأسئلة · اضغط «لُفّ» لاختيار سؤال</div>
-      <div class="qt" id="qt">من يجاوب أول؟</div>
-      <div class="qa" id="qa"></div>
-      <div class="qactions">
-        <button class="nbtn" id="wReveal">إظهار الإجابة</button>
-        <button class="nbtn primary" id="wRight"><svg class="icon"><use href="#i-check"/></svg>إجابة صحيحة</button>
-      </div>
-    </div>
-  </div>
-</div>
 <canvas id="confetti"></canvas>
 <aside class="notes" id="notes"><h4 id="notesT"></h4><div id="notesB"></div></aside>
 <div class="toast" id="toast"></div>
-<div class="help" id="help"><div class="card">
-  <h3 style="font-size:28px;margin-bottom:10px">طريقة العرض</h3>
-  <div><kbd>←</kbd> أو <kbd>Space</kbd> أو <kbd>PageDown</kbd> التالي · <kbd>→</kbd> أو <kbd>PageUp</kbd> السابق</div>
-  <div><kbd>F</kbd> ملء الشاشة · <kbd>N</kbd> نص المتحدث · <kbd>W</kbd> عجلة الأسئلة · <kbd>Esc</kbd> إغلاق</div>
-  <div style="color:var(--muted);margin-top:8px">«التالي» يكشف خطوات الشريحة واحدة واحدة قبل الانتقال. الأنشطة تعمل بالضغط مباشرة على الشاشة.</div>
-  <button class="nbtn primary" style="margin-top:16px" onclick="this.closest('.help').classList.remove('open')">تمام</button>
-</div></div>
+
 
 <script>
 {{SCRIPT}}

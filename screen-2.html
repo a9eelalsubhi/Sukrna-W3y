@@ -1,0 +1,1247 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>سكّرنا وعي — بخطوة وعي نواجه السكري</title>
+<meta name="description" content="عرض تفاعلي توعوي عن داء السكري — كلية الطب، جامعة أم القرى">
+<link rel="icon" href="assets/logos/icon.svg" type="image/svg+xml">
+<style>
+@font-face{font-family:"Thmanyah Sans";src:url(assets/fonts/thmanyahsans-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Thmanyah Sans";src:url(assets/fonts/thmanyahsans-Bold.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Thmanyah Sans";src:url(assets/fonts/thmanyahsans-Black.woff2) format("woff2");font-weight:900;font-display:swap}
+@font-face{font-family:"Thmanyah Serif";src:url(assets/fonts/thmanyahserifdisplay-Bold.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Thmanyah Serif";src:url(assets/fonts/thmanyahserifdisplay-Black.woff2) format("woff2");font-weight:900;font-display:swap}
+:root{
+  --night:#070A26; --galactic:#1B1F5E; --true:#0073CF; --sky:#4FB3FF; --pink:#CC338B; --pink2:#FF5DB1;
+  --ink:#F4F7FF; --muted:#AEB7DA; --line:rgba(255,255,255,.10); --glass:rgba(255,255,255,.055); --glass2:rgba(255,255,255,.09);
+  --good:#2FD39A; --warn:#FFB547; --bad:#FF5A6E;
+  --serif:"Thmanyah Serif","Thmanyah Sans",Tahoma,sans-serif; --sans:"Thmanyah Sans",Tahoma,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;-webkit-text-size-adjust:100%;touch-action:manipulation;background:var(--night);color:var(--ink);font-family:var(--sans);overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+#viewport{position:fixed;inset:0;display:grid;place-items:center;background:
+  radial-gradient(1200px 700px at 85% -10%,rgba(0,115,207,.35),transparent 60%),
+  radial-gradient(900px 600px at 0% 110%,rgba(204,51,139,.22),transparent 60%),var(--night)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:center;transform:translate(-50%,-50%)}
+.bgdrops{position:absolute;inset:0;pointer-events:none;opacity:.5}
+
+/* ---------- chrome ---------- */
+.dots{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,.07) 1.2px,transparent 1.3px);background-size:34px 34px;-webkit-mask-image:radial-gradient(1000px 600px at 50% 40%,#000,transparent);mask-image:radial-gradient(1000px 600px at 50% 40%,#000,transparent)}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none}
+.topbar{position:absolute;inset:0 0 auto 0;height:96px;display:flex;align-items:center;justify-content:space-between;padding:0 54px;z-index:20}
+.brand img{height:58px}
+.partners{display:flex;align-items:center;gap:26px}
+.partners img{height:70px}
+.partners .sep{width:1px;height:46px;background:rgba(255,255,255,.18)}
+.bottombar{position:absolute;inset:auto 0 0 0;height:100px;display:flex;align-items:center;justify-content:space-between;padding:0 54px;z-index:20}
+.track{display:flex;align-items:center;gap:16px}
+.drops{display:flex;gap:9px;align-items:flex-end}
+.drops svg{width:14px;height:18px;transition:.4s}
+.drops svg path{fill:rgba(255,255,255,.16);transition:.4s}
+.drops svg.on path{fill:var(--sky)}
+.drops svg.cur{width:22px;height:28px}
+.drops svg.cur path{fill:var(--pink2)}
+.ttl{font-size:17px;color:var(--muted)}
+.ttl b{color:#fff;font-family:var(--serif);font-size:22px;margin-inline-end:6px}
+.ctrl{display:flex;align-items:center;gap:12px}
+.nextc{position:relative;width:82px;height:82px;border-radius:50%;border:none;background:linear-gradient(140deg,var(--pink2),var(--pink));box-shadow:0 12px 26px rgba(4,6,30,.45);display:grid;place-items:center}
+.nextc svg.icon{width:34px;height:34px;stroke-width:2.4}
+.nextc .ring{position:absolute;inset:-9px;width:100px;height:100px;transform:rotate(-90deg)}
+.nextc .ring circle{fill:none;stroke-width:4}
+.nextc.restart{background:linear-gradient(140deg,var(--sky),var(--true));box-shadow:0 12px 26px rgba(4,6,30,.45)}
+.ghost{width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:transparent;display:grid;place-items:center;color:var(--muted)}
+.ghost svg{width:20px;height:20px}
+.ghost:disabled{opacity:.3}
+.nextlbl{font-size:15px;color:var(--muted);max-width:230px;line-height:1.4}
+.bignum{position:absolute;left:54px;top:4px;font-family:var(--serif);font-weight:900;font-size:150px;line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.09);pointer-events:none}
+.panel{background:linear-gradient(165deg,#161C63,#0C1145);border-radius:30px;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 20px 50px rgba(0,0,0,.25)}
+.photo{display:block;object-fit:cover;-webkit-mask-image:radial-gradient(closest-side,#000 72%,transparent 100%);mask-image:radial-gradient(closest-side,#000 72%,transparent 100%)}
+.photo.soft{-webkit-mask-image:radial-gradient(70% 70% at 50% 45%,#000 60%,transparent 100%);mask-image:radial-gradient(70% 70% at 50% 45%,#000 60%,transparent 100%)}
+/* ---------- slides ---------- */
+.slide{position:absolute;inset:96px 0 100px 0;padding:10px 64px 0;display:none}
+.slide.active{display:flex;flex-direction:column;justify-content:center;padding-bottom:24px;animation:slideIn .7s cubic-bezier(.2,.8,.2,1)}
+@keyframes slideIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+h1,h2,h3{margin:0;font-family:var(--serif);font-weight:900;line-height:1.25;text-wrap:balance}
+h2{font-size:58px;margin-top:6px}
+h2 em{font-style:normal;color:var(--pink2)}
+h2 .blue{color:var(--sky)}
+.lead{font-size:22px;color:var(--muted);margin:10px 0 0;max-width:62ch;line-height:1.7}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.card{background:var(--glass);border:1px solid var(--line);border-radius:22px;padding:22px}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s,transform .6s}
+.reveal.shown{opacity:1;transform:none}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;font-size:15px;font-weight:700;background:rgba(255,255,255,.08)}
+.icon{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ibox{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;flex:none;background:linear-gradient(140deg,rgba(79,179,255,.22),rgba(204,51,139,.18));border:1px solid var(--line);color:#fff}
+.ibox .icon{width:30px;height:30px}
+.act{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#0B0F3A;background:#FFD54F;padding:5px 12px;border-radius:10px}
+.act svg{width:16px;height:16px}
+
+/* cover */
+.cover{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center}
+.cover h1{font-size:76px}
+.cover h1 em{font-style:normal;color:var(--pink2)}
+.cover .sub{font-size:28px;color:var(--muted);margin-top:14px;line-height:1.6}
+.team{margin-top:34px;display:flex;flex-wrap:wrap;gap:10px}
+.team .pill{font-weight:400}
+.team .pill b{font-weight:700}
+#coverLogo{width:100%;filter:drop-shadow(0 30px 60px rgba(0,115,207,.35))}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+.stat{position:relative;padding:30px;border-radius:26px;background:var(--glass);border:1px solid var(--line);overflow:hidden;min-height:360px;display:flex;flex-direction:column;justify-content:space-between}
+.stat .big{font-family:var(--serif);font-weight:900;font-size:112px;line-height:1;color:#fff;direction:ltr;text-align:right}
+.stat .big small{font-size:40px;color:var(--sky)}
+.stat .lbl{font-size:22px;color:var(--muted)}
+.stat .ring{position:absolute;left:-40px;top:-40px;width:200px;height:200px;border-radius:50%;border:26px solid rgba(79,179,255,.10)}
+.stat.hidden .big{filter:blur(16px)}
+.guess{margin-top:22px;display:flex;align-items:center;gap:16px;font-size:20px;color:var(--muted)}
+
+/* insulin key scene */
+.scene{width:100%;height:560px;border-radius:28px;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid var(--line);overflow:hidden;position:relative}
+.modes{display:flex;gap:10px;margin-top:20px}
+.mode{padding:12px 20px;border-radius:14px;border:1px solid var(--line);background:var(--glass);font-size:18px;font-weight:700}
+.mode.on{background:var(--true);border-color:transparent}
+.explain{margin-top:18px;font-size:21px;line-height:1.7;color:var(--muted);min-height:110px}
+.explain b{color:#fff}
+
+/* who am I */
+.whos{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:30px}
+.who{border-radius:24px;background:var(--glass);border:1px solid var(--line);padding:24px;min-height:460px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
+.who .q{font-size:15px;font-weight:700;color:var(--warn)}
+.who ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.who li{font-size:19px;line-height:1.5;padding-inline-start:28px;position:relative}
+.who li::before{content:"؟";position:absolute;inset-inline-start:0;top:0;color:var(--sky);font-weight:900}
+.who .ans{margin-top:auto;border-radius:18px;padding:16px;background:linear-gradient(135deg,var(--true),var(--galactic));font-size:18px;line-height:1.6;display:none}
+.who.open .ans{display:block;animation:pop .5s}
+.who .ans b{font-family:var(--serif);font-size:28px;display:block}
+.who button.rv{margin-top:auto;padding:12px;border-radius:14px;border:1px dashed rgba(255,255,255,.3);background:transparent;font-size:17px;font-weight:700}
+.who.open button.rv{display:none}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:none;opacity:1}}
+
+/* risk */
+.risk{display:grid;grid-template-columns:1.25fr .75fr;gap:34px;margin-top:26px}
+.factors{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.factor{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:18px;border:1px solid var(--line);background:var(--glass);text-align:start;font-size:19px;font-weight:700;transition:.25s}
+.factor small{display:block;font-weight:400;font-size:14px;color:var(--muted)}
+.factor.on{background:rgba(204,51,139,.22);border-color:var(--pink2)}
+.factor .ibox{width:48px;height:48px}
+.meter{border-radius:26px;padding:26px;background:var(--glass);border:1px solid var(--line);display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center}
+.gaugeR{width:250px;height:150px}
+.meter .verdict{font-size:22px;font-weight:700;line-height:1.5;min-height:66px}
+.meter .note{font-size:14px;color:var(--muted)}
+
+/* symptoms hunt */
+.hunt{display:grid;grid-template-columns:1.35fr .65fr;gap:26px;margin-top:20px}
+.room{position:relative;height:590px;border-radius:28px;overflow:hidden;border:1px solid var(--line)}
+.room svg{width:100%;height:100%;display:block}
+.hot{cursor:pointer}
+.hot .halo{fill:rgba(255,213,79,.0);stroke:rgba(255,213,79,0);stroke-width:4;transition:.3s}
+.hot.found .halo{fill:rgba(47,211,154,.18);stroke:var(--good)}
+.hot:hover .halo{stroke:rgba(255,213,79,.6)}
+.found-list{display:flex;flex-direction:column;gap:10px}
+.fl{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:var(--glass);border:1px solid var(--line);font-size:18px;opacity:.35;transition:.4s}
+.fl.found{opacity:1;border-color:rgba(47,211,154,.5)}
+.fl .n{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.08);display:grid;place-items:center;font-weight:900}
+.fl.found .n{background:var(--good);color:#06301F}
+.score{font-family:var(--serif);font-size:40px;font-weight:900}
+
+/* glucose meter */
+.gm{display:grid;grid-template-columns:.9fr 1.1fr;gap:34px;margin-top:22px;align-items:start}
+.device{position:relative;width:300px;height:470px;transform:scale(.88);transform-origin:top center;margin-inline:auto;border-radius:60px;background:linear-gradient(160deg,#2A6BD8,#173C8F);box-shadow:inset 0 0 0 10px rgba(255,255,255,.08),0 40px 80px rgba(0,0,0,.45);display:flex;flex-direction:column;align-items:center;padding-top:44px}
+.screen{width:250px;height:200px;border-radius:26px;background:#CFE8D8;color:#11312A;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 6px 20px rgba(0,0,0,.25)}
+.screen .val{font-family:"Courier New",monospace;font-weight:900;font-size:84px;letter-spacing:-2px;direction:ltr}
+.screen .u{font-size:16px;font-weight:700;direction:ltr}
+.screen .tag{font-size:15px;margin-top:4px}
+.device .btns{display:flex;gap:26px;margin-top:40px}
+.device .btns i{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.15);display:block}
+.device .strip{position:absolute;bottom:-70px;width:44px;height:110px;border-radius:8px;background:linear-gradient(#F4F4F4,#DADADA);box-shadow:0 10px 20px rgba(0,0,0,.3)}
+.device .strip::after{content:"";position:absolute;bottom:12px;left:12px;width:20px;height:20px;border-radius:50%;background:var(--pink)}
+.tabs{display:flex;gap:10px}
+.tab{padding:12px 18px;border-radius:14px;border:1px solid var(--line);background:var(--glass);font-size:18px;font-weight:700}
+.tab.on{background:var(--true);border-color:transparent}
+.range{margin-top:22px}
+.bar{position:relative;height:26px;border-radius:999px;display:flex;overflow:hidden;direction:ltr}
+.bar span{display:block;height:100%}
+.ticks{display:flex;justify-content:space-between;font-size:15px;color:var(--muted);margin-top:8px;direction:ltr}
+input[type=range]{width:100%;margin-top:18px;accent-color:var(--pink2);height:30px;direction:ltr}
+.verdict2{margin-top:16px;padding:18px 20px;border-radius:18px;font-size:22px;font-weight:700;display:flex;gap:12px;align-items:center}
+.legend{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.legend div{border-radius:16px;padding:14px;background:var(--glass);border:1px solid var(--line);font-size:16px;line-height:1.6}
+.legend b{display:block;font-size:18px}
+.challenge{margin-top:18px;display:flex;gap:10px;align-items:center;font-size:18px;color:var(--muted)}
+
+/* emergency */
+.em{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:22px}
+.story{border-radius:26px;padding:26px;background:var(--glass);border:1px solid var(--line)}
+.story .who2{display:flex;gap:16px;align-items:center}
+.avatar{width:84px;height:84px;border-radius:50%;background:linear-gradient(140deg,#FFB86B,#FF7A59);display:grid;place-items:center;flex:none}
+.story p{font-size:21px;line-height:1.7;margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.chip{padding:10px 16px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.06);font-size:18px;font-weight:700}
+.chip.ok{background:rgba(47,211,154,.2);border-color:var(--good)}
+.chip.no{background:rgba(255,90,110,.18);border-color:var(--bad);animation:shake .4s}
+@keyframes shake{25%{transform:translateX(6px)}50%{transform:translateX(-6px)}75%{transform:translateX(3px)}}
+.feedback{margin-top:14px;font-size:19px;line-height:1.6;min-height:60px;color:var(--muted)}
+.rule{display:flex;gap:16px;align-items:center;margin-top:8px}
+.rule .clock{width:200px;height:200px;flex:none}
+.steps15{display:flex;flex-direction:column;gap:10px;font-size:19px}
+.steps15 div{display:flex;gap:12px;align-items:center}
+.steps15 b{width:36px;height:36px;border-radius:10px;background:var(--pink);display:grid;place-items:center;flex:none}
+.alert{margin-top:16px;border-radius:18px;padding:16px 18px;background:rgba(255,90,110,.14);border:1px solid rgba(255,90,110,.5);font-size:18px;line-height:1.7}
+.alert b{color:#FFB3BD}
+
+/* body map */
+.body{display:grid;grid-template-columns:.8fr 1.2fr;gap:30px;margin-top:14px;align-items:start}
+.bodyfig{height:640px}
+.bodyfig svg{height:100%;width:100%}
+.organ{cursor:pointer}
+.organ circle.pulse{fill:var(--pink2);opacity:.25;transform-box:fill-box;transform-origin:center;animation:pulse 2s infinite}
+@keyframes pulse{0%{transform:scale(.6);opacity:.5}100%{transform:scale(1.6);opacity:0}}
+.ocards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.ocard{display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:18px;background:var(--glass);border:1px solid var(--line);transition:.3s}
+.ocard h3{font-family:var(--sans);font-size:20px;font-weight:700;margin-bottom:4px}
+.ocard p{margin:0;font-size:16px;color:var(--muted);line-height:1.6}
+.ocard.hl{border-color:var(--pink2);background:rgba(204,51,139,.16);transform:translateX(-6px)}
+.foot{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+
+/* myths */
+.myths{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:26px}
+.myth{height:250px;perspective:1200px}
+.myth .in{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
+.myth.flip .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:10px;border:1px solid var(--line)}
+.front{background:var(--glass)}
+.front .num{font-family:var(--serif);font-size:20px;color:var(--sky);font-weight:900}
+.front p{font-size:20px;font-weight:700;line-height:1.5;margin:0}
+.front .vote{margin-top:auto;display:flex;gap:8px}
+.front .vote span{flex:1;text-align:center;padding:8px;border-radius:12px;background:rgba(255,255,255,.07);font-size:15px;font-weight:700}
+.back{transform:rotateY(180deg);background:linear-gradient(150deg,#2A1240,#1B1F5E)}
+.back .badge{align-self:flex-start;font-weight:900;font-size:15px;padding:6px 12px;border-radius:10px;background:var(--bad);color:#fff}
+.back p{margin:0;font-size:17px;line-height:1.6}
+
+/* living */
+.living{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:20px}
+.ltabs{display:flex;gap:10px}
+.tips{margin-top:16px;display:flex;flex-direction:column;gap:12px}
+.tip{display:flex;gap:14px;align-items:center;padding:14px 16px;border-radius:18px;background:var(--glass);border:1px solid var(--line);font-size:19px;animation:pop .4s both}
+.bag{border-radius:26px;padding:22px;background:var(--glass);border:1px solid var(--line)}
+.bagzone{height:200px;display:flex;align-items:flex-end;justify-content:center;position:relative}
+.bagzone svg{height:200px}
+.packed{position:absolute;top:58px;left:50%;transform:translateX(-50%);display:flex;gap:6px;flex-wrap:wrap;width:240px;justify-content:center}
+.packed span{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.95);display:grid;place-items:center;color:var(--galactic);animation:drop .5s cubic-bezier(.3,1.5,.5,1)}
+.packed span svg{width:24px;height:24px}
+@keyframes drop{from{transform:translateY(-120px)}to{transform:none}}
+.items{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.item{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.05);font-size:15px;font-weight:700;text-align:center}
+.item .icon{width:34px;height:34px}
+.item.used{opacity:.25;pointer-events:none}
+.item.no{animation:shake .4s;border-color:var(--bad)}
+
+/* prevention */
+.path{position:relative;height:330px;margin-top:20px}
+.path svg.road{position:absolute;inset:0;width:100%;height:100%}
+.stepn{position:absolute;width:250px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.stepn .disc{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(140deg,var(--true),var(--galactic));border:3px solid rgba(255,255,255,.25);box-shadow:0 14px 30px rgba(0,0,0,.35)}
+.stepn .disc .icon{width:44px;height:44px}
+.stepn b{font-size:20px;background:var(--night);padding:2px 10px;border-radius:10px}
+.stepn small{font-size:15px;color:var(--muted);line-height:1.5;background:var(--night);padding:2px 8px;border-radius:8px}
+.checks{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:20px}
+.check{border-radius:18px;padding:16px 10px;text-align:center;background:var(--glass);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:8px}
+.check b{font-size:17px}
+.check small{font-size:14px;color:var(--sky);font-weight:700}
+
+/* end */
+.end{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.wheelbtn{margin-top:26px;display:inline-flex;align-items:center;gap:14px;padding:20px 30px;border-radius:20px;border:none;font-size:24px;font-weight:900;background:linear-gradient(135deg,#FFD54F,#FFB547);color:#2A1500;box-shadow:0 16px 40px rgba(255,181,71,.35)}
+.wheelbtn svg{width:30px;height:30px}
+.sources{margin-top:24px;font-size:15px;color:var(--muted);line-height:1.8}
+
+/* wheel modal */
+.modal{position:fixed;inset:0;background:rgba(4,6,24,.86);backdrop-filter:blur(8px);display:none;place-items:center;z-index:100}
+.modal.open{display:grid}
+.wheelbox{width:min(1200px,94vw);display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center}
+.wheelwrap{position:relative;width:min(520px,44vw);aspect-ratio:1}
+#wheel{width:100%;height:100%;transition:transform 4.5s cubic-bezier(.12,.8,.12,1)}
+.pointer{position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:22px solid transparent;border-right:22px solid transparent;border-top:44px solid #FFD54F;filter:drop-shadow(0 6px 8px rgba(0,0,0,.5))}
+.spin{position:absolute;inset:0;margin:auto;width:28%;height:28%;border-radius:50%;border:6px solid #fff;background:var(--pink);font-size:clamp(16px,1.8vw,24px);font-weight:900;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.qpanel{border-radius:28px;padding:30px;background:rgba(255,255,255,.06);border:1px solid var(--line);min-height:360px;display:flex;flex-direction:column;gap:16px}
+.qpanel .qk{font-size:16px;color:var(--warn);font-weight:700}
+.qpanel .qt{font-family:var(--serif);font-size:clamp(24px,2.4vw,36px);font-weight:900;line-height:1.4}
+.qpanel .qa{font-size:clamp(18px,1.6vw,22px);line-height:1.7;padding:16px 18px;border-radius:16px;background:rgba(47,211,154,.14);border:1px solid rgba(47,211,154,.5);display:none}
+.qpanel .qa.show{display:block;animation:pop .4s}
+.qactions{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap}
+.close{position:absolute;top:24px;left:24px}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:120}
+
+/* notes */
+.notes{position:fixed;bottom:0;inset-inline:0;max-height:40vh;overflow:auto;background:#0D1240;border-top:1px solid var(--line);padding:18px 28px;font-size:18px;line-height:1.8;z-index:90;display:none}
+.notes.open{display:block}
+.notes h3{margin:0 0 6px;color:var(--pink2);font-size:15px}
+.toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%);background:#fff;color:var(--galactic);padding:12px 20px;border-radius:14px;font-weight:700;font-size:16px;z-index:130;opacity:0;transition:.3s;pointer-events:none}
+.toast.on{opacity:1}
+.help{position:fixed;inset:0;display:none;place-items:center;background:rgba(4,6,24,.8);z-index:110}
+.help.open{display:grid}
+.help .card{max-width:560px;font-size:18px;line-height:1.9}
+kbd{font-family:inherit;background:rgba(255,255,255,.12);border-radius:6px;padding:1px 8px;font-size:15px}
+
+/* ---------- v2 additions ---------- */
+.cover{grid-template-columns:1fr 1fr}
+.cover h1{font-size:64px}
+.coverimg img{width:100%;max-width:640px;margin-inline:auto;aspect-ratio:1}
+.statsrow{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:end;margin-top:20px}
+.statsrow .stats{margin-top:0}
+.famimg{width:100%;aspect-ratio:1}
+.stat-top{display:flex;justify-content:space-between;align-items:center}
+.stat .lbl{transition:.4s}
+.stat.hidden .lbl{color:var(--warn);font-weight:700}
+.mode,.tab{cursor:default}
+.who{padding-top:14px;min-height:540px;border:none}
+.whoimg{width:170px;height:170px;margin-inline:auto;margin-bottom:-6px}
+.who .ans{display:none}
+.who.open .ans{display:block}
+.who .qmark{margin-top:auto;height:86px;border-radius:18px;border:2px dashed rgba(255,255,255,.18);display:grid;place-items:center;font-family:var(--serif);font-size:54px;color:rgba(255,255,255,.35)}
+.who.open .qmark{display:none}
+.factor{opacity:.18;transform:none;border:none;background:linear-gradient(165deg,#161C63,#0C1145)}
+.factor.shown{opacity:1;box-shadow:0 0 0 2px var(--warn) inset}
+.factor.reveal{transform:none}
+.meter{justify-content:center;min-height:420px}
+.handwrap{display:flex;flex-direction:column;align-items:center;gap:10px;animation:wave 1.6s ease-in-out infinite;transform-origin:50% 90%}
+@keyframes wave{50%{transform:rotate(-12deg)}}
+.bigv{font-family:var(--serif);font-size:46px;font-weight:900;color:#fff;margin-bottom:6px}
+.huntscore{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:18px;color:var(--warn);font-weight:700}
+.room{border:none}
+.hot .halo{fill:rgba(255,213,79,0);stroke:rgba(255,213,79,0)}
+.hot.found .halo{fill:rgba(47,211,154,.16);stroke:var(--good);stroke-width:5}
+.hot.now .halo{animation:halo 1s ease-out}
+@keyframes halo{from{stroke-width:30;stroke-opacity:0}to{stroke-width:5;stroke-opacity:1}}
+.fl.now{transform:translateX(-8px)}
+.range{position:relative}
+.marker{position:absolute;top:-10px;width:6px;height:46px;border-radius:4px;background:#fff;box-shadow:0 0 0 3px var(--night);transition:left .8s cubic-bezier(.2,.8,.2,1);transform:translateX(-50%);display:none}
+.ticks{direction:ltr}
+.challenge{font-size:18px;color:var(--muted)}
+.challenge .rd{display:flex;gap:8px;align-items:center}
+.challenge .rd i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:900;background:rgba(255,255,255,.08)}
+.challenge .rd i.on{background:var(--pink)}
+.story{border:none}
+.emimg{position:relative;width:170px;height:170px;flex:none}
+.emimg img{position:absolute;inset:0;width:100%;height:100%;transition:opacity .8s}
+.chip{cursor:default}
+.chip.dim{opacity:.4;text-decoration:line-through}
+.alert.reveal,.feedback.reveal,.steps15.reveal{transform:none}
+.ocard{border:1px solid transparent}
+.footrow{display:flex;gap:16px;align-items:center;margin-top:16px}
+.footrow img{width:150px;height:150px;flex:none}
+.myth.cur .front{box-shadow:0 0 0 3px var(--warn) inset;animation:glow 1.4s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 0 3px var(--warn) inset,0 0 30px rgba(255,213,79,.35)}}
+.front{background:linear-gradient(165deg,#161C63,#0C1145);border:none}
+.living{grid-template-columns:1.1fr .9fr}
+.liverow{display:grid;grid-template-columns:210px 1fr;gap:14px;align-items:start;margin-top:14px}
+.liverow img{width:210px;height:210px;transition:opacity .4s}
+.liverow .tips{margin-top:0}
+.tip{background:linear-gradient(165deg,#161C63,#0C1145);border:none;font-size:18px;padding:12px 14px}
+.bag{border:none}
+.bagtop{display:flex;justify-content:space-between;align-items:center}
+.items{grid-template-columns:repeat(3,1fr)}
+.item{cursor:default;transition:.3s}
+.item.cur{box-shadow:0 0 0 3px var(--warn) inset;transform:scale(1.04)}
+.item.ok{opacity:.3}
+.item.no{border-color:var(--bad);background:rgba(255,90,110,.16);opacity:.6}
+.stepn img.disc{width:120px;height:120px;border-radius:50%;object-fit:cover;border:4px solid rgba(255,255,255,.2);box-shadow:0 14px 30px rgba(0,0,0,.35);background:#0C1145}
+.stepn:nth-of-type(5) img.disc{border-color:var(--pink2)}
+.check{border:none}
+.endimg img{width:100%;max-width:560px;aspect-ratio:1;margin-inline:auto}
+.restartnote{margin-top:24px;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:16px;background:rgba(79,179,255,.14);color:#CFE6FF;font-size:17px;font-weight:700}
+.restartnote svg{width:22px;height:22px}
+.sources{color:#C2C9E6}
+/* ---------- v3: cover hero + signs ---------- */
+.coverslide.active{justify-content:center;align-items:center}
+.hero{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
+.herologo{position:relative;width:min(980px,100%)}
+.herologo svg{width:100%;display:block;overflow:visible}
+.hero .sub{position:relative;font-size:26px;color:#C9D0EE;margin-top:6px;max-width:44ch;line-height:1.6}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.signs{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:22px}
+.sign{margin:0;position:relative;border-radius:26px;overflow:hidden;background:#0C1145;height:300px;display:flex;flex-direction:column;transition:transform .4s,box-shadow .4s,opacity .4s}
+.sign img{width:100%;flex:1;min-height:0;object-fit:cover;object-position:50% 30%}
+.sign figcaption{padding:12px 14px;font-size:20px;font-weight:700;background:#161C63;min-height:58px;display:flex;align-items:center;gap:10px}
+.sign .sa{display:none}
+.sign .sq{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.1);font-family:var(--serif);font-size:20px;flex:none}
+.sign.found .sa{display:inline}
+.sign.found .sq{background:var(--good);color:#06301F;font-size:0}
+.sign.found .sq::before{content:"✓";font-size:18px}
+.sign.found figcaption{background:linear-gradient(90deg,rgba(47,211,154,.22),#161C63)}
+.sign.cur{box-shadow:0 0 0 4px var(--warn);transform:translateY(-6px)}
+.sign.cur figcaption{color:var(--warn)}
+.sign:not(.found):not(.cur):not(.more){opacity:.72}
+.sign.more{padding:22px;justify-content:center;gap:10px;background:linear-gradient(165deg,#22145A,#0C1145)}
+.sign.more b{font-family:var(--serif);font-size:30px}
+.sign.more p{margin:0;font-size:18px;line-height:1.6;color:#C9D0EE}
+.sign.more .doc{color:var(--warn);font-weight:700}
+.sign.more .score{font-family:var(--serif);font-size:40px;font-weight:900;margin-top:auto}
+/* ---------- portrait (vertical) stage 900x1600 ---------- */
+body.portrait #stage{width:900px;height:1600px}
+body.portrait .topbar{height:110px;padding:0 32px}
+body.portrait .brand img{height:50px}
+body.portrait .partners{gap:16px}
+body.portrait .partners img{height:56px}
+body.portrait .bottombar{height:132px;padding:0 32px}
+body.portrait .nextlbl{display:none}
+body.portrait .drops{gap:6px}
+body.portrait .ttl{font-size:15px}
+body.portrait .slide{inset:110px 0 132px 0;padding:6px 36px 0}
+body.portrait .bignum{font-size:110px;left:30px;top:10px}
+body.portrait h2{font-size:46px}
+body.portrait .lead{font-size:20px}
+body.portrait .cols,body.portrait .cover,body.portrait .end,body.portrait .em,body.portrait .living,
+body.portrait .risk,body.portrait .gm,body.portrait .body,body.portrait .statsrow,body.portrait .hunt{grid-template-columns:1fr;gap:18px}
+/* cover */
+
+body.portrait .hero .sub{font-size:24px}
+/* numbers */
+body.portrait .stats{grid-template-columns:1fr;gap:14px}
+body.portrait .stat{min-height:0;padding:22px;flex-direction:row;align-items:center;gap:18px}
+body.portrait .stat-top{flex-direction:column;gap:8px}
+body.portrait .stat .big{font-size:80px;text-align:right}
+body.portrait .famimg{width:300px;margin-inline:auto;order:-1}
+/* insulin */
+body.portrait .scene{height:520px}
+body.portrait .explain{min-height:0}
+/* who */
+body.portrait .whos{grid-template-columns:1fr;gap:14px;margin-top:16px}
+body.portrait .who{min-height:0;display:grid;grid-template-columns:150px 1fr;column-gap:16px;padding:16px}
+body.portrait .whoimg{width:150px;height:150px;grid-row:span 3;margin:0}
+body.portrait .who ul{gap:4px}
+body.portrait .who li{font-size:17px}
+body.portrait .who .qmark{height:52px;font-size:34px;margin-top:8px}
+body.portrait .who .ans{font-size:16px;padding:12px}
+/* risk */
+body.portrait .meter{min-height:280px}
+/* signs */
+body.portrait .signs{grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
+body.portrait .sign{height:248px}
+body.portrait .cols{grid-template-columns:1fr!important}
+body.portrait .sign.more{height:auto}
+/* meter */
+body.portrait .gm .device{transform:scale(.72);margin-bottom:-120px}
+/* emergency */
+body.portrait .story{padding:20px}
+/* body */
+body.portrait .bodyfig{height:380px}
+body.portrait .ocards{grid-template-columns:repeat(2,1fr)}
+body.portrait .footrow img{width:110px;height:110px}
+/* myths */
+body.portrait .myths{grid-template-columns:repeat(2,1fr);gap:14px}
+body.portrait .myth{height:220px}
+/* living */
+body.portrait .liverow{grid-template-columns:150px 1fr}
+body.portrait .liverow img{width:150px;height:150px}
+/* prevention */
+body.portrait .path{height:auto;display:flex;flex-direction:column;gap:10px;margin-top:14px}
+body.portrait .path svg.road{display:none}
+body.portrait .stepn{position:static!important;width:auto;flex-direction:row;text-align:start;gap:16px}
+body.portrait .stepn img.disc{width:96px;height:96px}
+body.portrait .stepn b,body.portrait .stepn small{background:none;padding:0}
+body.portrait .stepn.reveal:not(.shown){opacity:.18}
+body.portrait .checks{grid-template-columns:repeat(3,1fr)}
+/* end */
+body.portrait .endimg img{max-width:420px}
+body.portrait .end h2{font-size:58px!important}
+/* ---------- room scene ---------- */
+.roomwrap{display:grid;grid-template-columns:1fr 330px;gap:22px;margin-top:16px;align-items:start}
+.scene3d{position:relative;width:100%;max-width:880px;aspect-ratio:3/2;border-radius:28px;overflow:hidden;justify-self:end}
+.scene3d img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.scene3d .spot{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.pin{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;opacity:0;transition:opacity .4s,transform .4s;pointer-events:none;z-index:2}
+.pin .pn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-weight:900;font-size:20px;background:var(--good);color:#06301F;box-shadow:0 0 0 4px rgba(5,7,32,.6);flex:none}
+.pin .pl{display:none;flex-direction:column;background:rgba(9,12,52,.92);border-radius:16px;padding:8px 14px;white-space:nowrap}
+.pin .pl b{font-size:20px}
+.pin .pl small{font-size:14px;color:#C9D0EE}
+.pin.found{opacity:1}
+.pin.cur{z-index:3}
+.pin.cur .pn{background:var(--warn);color:#3A2600;width:48px;height:48px;font-size:24px}
+.pin.cur .pl{display:flex;animation:pop .45s}
+.roomside{display:flex;flex-direction:column;gap:12px}
+.roomcount{font-family:var(--serif);font-weight:900;font-size:84px;line-height:1}
+.roomcount small{font-size:40px;color:var(--muted)}
+.roomask{margin:0;font-size:21px;font-weight:700;color:var(--warn);line-height:1.5}
+.roomfound{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.roomfound li{display:flex;align-items:center;gap:10px;font-size:19px;padding:9px 12px;border-radius:14px;background:linear-gradient(165deg,#161C63,#0C1145);animation:pop .4s}
+.roomfound li b{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--good);color:#06301F;font-size:15px;flex:none}
+.roomfound li.now b{background:var(--warn);color:#3A2600}
+.roommore{margin:4px 0 0;font-size:15px;color:var(--muted);line-height:1.6}
+body.portrait .roomwrap{grid-template-columns:1fr}
+body.portrait .scene3d{max-width:none}
+body.portrait .roomside{display:grid;grid-template-columns:auto 1fr;column-gap:18px;align-items:start}
+body.portrait .roomfound{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr}
+body.portrait .roommore{grid-column:1/-1}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage">
+
+<svg class="bgdrops" viewBox="0 0 1600 900" aria-hidden="true">
+  <g fill="#4FB3FF" opacity=".08">
+    <path d="M120 120 l14 24 a16 16 0 1 1 -28 0z"/><path d="M1480 760 l18 30 a20 20 0 1 1 -36 0z"/><path d="M1380 160 l10 18 a12 12 0 1 1 -20 0z"/><path d="M260 780 l12 20 a14 14 0 1 1 -24 0z"/>
+  </g>
+</svg>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+ <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></symbol>
+ <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3M15 12v2"/></symbol>
+ <symbol id="i-dna" viewBox="0 0 24 24"><path d="M7 3c0 6 10 6 10 12s-10 6-10 6M17 3c0 6-10 6-10 12M8 7h8M8 17h8M9.5 10h5M9.5 14h5"/></symbol>
+ <symbol id="i-scale" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="4"/><path d="M8 9a4 4 0 0 1 8 0M12 9l1.5-2"/></symbol>
+ <symbol id="i-sofa" viewBox="0 0 24 24"><path d="M4 11V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3"/><path d="M3 11a2 2 0 0 1 2 2v2h14v-2a2 2 0 1 1 2 2v3H3v-3a2 2 0 0 1 0-4zM6 18v2M18 18v2"/></symbol>
+ <symbol id="i-burger" viewBox="0 0 24 24"><path d="M4 10a8 5 0 0 1 16 0zM4 14h16M5 17h14a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3z"/></symbol>
+ <symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M7 3c0 5 10 6 10 9s-10 4-10 9M17 3c0 5-10 6-10 9s10 4 10 9"/></symbol>
+ <symbol id="i-preg" viewBox="0 0 24 24"><circle cx="11" cy="4" r="2"/><path d="M10 7c-2 2-2 5-1 7h0c2 0 5 .5 5 3s-2 3-3 3M9 14l-1 7M11 20v1"/></symbol>
+ <symbol id="i-bp" viewBox="0 0 24 24"><path d="M4 16a8 8 0 1 1 16 0"/><path d="M12 16l4-5M4 20h16"/></symbol>
+ <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+ <symbol id="i-family" viewBox="0 0 24 24"><circle cx="7" cy="6" r="2.5"/><circle cx="17" cy="6" r="2.5"/><circle cx="12" cy="12" r="2"/><path d="M3 20v-4a4 4 0 0 1 8 0M13 20v-4a4 4 0 0 1 8 0M9 21v-2a3 3 0 0 1 6 0v2"/></symbol>
+ <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+ <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 6.5-8 11-8 11z"/><path d="M6 12h3l2-3 2 5 1.5-2H18"/></symbol>
+ <symbol id="i-kidney" viewBox="0 0 24 24"><path d="M9 4C5 4 4 8 4 11s1 8 5 8 4-3 3-5-2-2-1-4 3-1 2-3-2-3-4-3z"/><path d="M15 6c3 0 5 3 5 6s-2 7-5 7"/></symbol>
+ <symbol id="i-nerve" viewBox="0 0 24 24"><path d="M13 2L5 14h6l-1 8 8-12h-6z"/></symbol>
+ <symbol id="i-foot" viewBox="0 0 24 24"><path d="M8 21c-2 0-3-2-3-5s1-6 1-9 2-4 4-4 3 2 3 5-1 4-1 7 1 6-4 6z"/><circle cx="16" cy="5" r="1.4"/><circle cx="18.5" cy="8" r="1.2"/><circle cx="19.5" cy="11.5" r="1.1"/></symbol>
+ <symbol id="i-tooth" viewBox="0 0 24 24"><path d="M7 3c-3 0-4 3-3 6s1 4 2 8 2 4 3 1 1-4 3-4 2 1 3 4 2 3 3-1 1-5 2-8-0-6-3-6c-2 0-3 1-5 1S9 3 7 3z"/></symbol>
+ <symbol id="i-glass" viewBox="0 0 24 24"><path d="M6 3h12l-2 18H8z"/><path d="M7 9h10"/></symbol>
+ <symbol id="i-toilet" viewBox="0 0 24 24"><path d="M6 3h6v7H6zM4 10h14a4 4 0 0 1-4 6l1 5H8l1-5a5 5 0 0 1-5-6z"/></symbol>
+ <symbol id="i-battery" viewBox="0 0 24 24"><rect x="3" y="7" width="16" height="10" rx="2"/><path d="M21 10v4M6 10v4"/></symbol>
+ <symbol id="i-band" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="4" transform="rotate(-35 12 12)"/><path d="M10 10l4 4M12 10.5v.01M10.5 12v.01M13.5 12v.01M12 13.5v.01"/></symbol>
+ <symbol id="i-weightdown" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></symbol>
+ <symbol id="i-hunger" viewBox="0 0 24 24"><path d="M5 3v8a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 0-3 3-3 6s1 4 3 4v8"/></symbol>
+ <symbol id="i-syringe" viewBox="0 0 24 24"><path d="M18 2l4 4M20 4l-9 9M14 4l6 6M15 9l-8 8-3 1 1-3 8-8M7 13l4 4M2 22l3-3"/></symbol>
+ <symbol id="i-meter" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="4"/><rect x="8" y="5" width="8" height="6" rx="1.5"/><circle cx="12" cy="16" r="2"/></symbol>
+ <symbol id="i-juice" viewBox="0 0 24 24"><path d="M7 7h10l-1.5 14h-7z"/><path d="M12 7l3-5M8 12h8"/></symbol>
+ <symbol id="i-dates" viewBox="0 0 24 24"><ellipse cx="8" cy="13" rx="3.3" ry="5.5" transform="rotate(-20 8 13)"/><ellipse cx="16" cy="13" rx="3.3" ry="5.5" transform="rotate(20 16 13)"/></symbol>
+ <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 3h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></symbol>
+ <symbol id="i-walk" viewBox="0 0 24 24"><circle cx="13" cy="4" r="2"/><path d="M10 21l2-6 3 3v3M9 12l1-4 4 1 3 3M12 15l-2-4M8 9l-2 4"/></symbol>
+ <symbol id="i-plate" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v9h9M12 12l-6.4 6.4"/></symbol>
+ <symbol id="i-nosmoke" viewBox="0 0 24 24"><rect x="2" y="13" width="15" height="4" rx="1"/><path d="M20 13v4M17 8c0-2 2-2 2-4M3 3l18 18"/></symbol>
+ <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></symbol>
+ <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 15A8 8 0 1 1 10 4a7 7 0 0 0 10 11z"/><path d="M17 4l.6 1.4L19 6l-1.4.6L17 8l-.6-1.4L15 6l1.4-.6z"/></symbol>
+ <symbol id="i-kaaba" viewBox="0 0 24 24"><path d="M4 7l8-4 8 4v12l-8 3-8-3z"/><path d="M4 7l8 3 8-3M12 10v12M4 11l8 3 8-3"/></symbol>
+ <symbol id="i-plane" viewBox="0 0 24 24"><path d="M2 13l20-8-6 16-4-6-6 2z"/><path d="M12 15l10-10"/></symbol>
+ <symbol id="i-id" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2"/><path d="M6 16a3 3 0 0 1 6 0M14 10h4M14 13h3"/></symbol>
+ <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2v20M3 7l18 10M21 7L3 17M9 4l3 2 3-2M9 20l3-2 3 2"/></symbol>
+ <symbol id="i-candy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M8 12l-5-3v6zM16 12l5-3v6z"/></symbol>
+ <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></symbol>
+ <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+ <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+ <symbol id="i-next" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+ <symbol id="i-prev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+ <symbol id="i-full" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+ <symbol id="i-notes" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M8 10h8M8 14h8M8 18h5"/></symbol>
+ <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5V14M12 17v.01"/></symbol>
+ <symbol id="i-wheel" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/><circle cx="12" cy="12" r="2.5"/></symbol>
+ <symbol id="i-hand" viewBox="0 0 24 24"><path d="M8 13V5a1.5 1.5 0 0 1 3 0v6M11 10V3.5a1.5 1.5 0 0 1 3 0V11M14 10V5a1.5 1.5 0 0 1 3 0v7M17 9a1.5 1.5 0 0 1 3 0v4a8 8 0 0 1-8 8h-1a6 6 0 0 1-5-3l-3-5a1.5 1.5 0 0 1 2.5-1.5L8 14"/></symbol>
+ <symbol id="i-lungs" viewBox="0 0 24 24"><path d="M12 3v8M12 11c-1 1-3 1-3 3v5a2 2 0 0 1-3 1c-2-1-3-4-3-8 0-3 2-6 4-6 1 0 2 1 2 2M12 11c1 1 3 1 3 3v5a2 2 0 0 0 3 1c2-1 3-4 3-8 0-3-2-6-4-6-1 0-2 1-2 2"/></symbol>
+ <symbol id="i-restart" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.5-5.8M4 4v5h5"/></symbol>
+ <symbol id="i-pump" viewBox="0 0 24 24"><rect x="4" y="6" width="12" height="14" rx="3"/><rect x="7" y="9" width="6" height="4" rx="1"/><path d="M16 10h2a3 3 0 0 1 3 3v6"/></symbol>
+ <symbol id="i-sensor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5"/><path d="M12 2v3M4 18l2-2M20 18l-2-2"/></symbol>
+</defs>
+</svg>
+
+<div class="dots"></div>
+<div class="blob" style="width:520px;height:520px;right:-140px;top:-160px;background:rgba(0,115,207,.35)"></div>
+<div class="blob" style="width:460px;height:460px;left:-160px;bottom:-200px;background:rgba(204,51,139,.25)"></div>
+<div class="bignum" id="bignum">٠١</div>
+<header class="topbar">
+  <div class="brand"><img src="assets/logos/sukkarna-white.svg" alt="سكّرنا وعي"></div>
+  <div class="partners">
+    <img src="assets/logos/moh-white.svg" alt="وزارة الصحة">
+    <span class="sep"></span>
+    <img src="assets/logos/volunteer-white.svg" alt="جامعة أم القرى، إدارة العمل التطوعي والمسؤولية المجتمعية">
+  </div>
+</header>
+
+<!-- 0 COVER -->
+<section class="slide coverslide" data-title="البداية">
+  <div class="hero">
+    <div class="herologo"><svg id="coverLogo" viewBox="28 50 520 330" role="img" aria-label="شعار سكّرنا وعي">
+<defs><mask id="cvM" maskUnits="userSpaceOnUse" x="-100" y="-100" width="800" height="600"><rect x="-100" y="-100" width="800" height="600" fill="#fff"/>
+<g clip-path="url(#cvClip)"><path d="M97.28 233.84V236.0L130.88 244.28C124.88 247.52 106.16 253.88 88.4 253.88C74.36 253.88 60.559999999999995 249.92 60.559999999999995 230.6C60.559999999999995 222.68 62.839999999999996 214.04 65.36 206.6H62.959999999999994C60.08 214.64 55.4 230.6 55.4 244.28C55.4 265.76 66.92 276.08 86.12 276.08C103.28 276.08 119.11999999999999 267.8 128.12 259.52L135.44 235.88C136.64 232.16 133.51999999999998 227.24 127.64 225.08V219.32C117.8 219.32 112.28 218.48 102.8 216.44ZM104.36 296.24C104.47999999999999 296.12 104.47999999999999 294.56 104.36 294.44L94.28 284.36L85.28 293.36L76.28 284.36L66.08 294.56V296.12L76.28 306.32L85.28 297.32L94.28 306.32ZM128.24 219.32C124.28 219.32 122.36 221.24 122.36 225.2V242.0C140.0 242.0 167.36 238.04 182.48 231.44L190.76 216.2L189.56 214.04C177.07999999999998 216.44 167.24 217.28 159.56 217.28C138.8 217.28 133.76 210.68 133.76 207.92000000000002C133.76 204.92000000000002 140.12 200.48000000000002 152.84 200.48000000000002C163.28 200.48000000000002 171.2 203.48000000000002 175.76 206.36L177.32 205.52C176.48 198.32 173.84 179.72 156.44 179.72C140.48 179.72 131.84 195.44 131.84 208.28C131.84 212.6 132.8 216.2 134.48 219.32C132.44 219.32 130.4 219.32 128.24 219.32ZM219.79999999999998 269.24C234.79999999999998 253.04 241.64 238.88 241.64 221.48C241.64 204.8 235.27999999999997 185.84 220.15999999999997 185.84C208.39999999999998 185.84 197.6 197.36 197.6 215.6C197.6 230.48 204.79999999999998 236.36 213.79999999999998 236.36C221.48 236.36 232.27999999999997 232.64 239.11999999999998 224.72C239.23999999999998 225.32 239.23999999999998 225.92000000000002 239.23999999999998 226.52C239.23999999999998 236.84 225.32 248.96 193.88 253.76V256.16ZM215.48 216.08C205.76 216.08 199.76 215.0 199.76 212.0C199.76 209.0 206.11999999999998 206.72 212.35999999999999 206.72C219.67999999999998 206.72 227.83999999999997 209.96 233.11999999999998 214.76C229.15999999999997 215.48 222.92 216.08 215.48 216.08ZM302.84000000000003 242.0C306.68 242.0 308.72 239.96 308.72 236.12V219.32C298.52000000000004 219.32 296.48 218.24 296.48 213.68V151.28H294.08000000000004L281.96000000000004 168.07999999999998L284.96000000000004 213.92000000000002C286.28000000000003 233.6 291.56000000000006 242.0 302.84000000000003 242.0ZM326.23999999999995 183.56H323.84L315.44 203.48000000000002C320.84 207.44 326.84 213.2 330.2 217.4C323.84 218.6 316.03999999999996 219.32 308.84 219.32C305.0 219.32 302.96 221.36 302.96 225.2V242.0C309.44 242.0 318.44 239.96 325.28 236.0L331.28 219.92000000000002C333.2 214.88 334.15999999999997 209.96 334.03999999999996 205.04L336.79999999999995 198.56ZM349.16 216.68 362.84 236.12C357.08 245.6 343.4 254.48 323.96 257.6V259.4L349.64 273.08C358.28 262.28 363.2 250.88 364.64 236.48C368.12 240.56 371.0 242.0 375.68 242.0C379.52 242.0 381.56 240.08 381.56 236.12V219.32C373.28 219.32 370.16 219.8 366.44 212.96L359.24 199.64H356.84000000000003ZM418.4 127.52 415.15999999999997 134.0C417.2 136.04 419.47999999999996 138.68 420.67999999999995 140.84C419.59999999999997 140.72 415.76 140.48 415.03999999999996 140.48C409.99999999999994 140.12 409.28 137.24 409.64 132.07999999999998H408.44C407.11999999999995 136.28 404.71999999999997 141.32 399.32 141.32C395.71999999999997 141.32 393.79999999999995 139.16 394.76 133.28H393.44L392.23999999999995 137.72C390.08 145.64 392.47999999999996 150.07999999999998 397.28 150.07999999999998C402.32 150.07999999999998 405.44 145.16 406.4 140.96C406.15999999999997 144.2 408.91999999999996 148.88 413.11999999999995 148.88C417.79999999999995 148.88 422.35999999999996 143.12 422.35999999999996 136.76C422.35999999999996 133.64 421.28 129.92 419.59999999999997 127.52ZM381.68 219.32C377.72 219.32 375.8 221.24 375.8 225.2V242.0H377.36C385.52 242.0 393.92 239.96 398.36 236.6L405.92 218.72L411.8 225.2C420.56 235.04 423.08000000000004 241.88 432.8 242.0C436.76 242.0 438.68 240.08 438.68 236.12V219.32C428.96000000000004 219.32 425.12 219.32 419.36 212.84L387.8 177.56L436.76 167.36L444.68 149.12L443.24 147.2L393.68 159.56L380.24 190.04L404.48 217.04C398.84000000000003 218.36 392.72 219.32 382.28000000000003 219.32ZM512.8399999999999 188.96H510.43999999999994L502.99999999999994 208.04C508.28 212.12 511.76 214.76 515.5999999999999 220.28L490.4 214.52L492.91999999999996 203.6L489.43999999999994 202.76L485.35999999999996 217.16C481.76 219.2 477.43999999999994 219.8 473.35999999999996 219.8C467.96 219.8 461.47999999999996 218.48 456.91999999999996 216.32L462.43999999999994 206.12L459.31999999999994 204.44L451.4 217.64C446.59999999999997 218.96 444.91999999999996 219.32 438.91999999999996 219.32C434.96 219.32 433.03999999999996 221.24 433.03999999999996 225.2V242.0C437.11999999999995 242.0 441.08 241.4 444.91999999999996 238.88L447.43999999999994 234.2C451.64 238.64 457.64 242.0 465.31999999999994 242.0C471.79999999999995 242.0 479.35999999999996 239.6 481.52 232.52L511.52 240.2L517.28 220.64C522.0799999999999 204.56 520.76 199.88 512.8399999999999 188.96Z" stroke="#000" stroke-width="16" stroke-linejoin="round"/></g><path id="cvDropMask" d="M320.04 128.00 L327.28 147.78 A15.60 15.60 0 1 1 312.80 147.78 Z" stroke="#000" stroke-width="0" stroke-linejoin="round"/></mask>
+<clipPath id="cvClip" clipPathUnits="userSpaceOnUse"><rect id="cvWipe" x="560" y="0" width="0" height="500"/></clipPath></defs>
+<g mask="url(#cvM)"><g transform="translate(456 176) scale(0.85) translate(-470 -180)">
+<path id="cvOut" d="M52 170 A18.4 18.4 0 0 1 58 140 A18.7 18.7 0 0 1 78 116 A17.2 17.2 0 0 1 104 104 A16.8 16.8 0 0 1 132 104 A16.8 16.8 0 0 1 160 104 A17.0 17.0 0 0 1 188 100 A17.2 17.2 0 0 1 216 94 A17.2 17.2 0 0 1 244 88 A17.2 17.2 0 0 1 272 82 A17.1 17.1 0 0 1 300 77 A17.1 17.1 0 0 1 328 72 A17.1 17.1 0 0 1 356 67 A15.7 15.7 0 0 1 382 64 A13.3 13.3 0 0 1 404 66 C416 68 420 80 410 88 C384 96 352 106 320 118 C280 132 250 150 232 176 C214 204 210 240 180 256 C150 272 100 262 78 240 C58 220 50 196 52 170 Z" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1" stroke="#fff" stroke-width="9.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path id="cvShine" d="M52 170 A18.4 18.4 0 0 1 58 140 A18.7 18.7 0 0 1 78 116 A17.2 17.2 0 0 1 104 104 A16.8 16.8 0 0 1 132 104 A16.8 16.8 0 0 1 160 104 A17.0 17.0 0 0 1 188 100 A17.2 17.2 0 0 1 216 94 A17.2 17.2 0 0 1 244 88 A17.2 17.2 0 0 1 272 82 A17.1 17.1 0 0 1 300 77 A17.1 17.1 0 0 1 328 72 A17.1 17.1 0 0 1 356 67 A15.7 15.7 0 0 1 382 64 A13.3 13.3 0 0 1 404 66 C416 68 420 80 410 88 C384 96 352 106 320 118 C280 132 250 150 232 176 C214 204 210 240 180 256 C150 272 100 262 78 240 C58 220 50 196 52 170 Z" pathLength="1" stroke-dasharray="0 1" stroke="#FF8FCB" stroke-width="9.4" stroke-linecap="round" fill="none" opacity=".9"/>
+<path id="cvDuo" d="M122 74 C60 74 20 128 22 190 C24 252 70 292 142 290 C182 289 208 276 222 258" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1" stroke="#fff" stroke-width="9.4" stroke-linecap="round" fill="none"/></g></g>
+<g clip-path="url(#cvClip)"><path id="cvWm" d="M97.28 233.84V236.0L130.88 244.28C124.88 247.52 106.16 253.88 88.4 253.88C74.36 253.88 60.559999999999995 249.92 60.559999999999995 230.6C60.559999999999995 222.68 62.839999999999996 214.04 65.36 206.6H62.959999999999994C60.08 214.64 55.4 230.6 55.4 244.28C55.4 265.76 66.92 276.08 86.12 276.08C103.28 276.08 119.11999999999999 267.8 128.12 259.52L135.44 235.88C136.64 232.16 133.51999999999998 227.24 127.64 225.08V219.32C117.8 219.32 112.28 218.48 102.8 216.44ZM104.36 296.24C104.47999999999999 296.12 104.47999999999999 294.56 104.36 294.44L94.28 284.36L85.28 293.36L76.28 284.36L66.08 294.56V296.12L76.28 306.32L85.28 297.32L94.28 306.32ZM128.24 219.32C124.28 219.32 122.36 221.24 122.36 225.2V242.0C140.0 242.0 167.36 238.04 182.48 231.44L190.76 216.2L189.56 214.04C177.07999999999998 216.44 167.24 217.28 159.56 217.28C138.8 217.28 133.76 210.68 133.76 207.92000000000002C133.76 204.92000000000002 140.12 200.48000000000002 152.84 200.48000000000002C163.28 200.48000000000002 171.2 203.48000000000002 175.76 206.36L177.32 205.52C176.48 198.32 173.84 179.72 156.44 179.72C140.48 179.72 131.84 195.44 131.84 208.28C131.84 212.6 132.8 216.2 134.48 219.32C132.44 219.32 130.4 219.32 128.24 219.32ZM219.79999999999998 269.24C234.79999999999998 253.04 241.64 238.88 241.64 221.48C241.64 204.8 235.27999999999997 185.84 220.15999999999997 185.84C208.39999999999998 185.84 197.6 197.36 197.6 215.6C197.6 230.48 204.79999999999998 236.36 213.79999999999998 236.36C221.48 236.36 232.27999999999997 232.64 239.11999999999998 224.72C239.23999999999998 225.32 239.23999999999998 225.92000000000002 239.23999999999998 226.52C239.23999999999998 236.84 225.32 248.96 193.88 253.76V256.16ZM215.48 216.08C205.76 216.08 199.76 215.0 199.76 212.0C199.76 209.0 206.11999999999998 206.72 212.35999999999999 206.72C219.67999999999998 206.72 227.83999999999997 209.96 233.11999999999998 214.76C229.15999999999997 215.48 222.92 216.08 215.48 216.08ZM302.84000000000003 242.0C306.68 242.0 308.72 239.96 308.72 236.12V219.32C298.52000000000004 219.32 296.48 218.24 296.48 213.68V151.28H294.08000000000004L281.96000000000004 168.07999999999998L284.96000000000004 213.92000000000002C286.28000000000003 233.6 291.56000000000006 242.0 302.84000000000003 242.0ZM326.23999999999995 183.56H323.84L315.44 203.48000000000002C320.84 207.44 326.84 213.2 330.2 217.4C323.84 218.6 316.03999999999996 219.32 308.84 219.32C305.0 219.32 302.96 221.36 302.96 225.2V242.0C309.44 242.0 318.44 239.96 325.28 236.0L331.28 219.92000000000002C333.2 214.88 334.15999999999997 209.96 334.03999999999996 205.04L336.79999999999995 198.56ZM349.16 216.68 362.84 236.12C357.08 245.6 343.4 254.48 323.96 257.6V259.4L349.64 273.08C358.28 262.28 363.2 250.88 364.64 236.48C368.12 240.56 371.0 242.0 375.68 242.0C379.52 242.0 381.56 240.08 381.56 236.12V219.32C373.28 219.32 370.16 219.8 366.44 212.96L359.24 199.64H356.84000000000003ZM418.4 127.52 415.15999999999997 134.0C417.2 136.04 419.47999999999996 138.68 420.67999999999995 140.84C419.59999999999997 140.72 415.76 140.48 415.03999999999996 140.48C409.99999999999994 140.12 409.28 137.24 409.64 132.07999999999998H408.44C407.11999999999995 136.28 404.71999999999997 141.32 399.32 141.32C395.71999999999997 141.32 393.79999999999995 139.16 394.76 133.28H393.44L392.23999999999995 137.72C390.08 145.64 392.47999999999996 150.07999999999998 397.28 150.07999999999998C402.32 150.07999999999998 405.44 145.16 406.4 140.96C406.15999999999997 144.2 408.91999999999996 148.88 413.11999999999995 148.88C417.79999999999995 148.88 422.35999999999996 143.12 422.35999999999996 136.76C422.35999999999996 133.64 421.28 129.92 419.59999999999997 127.52ZM381.68 219.32C377.72 219.32 375.8 221.24 375.8 225.2V242.0H377.36C385.52 242.0 393.92 239.96 398.36 236.6L405.92 218.72L411.8 225.2C420.56 235.04 423.08000000000004 241.88 432.8 242.0C436.76 242.0 438.68 240.08 438.68 236.12V219.32C428.96000000000004 219.32 425.12 219.32 419.36 212.84L387.8 177.56L436.76 167.36L444.68 149.12L443.24 147.2L393.68 159.56L380.24 190.04L404.48 217.04C398.84000000000003 218.36 392.72 219.32 382.28000000000003 219.32ZM512.8399999999999 188.96H510.43999999999994L502.99999999999994 208.04C508.28 212.12 511.76 214.76 515.5999999999999 220.28L490.4 214.52L492.91999999999996 203.6L489.43999999999994 202.76L485.35999999999996 217.16C481.76 219.2 477.43999999999994 219.8 473.35999999999996 219.8C467.96 219.8 461.47999999999996 218.48 456.91999999999996 216.32L462.43999999999994 206.12L459.31999999999994 204.44L451.4 217.64C446.59999999999997 218.96 444.91999999999996 219.32 438.91999999999996 219.32C434.96 219.32 433.03999999999996 221.24 433.03999999999996 225.2V242.0C437.11999999999995 242.0 441.08 241.4 444.91999999999996 238.88L447.43999999999994 234.2C451.64 238.64 457.64 242.0 465.31999999999994 242.0C471.79999999999995 242.0 479.35999999999996 239.6 481.52 232.52L511.52 240.2L517.28 220.64C522.0799999999999 204.56 520.76 199.88 512.8399999999999 188.96Z" fill="#fff"/></g>
+<circle id="cvRipple" r="20" fill="none" stroke="#FF5DB1" stroke-width="3" opacity="0"/><path id="cvDrop" d="M320.04 128.00 L327.28 147.78 A15.60 15.60 0 1 1 312.80 147.78 Z" fill="#CC338B" style="opacity:0"/>
+<path id="cvTag" d="M121.072 345.596C121.072 344.202 123.112 341.516 125.96799999999999 341.516C127.77 341.516 128.79 342.536 129.572 343.318L132.49599999999998 341.176C131.68 339.714 130.35399999999998 336.824 126.68199999999999 336.824C122.024 336.824 117.74 341.48199999999997 117.74 346.514C117.74 349.302 119.066 350.764 122.806 351.478L128.34799999999998 352.566C126.988 354.47 122.466 356.442 117.536 356.442C113.62599999999999 356.442 110.42999999999999 355.218 110.42999999999999 350.764C110.42999999999999 349.268 110.634 347.772 111.11 346.004L107.71 345.392C106.86 348.078 106.622 350.356 106.622 351.988C106.622 359.128 111.416 361.678 117.128 361.678C124.36999999999999 361.678 131.748 357.598 131.748 351.92C131.748 349.506 130.422 348.35 126.24 347.602L123.588 347.092C121.88799999999999 346.752 121.072 346.31 121.072 345.596ZM114.85 370.076 117.22999999999999 367.662 119.61 370.076 122.5 367.186 119.61 364.296 117.22999999999999 366.676 114.85 364.296 111.994 367.186ZM143.34199999999998 356.0C144.328 356.0 144.838 355.49 144.838 354.504V350.594H144.498C142.084 350.594 141.132 349.676 140.214 346.14L139.534 343.556V343.59C139.534 343.556 139.534 343.556 139.534 343.556L135.658 344.542C136.84799999999998 348.724 137.664 351.682 137.664 354.096C137.664 356.85 136.576 359.672 131.06799999999998 359.672C130.66 359.672 130.082 359.672 129.674 359.638V364.262C130.388 364.33 131.272 364.398 131.884 364.398C138.61599999999999 364.398 140.894 359.978 141.2 355.286C141.778 355.762 142.458 356.0 143.34199999999998 356.0ZM144.838 350.594C143.85199999999998 350.594 143.34199999999998 351.104 143.34199999999998 352.09V356.0H144.736C147.48999999999998 356.0 149.35999999999999 355.354 150.414 354.742L152.42 350.254C154.73199999999997 353.076 156.46599999999998 356.0 159.22 356.0C160.206 356.0 160.71599999999998 355.49 160.71599999999998 354.504V350.594C157.85999999999999 350.594 156.874 349.404 154.08599999999998 346.174L147.32 338.558L162.51799999999997 333.764V329.344L145.82399999999998 334.478V342.604L151.97799999999998 349.71C150.142 350.288 148.10199999999998 350.594 145.51799999999997 350.594ZM188.29 356.0C189.242 356.0 189.786 355.49 189.786 354.504V350.594C187.26999999999998 350.594 186.148 350.084 186.148 347.874V344.066H182.102V348.384C182.102 348.996 182.136 349.642 182.204 350.288C181.66 350.458 181.01399999999998 350.594 180.402 350.594C179.212 350.594 178.634 350.084 178.634 348.996V346.344H174.588V349.778C174.588 350.016 174.588 350.254 174.62199999999999 350.458C173.94199999999998 350.73 173.194 350.9 172.17399999999998 350.9C170.26999999999998 350.9 169.07999999999998 350.288 168.02599999999998 349.37L169.522 346.956L166.564 345.052L164.218 348.724C163.43599999999998 349.914 162.416 350.594 160.784 350.594C159.798 350.594 159.254 351.104 159.254 352.09V356.0C161.974 356.0 163.504 355.49 165.30599999999998 353.314C166.7 355.15 168.60399999999998 356.0 170.26999999999998 356.0C171.902 356.0 173.16 355.184 173.908 354.606L174.75799999999998 352.09C175.2 354.946 176.56 356.0 178.464 356.0C180.096 356.0 181.286 355.252 182.06799999999998 354.402L182.51 351.784C183.156 354.13 184.754 356.0 188.29 356.0ZM189.78600000000003 350.594C188.83400000000003 350.594 188.29000000000002 351.104 188.29000000000002 352.056V356.0C194.104 356.0 196.04200000000003 352.124 196.04200000000003 345.868V330.466H191.96200000000002V348.214C191.96200000000002 349.948 191.18 350.594 189.78600000000003 350.594ZM204.168 356.0V330.466H200.08800000000002V356.0ZM233.068 356.0C234.02 356.0 234.56400000000002 355.49 234.56400000000002 354.504V350.594C232.252 350.594 230.654 350.39 230.654 348.078V337.062H226.846V339.714L221.61 341.72C217.394 343.318 216.068 346.31 216.068 348.996C216.068 352.396 218.27800000000002 354.912 221.814 354.912C223.412 354.912 225.112 354.402 225.996 353.892L227.01600000000002 350.832C227.662 354.198 229.906 356.0 233.068 356.0ZM222.66400000000002 345.494 226.846 344.1V348.69C226.846 348.894 226.846 349.098 226.846 349.268C225.38400000000001 349.744 223.71800000000002 350.05 222.494 350.05C220.76000000000002 350.05 219.434 349.404 219.434 348.146C219.434 346.956 220.65800000000002 346.14 222.66400000000002 345.494ZM240.344 344.814C242.07799999999997 344.814 243.914 346.242 246.124 347.636C242.31599999999997 349.506 238.916 350.594 234.564 350.594C233.57799999999997 350.594 233.06799999999998 351.104 233.06799999999998 352.09V356.0C242.51999999999998 356.0 244.52599999999998 350.084 252.48199999999997 350.084H255.37199999999999V346.174H253.84199999999998C247.95999999999998 346.174 245.546 340.054 240.30999999999997 340.054C236.60399999999998 340.054 235.04 343.08 234.25799999999998 345.052L237.35199999999998 346.854C238.03199999999998 345.834 238.88199999999998 344.814 240.344 344.814ZM242.35 365.078 245.546 361.848 242.35 358.652 239.154 361.848ZM262.07 356.0V330.466H257.99V356.0ZM267.476 365.35C275.84000000000003 365.35 278.968 360.692 279.92 356.0H281.178C282.164 356.0 282.67400000000004 355.49 282.67400000000004 354.504V350.594H280.226C279.75 344.984 276.826 341.414 272.44 341.414C268.462 341.414 265.43600000000004 344.338 265.43600000000004 349.268C265.43600000000004 353.654 267.81600000000003 356.0 271.012 356.0H276.146C275.16 358.448 272.644 360.556 267.10200000000003 360.556H265.776V365.35ZM268.7 348.52C268.7 347.194 270.094 346.174 271.76 346.174C273.868 346.174 275.84000000000003 347.738 276.52000000000004 350.56H272.1C270.16200000000003 350.56 268.7 349.88 268.7 348.52ZM281.178 356.0C286.788 356.0 291.718 353.076 290.222 344.916L289.474 340.666L285.224 341.448L286.24399999999997 347.296C286.71999999999997 350.05 285.7 350.594 282.70799999999997 350.594C281.722 350.594 281.178 351.104 281.178 352.09ZM287.196 337.70799999999997 290.392 334.478 287.196 331.282 284.0 334.478ZM315.144 354.13C318.10200000000003 355.116 322.522 356.272 322.522 357.326C322.522 358.346 317.694 360.318 312.05 360.318C308.378 360.318 304.57 359.468 304.57 354.096C304.57 352.906 304.74 351.036 305.25 348.962L301.85 348.384C301.10200000000003 350.798 300.762 353.722 300.762 355.592C300.762 362.222 305.012 365.656 311.608 365.656C318.408 365.656 326.16 362.01800000000003 326.16 356.782C326.16 354.81 325.072 353.348 323.644 352.396V350.594C320.72 350.594 319.156 350.254 316.096 349.506ZM309.432 374.02 311.812 371.606 314.192 374.02 317.082 371.13 314.192 368.24 311.812 370.62 309.432 368.24 306.576 371.13ZM323.678 350.594C322.692 350.594 322.148 351.104 322.148 352.09V356.0C327.69 356.0 337.04 354.98 341.90200000000004 353.178L341.46000000000004 348.962H341.39200000000005H341.42600000000004C338.91 349.37 335.68 349.914 333.742 349.914C328.71000000000004 349.914 327.99600000000004 347.466 327.99600000000004 346.48C327.99600000000004 345.154 329.22 343.76 331.73600000000005 343.76C334.286 343.76 335.78200000000004 345.256 336.598 346.344L339.93 344.406C338.502 341.074 336.25800000000004 338.864 332.314 338.864C327.01000000000005 338.864 324.42600000000004 342.876 324.42600000000004 346.514C324.42600000000004 348.146 324.93600000000004 349.472 325.752 350.56C325.10600000000005 350.56 324.39200000000005 350.594 323.678 350.594ZM345.77799999999996 363.82C356.41999999999996 363.82 358.596 356.272 358.596 350.73C358.596 344.202 355.57 339.884 350.74199999999996 339.884C346.76399999999995 339.884 343.738 342.808 343.738 347.738C343.738 352.124 346.152 354.47 349.518 354.47C350.912 354.47 352.068 354.062 353.53 353.246L354.95799999999997 349.744C355.02599999999995 350.22 355.06 350.696 355.06 351.24C355.06 354.674 353.394 359.026 345.404 359.026H344.078V363.82ZM350.46999999999997 349.574C348.498 349.574 347.00199999999995 348.792 347.00199999999995 347.228C347.00199999999995 345.766 348.39599999999996 344.78 350.06199999999995 344.78C352.20399999999995 344.78 354.21 346.344 354.856 349.234C353.7 349.404 352.20399999999995 349.574 350.46999999999997 349.574ZM371.82199999999995 339.578 371.448 342.672C369.95199999999994 345.494 369.37399999999997 347.33 369.37399999999997 349.438C369.37399999999997 354.334 372.53599999999994 356.0 376.65 356.0C382.056 356.0 385.28599999999994 353.076 385.28599999999994 347.84C385.28599999999994 342.91 381.91999999999996 339.782 371.82199999999995 339.578ZM374.43999999999994 336.654 376.854 334.24 379.234 336.654 382.12399999999997 333.764 379.234 330.874 376.854 333.288 374.43999999999994 330.874 371.58399999999995 333.764ZM381.74999999999994 348.622C381.74999999999994 350.152 380.01599999999996 351.104 376.95599999999996 351.104C374.40599999999995 351.104 372.638 350.424 372.638 348.656C372.638 347.602 373.24999999999994 345.868 374.33799999999997 344.372C381.17199999999997 345.154 381.74999999999994 347.704 381.74999999999994 348.622ZM389.536 365.35C397.90000000000003 365.35 401.028 360.692 401.98 356.0H403.238C404.22400000000005 356.0 404.73400000000004 355.49 404.73400000000004 354.504V350.594H402.286C401.81 344.984 398.886 341.414 394.5 341.414C390.522 341.414 387.49600000000004 344.338 387.49600000000004 349.268C387.49600000000004 353.654 389.87600000000003 356.0 393.072 356.0H398.206C397.22 358.448 394.704 360.556 389.16200000000003 360.556H387.836V365.35ZM390.76 348.52C390.76 347.194 392.154 346.174 393.82 346.174C395.928 346.174 397.90000000000003 347.738 398.58000000000004 350.56H394.16C392.22200000000004 350.56 390.76 349.88 390.76 348.52ZM404.25800000000004 350.594C403.6120000000001 350.594 403.23800000000006 350.934 403.23800000000006 351.614V356.0H413.37000000000006C416.56600000000003 356.0 419.15000000000003 355.558 421.12200000000007 354.708C422.92400000000004 355.49 424.8620000000001 356.0 426.80000000000007 356.0C427.75200000000007 356.0 428.29600000000005 355.49 428.29600000000005 354.504V350.594C427.37800000000004 350.594 426.2900000000001 350.492 425.23600000000005 350.39C425.54200000000003 349.506 425.67800000000005 348.554 425.67800000000005 347.5C425.67800000000005 342.4 422.38000000000005 339.782 418.06200000000007 339.782C415.58000000000004 339.782 413.23400000000004 340.632 411.02400000000006 342.57V330.5H406.9440000000001V347.738C406.4340000000001 348.588 405.92400000000004 349.54 405.44800000000004 350.594ZM417.34800000000007 344.542C420.6460000000001 344.542 422.10800000000006 346.378 422.10800000000006 347.84C422.10800000000006 349.71 419.72800000000007 350.594 413.81200000000007 350.594H409.15400000000005C411.1940000000001 346.752 413.744 344.542 417.34800000000007 344.542ZM450.77000000000004 356.0C451.7560000000001 356.0 452.30000000000007 355.49 452.30000000000007 354.504V350.594C448.6960000000001 350.594 446.86000000000007 350.356 446.62200000000007 348.384H449.47800000000007V344.44H448.11800000000005C442.1000000000001 344.44 439.21000000000004 339.544 434.24600000000004 339.544C430.57400000000007 339.544 428.8740000000001 342.162 427.99000000000007 344.542L431.11800000000005 346.344C431.76400000000007 345.188 432.6480000000001 344.304 434.14400000000006 344.304C435.87800000000004 344.304 437.74800000000005 345.392 440.02600000000007 346.446C436.28600000000006 348.452 432.61400000000003 350.594 428.29600000000005 350.594C427.34400000000005 350.594 426.83400000000006 351.104 426.83400000000006 352.056V356.0C434.92600000000004 356.0 437.71400000000006 350.492 443.18800000000005 348.826C442.95000000000005 352.6 444.7180000000001 356.0 450.43000000000006 356.0ZM434.00800000000004 336.348 437.20400000000006 333.118 434.00800000000004 329.922 430.81200000000007 333.118ZM450.804 356.0C456.414 356.0 461.344 353.076 459.84799999999996 344.916L459.09999999999997 340.666L454.84999999999997 341.448L455.86999999999995 347.296C456.34599999999995 350.05 455.32599999999996 350.594 452.33399999999995 350.594C451.34799999999996 350.594 450.804 351.104 450.804 352.09ZM455.224 365.078 458.41999999999996 361.848 455.224 358.652 452.02799999999996 361.848Z" fill="#fff" style="opacity:0"/></svg></div>
+    <h1 class="sr">سكّرنا وعي: بخطوة وعي نواجه السكري</h1>
+    <p class="sub">حملة توعوية من كلية الطب بجامعة أم القرى · نفهم السكري، نكتشف علاماته، ونعرف كيف نتصرّف</p>
+  </div>
+  <template class="note">رحّب بالحضور. عرّف بالحملة وأنها بالتعاون بين كلية الطب وإدارة العمل التطوعي والمسؤولية المجتمعية. قل: العرض فيه أسئلة وأنشطة، فخلّكم جاهزين للمشاركة.</template>
+</section>
+
+<!-- 1 NUMBERS -->
+<section class="slide" data-title="خمّن الرقم" data-steps="3">
+  <h2>كم شخص يعيش مع <em>السكري</em>؟</h2>
+  <p class="lead">قبل كل كشف: كل واحد يخمّن بصوت عالي، والأقرب يكسب.</p>
+  <div class="statsrow">
+    <div class="stats">
+      <div class="stat panel hidden" data-reveal-step="1" data-count="500" data-suffix="M+">
+        <div class="stat-top"><div class="ibox"><svg class="icon"><use href="#i-family"/></svg></div><span class="pill">حول العالم</span></div>
+        <div><div class="big"><span class="num">؟</span></div><div class="lbl" data-text="أكثر من ٥٠٠ مليون مصاب حول العالم">كم مصاب حول العالم؟</div></div>
+      </div>
+      <div class="stat panel hidden" data-reveal-step="2" data-count="5.3" data-suffix="M">
+        <div class="stat-top"><div class="ibox"><svg class="icon"><use href="#i-heart"/></svg></div><span class="pill">في المملكة</span></div>
+        <div><div class="big"><span class="num">؟</span></div><div class="lbl" data-text="حوالي ٥٫٣ مليون مصاب في المملكة">وكم مصاب عندنا في المملكة؟</div></div>
+      </div>
+      <div class="stat panel hidden" data-reveal-step="3" data-count="90" data-suffix="%">
+        <div class="stat-top"><div class="ibox"><svg class="icon"><use href="#i-search"/></svg></div><span class="pill">النوع الثاني</span></div>
+        <div><div class="big"><span class="num">؟</span></div><div class="lbl" data-text="من الحالات في المملكة من النوع الثاني، وأغلب عوامل خطره بأيدينا">كم نسبة النوع الثاني من الحالات؟</div></div>
+      </div>
+    </div>
+    <img class="photo soft famimg" src="assets/img/family.webp" alt="عائلة سعودية من عدة أجيال">
+  </div>
+  <template class="note">اسأل: كم مصاب حول العالم؟ خلّهم يخمّنون، ثم «التالي» يكشف الرقم. كرر مع المملكة ثم نسبة النوع الثاني. الرسالة: الكشف المبكر يكتشف المرض قبل الأعراض، ويبدأ العلاج في الوقت المناسب.</template>
+</section>
+
+<!-- 2 INSULIN KEY -->
+<section class="slide" data-title="الإنسولين: المفتاح" data-steps="2">
+  <div class="cols" style="grid-template-columns:.85fr 1.15fr">
+    <div>
+      <h2>الإنسولين هو <em>المفتاح</em></h2>
+      <p class="lead">السكري اضطراب مزمن ينتج عن <b style="color:#fff">نقص الإنسولين أو مقاومته</b>، فيتراكم الجلوكوز في الدم بدل ما يدخل الخلايا ويصير طاقة.</p>
+      <div class="modes">
+        <span class="mode on" data-mode="normal">الجسم السليم</span>
+        <span class="mode" data-mode="t1">النوع الأول</span>
+        <span class="mode" data-mode="t2">النوع الثاني</span>
+      </div>
+      <div class="explain" id="keyExplain"></div>
+    </div>
+    <div class="scene panel"><svg id="keyScene" viewBox="0 0 800 560" width="100%" height="100%"></svg></div>
+  </div>
+  <template class="note">الأكل يرفع الجلوكوز، فيفرز البنكرياس الإنسولين، والإنسولين مثل المفتاح يفتح باب الخلية فيدخل السكر ويصير طاقة. «التالي»: النوع الأول (الجهاز المناعي هاجم البنكرياس فلا توجد مفاتيح)، ثم النوع الثاني (المفتاح موجود لكن القفل لا يستجيب).</template>
+</section>
+
+<!-- 3 WHO AM I -->
+<section class="slide" data-title="من أنا؟" data-steps="3">
+  <h2>ثلاث شخصيات… <em>خمّنوا نوع السكري</em></h2>
+  <div class="whos">
+    <div class="who panel" data-reveal-step="1">
+      <img class="photo soft whoimg" src="assets/img/type1-child.webp" alt="طفل يحمل قلم إنسولين">
+      <ul><li>جهازي المناعي هاجم خلايا بيتا في البنكرياس</li><li>غالبًا أظهر في الطفولة أو المراهقة</li><li>لا علاقة لي بالسمنة أو نمط الحياة</li><li>أحتاج الإنسولين مدى الحياة</li></ul>
+      <div class="ans"><b>النوع الأول</b>مرض مناعي ذاتي ينعدم فيه الإنسولين. علاجه الإنسولين بالحقن أو المضخة.</div>
+      <div class="qmark">؟</div>
+    </div>
+    <div class="who panel" data-reveal-step="2">
+      <img class="photo soft whoimg" src="assets/img/type2-man.webp" alt="رجل يقيس محيط خصره">
+      <ul><li>الأكثر شيوعًا، نحو ٩٠٪ من الحالات</li><li>جسمي لا يستخدم الإنسولين بكفاءة</li><li>قد أبدأ بهدوء وبلا أعراض لسنوات</li><li>الوزن الزائد وقلة الحركة يساعدونني</li></ul>
+      <div class="ans"><b>النوع الثاني</b>مقاومة للإنسولين. يبدأ علاجه بنمط الحياة، ثم الأدوية الفموية مثل الميتفورمين، والإنسولين عند الحاجة.</div>
+      <div class="qmark">؟</div>
+    </div>
+    <div class="who panel" data-reveal-step="3">
+      <img class="photo soft whoimg" src="assets/img/gestational.webp" alt="امرأة حامل تقيس السكر">
+      <ul><li>أظهر بسبب هرمونات المشيمة</li><li>أظهر في فترة معيّنة فقط</li><li>غالبًا أختفي بعد الولادة</li><li>لكني أرفع خطر النوع الثاني لاحقًا</li></ul>
+      <div class="ans"><b>سكري الحمل</b>ارتفاع الجلوكوز أثناء الحمل، يحتاج متابعة لأنه يزيد مخاطر الحمل والنوع الثاني لاحقًا.</div>
+      <div class="qmark">؟</div>
+    </div>
+  </div>
+  <template class="note">اقرأ أدلة الشخصية الأولى واطلب التخمين، ثم «التالي» يكشف. كرر مع الثانية والثالثة. أكّد أن النوع الأول ليس بسبب الأكل أو السمنة.</template>
+</section>
+
+<!-- 4 RISK -->
+<section class="slide" data-title="ارفع يدك" data-steps="5">
+  <h2>متى لازم <em>تفحص السكر</em>؟</h2>
+  <p class="lead">من عمر ٣٥ سنة حتى بدون أعراض، وقبلها إذا عندك أحد عوامل الخطر. <b style="color:#fff">ارفع يدك إذا ينطبق عليك أي عامل:</b></p>
+  <div class="risk">
+    <div class="factors">
+      <div class="factor reveal" data-step="1"><span class="ibox"><svg class="icon"><use href="#i-hourglass"/></svg></span><span>العمر ٣٥ سنة فأكثر<small>الخطر يزيد مع العمر</small></span></div>
+      <div class="factor reveal" data-step="1"><span class="ibox"><svg class="icon"><use href="#i-dna"/></svg></span><span>أحد الوالدين أو الإخوة مصاب<small>الوراثة والتاريخ العائلي</small></span></div>
+      <div class="factor reveal" data-step="2"><span class="ibox"><svg class="icon"><use href="#i-scale"/></svg></span><span>زيادة الوزن أو السمنة<small>خاصة حول البطن</small></span></div>
+      <div class="factor reveal" data-step="2"><span class="ibox"><svg class="icon"><use href="#i-sofa"/></svg></span><span>قلة الحركة<small>رياضة أقل من ٣ مرات أسبوعيًا</small></span></div>
+      <div class="factor reveal" data-step="3"><span class="ibox"><svg class="icon"><use href="#i-burger"/></svg></span><span>غذاء غير صحي<small>غني بالسكريات والدهون</small></span></div>
+      <div class="factor reveal" data-step="3"><span class="ibox"><svg class="icon"><use href="#i-preg"/></svg></span><span>سكري حمل سابق<small>أو ولادة طفل وزنه فوق ٤ كجم</small></span></div>
+      <div class="factor reveal" data-step="4"><span class="ibox"><svg class="icon"><use href="#i-bp"/></svg></span><span>ارتفاع الضغط أو الكوليسترول<small>من عوامل الخطر المعروفة</small></span></div>
+      <div class="factor reveal" data-step="4"><span class="ibox"><svg class="icon"><use href="#i-shield"/></svg></span><span>متلازمة تكيّس المبايض<small>ترتبط بمقاومة الإنسولين</small></span></div>
+    </div>
+    <div class="meter panel">
+      <div class="handwrap" id="riskHand"><svg class="icon" style="width:110px;height:110px;color:var(--warn)"><use href="#i-hand"/></svg><div class="verdict">كم يد ارتفعت؟</div></div>
+      <div class="reveal" data-step="5" style="text-align:center"><div class="bigv">عامل واحد يكفي</div><div class="verdict" style="color:var(--warn)">إذا رفعت يدك ولو مرة: افحص سكرك الآن، حتى بدون أعراض.</div><div class="note">الفحص بسيط: سكر صائم أو سكر تراكمي.</div></div>
+    </div>
+  </div>
+  <template class="note">كل «التالي» يعرض عاملين. اطلب من الحضور رفع اليد إذا انطبق عليهم أي عامل. في الأخير: عامل واحد يكفي ليفحص الشخص سكره مبكرًا.</template>
+</section>
+
+<!-- 5 SIGNS: the room -->
+<section class="slide" data-title="اكتشف العلامات" data-steps="7">
+  <h2>في هذي الغرفة <em>٧ علامات</em> للسكري… من يلقاها؟</h2>
+  <div class="roomwrap">
+    <div class="scene3d" id="scene3d" data-holes="[255,560,125],[1250,250,190],[960,245,115],[830,722,80],[1385,700,230],[650,200,95],[690,905,170]">
+      <img src="assets/img/room-scene.webp" alt="رجل في غرفة نومه ليلًا تظهر عليه علامات السكري">
+      <svg class="spot" viewBox="0 0 1536 1024" preserveAspectRatio="none" aria-hidden="true"><defs><mask id="spotMask"><rect width="1536" height="1024" fill="#fff"/><circle id="spotHole" cx="768" cy="512" r="0" fill="#000"/></mask></defs><rect width="1536" height="1024" fill="rgba(5,7,32,.62)" mask="url(#spotMask)" id="spotDim" opacity="0"/><circle id="spotRing" cx="768" cy="512" r="0" fill="none" stroke="#FFD54F" stroke-width="6" opacity="0"/></svg>
+      <div class="pin" data-i="0" style="left:16.60%;top:68.73%"><span class="pn">١</span><span class="pl"><b>عطش شديد</b><small>كاسات فاضية وقارورة… وما زال يشرب</small></span></div>
+      <div class="pin" data-i="1" style="left:81.38%;top:45.75%"><span class="pn">٢</span><span class="pl"><b>كثرة التبول ليلًا</b><small>الساعة ٣ فجرًا، وباب الحمام مفتوح</small></span></div>
+      <div class="pin" data-i="2" style="left:62.50%;top:36.84%"><span class="pn">٣</span><span class="pl"><b>تشوّش الرؤية</b><small>يبعد الجوال ويفرك عينه</small></span></div>
+      <div class="pin" data-i="3" style="left:54.04%;top:79.49%"><span class="pn">٤</span><span class="pl"><b>بطء التئام الجروح</b><small>لصقة على جرح ما التأم</small></span></div>
+      <div class="pin" data-i="4" style="left:90.17%;top:94.19%"><span class="pn">٥</span><span class="pl"><b>نزول الوزن دون سبب</b><small>حزام وبنطلون صاروا واسعين، والميزان تحت</small></span></div>
+      <div class="pin" data-i="5" style="left:42.32%;top:30.20%"><span class="pn">٦</span><span class="pl"><b>تعب وإرهاق دائم</b><small>هالات سوداء وقهوة في نص الليل</small></span></div>
+      <div class="pin" data-i="6" style="left:44.92%;top:69.29%"><span class="pn">٧</span><span class="pl"><b>تنميل ووخز في القدمين</b><small>شرارات حول أصابع القدم</small></span></div>
+    </div>
+    <div class="roomside">
+      <div class="roomcount"><span id="huntN">٠</span><small>/٧</small></div>
+      <p class="roomask" id="roomAsk">كم علامة تشوفون؟ قولوها بصوت عالي</p>
+      <ol class="roomfound" id="roomFound"></ol>
+      <p class="roommore">وأيضًا: جوع دائم، جفاف وحكة في الجلد، التهابات متكررة. وجود الأعراض يستدعي مراجعة الطبيب.</p>
+    </div>
+  </div>
+  <template class="note">اعرض الغرفة واسأل: كم علامة تشوفون؟ خلّ الحضور يأشرون ويقولون، وكل «التالي» يسلّط الضوء على علامة ويكتب اسمها. النوع الأول تظهر أعراضه بسرعة، والثاني يتطور ببطء وقد لا تظهر أعراضه.</template>
+</section>
+
+<!-- 6 NUMBERS -->
+<section class="slide" data-title="اقرأ الجهاز" data-steps="8">
+  <h2>طبيعي؟ ما قبل السكري؟ <em>أو سكري؟</em></h2>
+  <div class="gm">
+    <div style="padding-top:6px"><div class="device"><div class="screen"><div class="val" id="gVal">--</div><div class="u" id="gUnit">mg/dL</div><div class="tag" id="gTag">جاهز</div></div><div class="btns"><i></i><i></i></div><div class="strip"></div></div></div>
+    <div>
+      <div class="tabs" id="gTabs"><span class="tab on" data-t="fast">السكر الصائم</span><span class="tab" data-t="post">بعد الأكل بساعتين</span><span class="tab" data-t="a1c">السكر التراكمي HbA1c</span></div>
+      <div class="range"><div class="bar" id="gBar"></div><div class="marker" id="gMark"></div><div class="ticks" id="gTicks"></div></div>
+      <div class="verdict2" id="gVerdict"></div>
+      <div class="legend" id="gLegend"></div>
+      <div class="challenge" id="gRound"></div>
+    </div>
+  </div>
+  <template class="note">كل قراءة تظهر أولًا بدون تصنيف: اطلب من الحضور التصويت بالأيدي (طبيعي، ما قبل السكري، سكري)، ثم «التالي» يكشف. ما قبل السكري فرصة ذهبية: تعديل نمط الحياة قد يرجّع السكر للطبيعي.</template>
+</section>
+
+<!-- 7 EMERGENCY -->
+<section class="slide" data-title="أنت المسعف" data-steps="4">
+  <h2>هبوط السكر: <em>ماذا تفعل؟</em></h2>
+  <div class="em">
+    <div class="story panel">
+      <div class="who2"><div class="emimg"><img class="photo soft" id="hypoImg" src="assets/img/hypo.webp" alt="رجل يتعرق ويشعر بالدوخة"><img class="photo soft" id="juiceImg" src="assets/img/juice.webp" alt="رجل يشرب عصيرًا" style="opacity:0"></div>
+        <p>«أبو فهد» أخذ جرعته وتأخر على الأكل. الآن <b>يتعرّق ويرتجف</b>، ويحس بجوع ودوخة، وقلبه سريع. <b>وهو واعٍ.</b> ماذا تعطيه؟</p></div>
+      <div class="chips" id="hypoChips">
+        <div class="chip" data-ok="1">كوب عصير أو ٣ تمرات</div>
+        <div class="chip" data-ok="0">جرعة إنسولين</div>
+        <div class="chip" data-ok="0">ماء فقط</div>
+        <div class="chip" data-ok="0">ينتظر لين وقت الأكل</div>
+      </div>
+      <div class="feedback reveal" data-step="1"><b style="color:var(--good)">الجواب: سكريات سريعة.</b> ١٥ غرام: كوب عصير، أو ٣ تمرات، أو ملعقة عسل. الإنسولين يخفضه أكثر، والماء لا يرفعه، والانتظار قد يفقده وعيه.</div>
+      <div class="alert reveal" data-step="4"><b>إذا فقد الوعي:</b> لا شيء بالفم (حتى لا يختنق)، اتصل بالإسعاف <b>997</b> فورًا، ضعه على جانبه، وراقب التنفس والنبض. ويُحقن بالجلوكاجون إن توفر.</div>
+    </div>
+    <div class="story panel">
+      <h3 style="font-size:30px">قاعدة <span style="color:var(--pink2)">١٥ × ١٥</span></h3>
+      <div class="rule">
+        <svg class="clock" viewBox="0 0 200 200"><circle cx="100" cy="100" r="84" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="16"/><circle id="clockArc" cx="100" cy="100" r="84" fill="none" stroke="#FF5DB1" stroke-width="16" stroke-linecap="round" pathLength="1" stroke-dasharray="0 1" transform="rotate(-90 100 100)"/><text x="100" y="98" text-anchor="middle" font-size="54" font-weight="900" fill="#fff" id="clockT">١٥</text><text x="100" y="128" text-anchor="middle" font-size="18" fill="#AEB7DA">دقيقة</text></svg>
+        <div class="steps15 reveal" data-step="2">
+          <div><b>١</b>تناول ١٥ غرام سكريات سريعة</div>
+          <div><b>٢</b>انتظر ١٥ دقيقة ثم أعد القياس</div>
+          <div><b>٣</b>ما زال منخفضًا؟ كرّر ١٥ غرام</div>
+          <div><b>٤</b>بعد التحسّن: وجبة خفيفة فيها نشويات وبروتين</div>
+        </div>
+      </div>
+      <div class="alert reveal" data-step="3" style="background:rgba(255,181,71,.12);border-color:rgba(255,181,71,.5)"><b style="color:#FFD08A">وعند ارتفاع السكر:</b> اشرب ماء كثير، والتزم بجرعتك دون زيادة من نفسك، وتجنب السكريات. فوق ٣٠٠ ملغ/دل، أو غثيان وقيء، أو رائحة أسيتون: الطوارئ فورًا (احتمال حماض كيتوني).</div>
+    </div>
+  </div>
+  <template class="note">اسأل: ماذا تعطيه؟ خلّهم يجاوبون، ثم «التالي» يكشف الجواب. بعدها قاعدة ١٥×١٥ (العدّاد يعمل تلقائيًا)، ثم التعامل مع ارتفاع السكر، ثم فقدان الوعي.</template>
+</section>
+
+<!-- 8 COMPLICATIONS -->
+<section class="slide" data-title="المضاعفات" data-steps="6">
+  <h2>السكري يمسّ <em>الجسم كله</em></h2>
+  <div class="body">
+    <div class="bodyfig"><svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="خريطة الجسم ومضاعفات السكري">
+<defs><linearGradient id="skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4FB3FF" stop-opacity=".55"/><stop offset="1" stop-color="#1B1F5E" stop-opacity=".55"/></linearGradient></defs>
+<g fill="url(#skin)" stroke="rgba(255,255,255,.35)" stroke-width="2">
+ <circle cx="180" cy="78" r="50"/>
+ <path d="M160 124h40v20h-40z"/>
+ <path d="M112 150c0-8 8-14 18-14h100c10 0 18 6 18 14l6 170c0 12-8 20-20 20h-108c-12 0-20-8-20-20z"/>
+ <path d="M112 156c-20 6-30 18-34 40l-24 170c-2 14 14 18 18 6l30-150z"/>
+ <path d="M248 156c20 6 30 18 34 40l24 170c2 14-14 18-18 6l-30-150z"/>
+ <path d="M128 336h46l-6 240c0 14-30 14-30 0z"/>
+ <path d="M186 336h46l-10 240c0 14-30 14-30 0z"/>
+ <ellipse cx="150" cy="592" rx="26" ry="14"/><ellipse cx="210" cy="592" rx="26" ry="14"/>
+</g>
+<g class="organ" data-o="eye"><circle class="pulse" cx="180" cy="70" r="26"/><g fill="#fff"><ellipse cx="162" cy="70" rx="10" ry="6"/><ellipse cx="198" cy="70" rx="10" ry="6"/></g><g fill="#1B1F5E"><circle cx="162" cy="70" r="3.5"/><circle cx="198" cy="70" r="3.5"/></g></g>
+<g class="organ" data-o="tooth"><circle class="pulse" cx="180" cy="104" r="20"/><path d="M166 100q14 12 28 0" fill="#fff" stroke="#FF5DB1" stroke-width="3"/></g>
+<g class="organ" data-o="heart"><circle class="pulse" cx="200" cy="200" r="34"/><path d="M200 222s-24-13-24-31a12 12 0 0 1 24-7 12 12 0 0 1 24 7c0 18-24 31-24 31z" fill="#FF5A6E"/></g>
+<g class="organ" data-o="kidney"><circle class="pulse" cx="180" cy="285" r="40"/><path d="M160 268c-12 0-16 10-16 18s4 20 16 20 10-8 8-12-4-6 0-12 4-14-8-14z" fill="#B0475F"/><path d="M200 268c12 0 16 10 16 18s-4 20-16 20-10-8-8-12 4-6 0-12-4-14 8-14z" fill="#B0475F"/></g>
+<g class="organ" data-o="nerve"><circle class="pulse" cx="66" cy="372" r="28"/><path d="M70 350l-12 22h10l-4 18 14-24h-10z" fill="#FFD54F"/><path d="M286 350l-12 22h10l-4 18 14-24h-10z" fill="#FFD54F" opacity=".7"/></g>
+<g class="organ" data-o="foot"><circle class="pulse" cx="150" cy="592" r="30"/><circle cx="150" cy="592" r="8" fill="#FF5A6E"/></g>
+</svg>
+</div>
+    <div>
+      <div class="ocards" id="ocards">
+        <div class="ocard panel" data-o="eye"><span class="ibox"><svg class="icon"><use href="#i-eye"/></svg></span><div><h3>العين</h3><p>اعتلال الشبكية قد يصل لفقدان البصر</p></div></div>
+        <div class="ocard panel" data-o="tooth"><span class="ibox"><svg class="icon"><use href="#i-tooth"/></svg></span><div><h3>الفم والأسنان</h3><p>التهاب واحمرار وتورّم اللثة</p></div></div>
+        <div class="ocard panel" data-o="heart"><span class="ibox"><svg class="icon"><use href="#i-heart"/></svg></span><div><h3>القلب والأوعية</h3><p>جلطات وارتفاع ضغط وتصلّب الشرايين</p></div></div>
+        <div class="ocard panel" data-o="kidney"><span class="ibox"><svg class="icon"><use href="#i-kidney"/></svg></span><div><h3>الكلى</h3><p>اعتلال الكلى قد يؤدي إلى الفشل الكلوي</p></div></div>
+        <div class="ocard panel" data-o="nerve"><span class="ibox"><svg class="icon"><use href="#i-nerve"/></svg></span><div><h3>الأعصاب</h3><p>خدر وألم ووخز في الأطراف</p></div></div>
+        <div class="ocard panel" data-o="foot"><span class="ibox"><svg class="icon"><use href="#i-foot"/></svg></span><div><h3>القدم السكري</h3><p>ضعف الإحساس وبطء الالتئام، وقد تصل للبتر</p></div></div>
+      </div>
+      <div class="footrow">
+        <img class="photo soft" src="assets/img/footcare.webp" alt="رجل يفحص قدمه">
+        <div><h3 style="font-size:22px;margin-bottom:8px">العناية بالقدم كل يوم</h3>
+        <div class="foot"><span class="pill">افحصها يوميًا</span><span class="pill">اغسلها وجفّف ما بين الأصابع</span><span class="pill">رطّب الجلد</span><span class="pill">اعتنِ بالأظافر</span><span class="pill">حذاء مريح ولا حافيًا</span><span class="pill">أي جرح؟ الطبيب فورًا</span></div></div>
+      </div>
+    </div>
+  </div>
+  <template class="note">كل «التالي» يبرز عضوًا. السبب: ارتفاع السكر لفترات طويلة يتلف الأوعية الدموية والأعصاب. ضبط السكر والفحوصات الدورية تمنع أغلبها أو تكشفها مبكرًا.</template>
+</section>
+
+<!-- 9 MYTHS -->
+<section class="slide" data-title="صح أم خطأ" data-steps="8">
+  <h2>صوّتوا بأيديكم… <em>ثم نقلب البطاقة</em></h2>
+  <div class="myths" id="myths"></div>
+  <template class="note">البطاقة المضيئة هي الحالية: اقرأها، واطلب رفع اليد لمن يراها صحيحة ثم لمن يراها خاطئة، و«التالي» يقلبها. ركّز على: الأنسولين لا يسبب الإدمان، والأعشاب ليست علاجًا.</template>
+</section>
+
+<!-- 10 LIVING -->
+<section class="slide" data-title="رمضان والحج والسفر" data-steps="8">
+  <h2>مريض السكري في <em>رمضان والحج والسفر</em></h2>
+  <div class="living">
+    <div class="livecol">
+      <div class="ltabs" id="ltabs"><span class="tab on" data-l="ramadan">رمضان</span><span class="tab" data-l="hajj">الحج</span><span class="tab" data-l="travel">السفر</span></div>
+      <div class="liverow"><img class="photo soft" id="liveImg" src="assets/img/ramadan.webp" alt=""><div class="tips" id="tips"></div></div>
+    </div>
+    <div class="bag panel">
+      <div class="bagtop"><span class="act">ماذا يدخل الشنطة؟ صوّتوا</span><span class="score" style="font-size:30px"><span id="bagN">٠</span>/٤</span></div>
+      <div class="bagzone"><svg viewBox="0 0 260 200"><rect x="40" y="60" width="180" height="134" rx="28" fill="#CC338B"/><rect x="40" y="60" width="180" height="40" rx="20" fill="#E5469E"/><path d="M95 60V40a12 12 0 0 1 12-12h46a12 12 0 0 1 12 12v20" fill="none" stroke="#E5469E" stroke-width="12"/><rect x="118" y="120" width="24" height="24" rx="4" fill="#fff"/><path d="M130 124v16M122 132h16" stroke="#CC338B" stroke-width="4"/></svg><div class="packed" id="packed"></div></div>
+      <div class="items" id="items"></div>
+      <div class="feedback" id="bagFb" style="min-height:56px"></div>
+    </div>
+  </div>
+  <template class="note">«التالي» ينقل بين رمضان والحج والسفر. بعدها لعبة الشنطة: الأداة المضيئة، اسأل: تدخل الشنطة أو لا؟ ثم «التالي» يكشف. قبل رمضان لازم مراجعة الطبيب لمعرفة إمكانية الصيام وضبط الجرعات.</template>
+</section>
+
+<!-- 11 PREVENTION -->
+<section class="slide" data-title="الوقاية" data-steps="5">
+  <h2>٥ خطوات <em>تحميك</em></h2>
+  <div class="path">
+    <svg class="road" viewBox="0 0 1470 330" preserveAspectRatio="none"><path d="M1420 250 C1250 250 1230 90 1060 90 S840 250 700 250 S480 90 330 90 S120 250 40 250" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="14" stroke-linecap="round" stroke-dasharray="2 26"/><path id="roadDone" d="M1420 250 C1250 250 1230 90 1060 90 S840 250 700 250 S480 90 330 90 S120 250 40 250" fill="none" stroke="#FF5DB1" stroke-width="6" stroke-linecap="round" pathLength="1" stroke-dasharray="0 1" style="transition:stroke-dasharray .9s"/></svg>
+    <div class="stepn reveal" data-step="1" style="right:0;top:110px"><img class="disc" src="assets/img/scale.webp" alt=""><b>١. وزن صحي</b><small>حتى نزول بسيط في الوزن يفرق</small></div>
+    <div class="stepn reveal" data-step="2" style="right:290px;top:-40px"><img class="disc" src="assets/img/walk.webp" alt=""><b>٢. تحرّك بانتظام</b><small>٣٠ دقيقة يوميًا على الأقل</small></div>
+    <div class="stepn reveal" data-step="3" style="right:610px;top:110px"><img class="disc" src="assets/img/plate.webp" alt=""><b>٣. غذاء متوازن</b><small>أقل سكريات ودهون مشبعة</small></div>
+    <div class="stepn reveal" data-step="4" style="right:910px;top:-40px"><img class="disc" src="assets/img/nosmoke.webp" alt=""><b>٤. أقلع عن التدخين</b><small>يحمي قلبك وأوعيتك</small></div>
+    <div class="stepn reveal" data-step="5" style="right:1210px;top:110px"><img class="disc" src="assets/img/checkup.webp" alt=""><b>٥. افحص دوريًا</b><small>خاصة بعد ٣٥ أو مع عوامل الخطر</small></div>
+  </div>
+  <h3 style="font-size:24px;margin-top:4px">والمصاب؟ فحوصاته الدورية:</h3>
+  <div class="checks">
+    <div class="check panel"><span class="ibox"><svg class="icon"><use href="#i-meter"/></svg></span><b>السكر التراكمي</b><small>كل ٣–٦ أشهر</small></div>
+    <div class="check panel"><span class="ibox"><svg class="icon"><use href="#i-eye"/></svg></span><b>فحص العين</b><small>سنويًا</small></div>
+    <div class="check panel"><span class="ibox"><svg class="icon"><use href="#i-kidney"/></svg></span><b>وظائف الكلى</b><small>سنويًا</small></div>
+    <div class="check panel"><span class="ibox"><svg class="icon"><use href="#i-heart"/></svg></span><b>الكوليسترول</b><small>سنويًا</small></div>
+    <div class="check panel"><span class="ibox"><svg class="icon"><use href="#i-foot"/></svg></span><b>فحص القدمين</b><small>كل زيارة</small></div>
+    <div class="check panel"><span class="ibox"><svg class="icon"><use href="#i-bp"/></svg></span><b>الضغط والوزن</b><small>كل مراجعة</small></div>
+  </div>
+  <template class="note">كل «التالي» يضيف خطوة على الطريق، وهذا شعار الحملة: بخطوة وعي. ثم الفحوصات الدورية للمصابين، ومواعيدها يحددها الطبيب حسب الحالة.</template>
+</section>
+
+<!-- 12 END -->
+<section class="slide" data-title="شكرًا لكم">
+  <div class="end">
+    <div>
+      <h2 style="font-size:76px">صحتك تبدأ <em>بخطوة</em></h2>
+      <p class="lead">افحص سكرك، تحرّك كل يوم، وشارك اللي تعلمته مع أهلك.</p>
+      <div class="sources">المصادر: وزارة الصحة السعودية (moh.gov.sa) · منظمة الصحة العالمية (WHO) · مراكز السيطرة على الأمراض (CDC) · الجمعية الأمريكية للسكري (ADA).</div>
+      <div class="restartnote"><svg class="icon"><use href="#i-restart"/></svg>«التالي» هنا يعيد العرض من البداية</div>
+    </div>
+    <div class="endimg"><img class="photo soft" src="assets/img/family.webp" alt="عائلة سعودية"></div>
+  </div>
+  <template class="note">اشكر الحضور والمشرفة وفريق العمل وإدارة العمل التطوعي. افتح باب الأسئلة. زر «التالي» في هذي الشريحة يعيد العرض من البداية.</template>
+</section>
+
+
+<footer class="bottombar">
+  <div class="track"><div class="drops" id="progress"></div><div class="ttl" id="ttl"></div></div>
+  <div class="ctrl">
+    <span class="nextlbl" id="hint"></span>
+    <button class="ghost" id="bNotes" title="نص المتحدث (N)"><svg class="icon"><use href="#i-notes"/></svg></button>
+    <button class="ghost" id="bFull" title="ملء الشاشة (F)"><svg class="icon"><use href="#i-full"/></svg></button>
+    <button class="ghost" id="bPrev" title="السابق"><svg class="icon"><use href="#i-prev"/></svg></button>
+    <button class="nextc" id="bNext" title="التالي"><svg class="ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" stroke="rgba(255,255,255,.15)"/><circle id="ringArc" cx="50" cy="50" r="46" stroke="#fff" pathLength="1" stroke-dasharray="0 1" stroke-linecap="round"/></svg><svg class="icon" id="nextIco"><use href="#i-next"/></svg></button>
+  </div>
+</footer>
+
+</div></div>
+
+<canvas id="confetti"></canvas>
+<aside class="notes" id="notes"><h3 id="notesT"></h3><div id="notesB"></div></aside>
+<div class="toast" id="toast"></div>
+
+
+<script src="assets/js/gsap.min.js"></script>
+<script>
+window.SLIDE_SEQ=[0, 7, 8, 9, 10, 11, 12];
+const PANC_OUT="M52 170 A18.4 18.4 0 0 1 58 140 A18.7 18.7 0 0 1 78 116 A17.2 17.2 0 0 1 104 104 A16.8 16.8 0 0 1 132 104 A16.8 16.8 0 0 1 160 104 A17.0 17.0 0 0 1 188 100 A17.2 17.2 0 0 1 216 94 A17.2 17.2 0 0 1 244 88 A17.2 17.2 0 0 1 272 82 A17.1 17.1 0 0 1 300 77 A17.1 17.1 0 0 1 328 72 A17.1 17.1 0 0 1 356 67 A15.7 15.7 0 0 1 382 64 A13.3 13.3 0 0 1 404 66 C416 68 420 80 410 88 C384 96 352 106 320 118 C280 132 250 150 232 176 C214 204 210 240 180 256 C150 272 100 262 78 240 C58 220 50 196 52 170 Z", PANC_DUO="M122 74 C60 74 20 128 22 190 C24 252 70 292 142 290 C182 289 208 276 222 258";
+(() => {
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const ease = x => 1 - Math.pow(1 - x, 3);
+const easeIO = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const ar = n => String(n).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- fit stage ---------- */
+const stage = $('#stage');
+function fit() {
+  const vw = window.visualViewport ? visualViewport.width : innerWidth, vh = window.visualViewport ? visualViewport.height : innerHeight;
+  const port = vw / vh < .85; document.body.classList.toggle('portrait', port);
+  const W = port ? 900 : 1600, H = port ? 1600 : 900;
+  stage.style.transform = `translate(-50%,-50%) scale(${Math.min(vw / W, vh / H)})`;
+}
+addEventListener('resize', fit); addEventListener('orientationchange', () => setTimeout(fit, 250));
+window.visualViewport && visualViewport.addEventListener('resize', fit); fit();
+
+/* ---------- toast ---------- */
+let tt; function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('on'), 2200); }
+
+/* ---------- slides & steps ---------- */
+const slides = $$('.slide');
+/* a screen can show only part of the deck: SEQ lists the slide indexes it plays, in order */
+const SEQ = (window.SLIDE_SEQ || slides.map((_, i) => i)).filter(i => i < slides.length);
+const pos = () => SEQ.indexOf(cur);
+let cur = SEQ[0], step = 0;
+const prog = $('#progress');
+SEQ.forEach(() => { prog.insertAdjacentHTML('beforeend', '<svg viewBox="0 0 14 18"><path d="M7 0s7 7.6 7 11a7 7 0 0 1-14 0C0 7.6 7 0 7 0z"/></svg>'); });
+const hooks = {};
+const stepsOf = i => +(slides[i].dataset.steps || 0);
+function applySteps() {
+  $$('.reveal[data-step]', slides[cur]).forEach(el => el.classList.toggle('shown', +el.dataset.step <= step));
+  hooks[cur]?.step?.(step);
+}
+function show(i, atEnd = false) {
+  slides[cur].classList.remove('active'); hooks[cur]?.leave?.();
+  cur = SEQ.includes(i) ? i : SEQ[0]; step = atEnd ? stepsOf(cur) : 0;
+  slides[cur].classList.add('active'); hooks[cur]?.enter?.();
+  applySteps(); ui();
+  history.replaceState(null, '', '#' + (pos() + 1));
+}
+const atLast = () => pos() === SEQ.length - 1 && step >= stepsOf(cur);
+function next() {
+  if (step < stepsOf(cur)) { step++; applySteps(); ui(); }
+  else if (pos() < SEQ.length - 1) show(SEQ[pos() + 1]);
+  else { show(SEQ[0]); toast('بدأنا من جديد'); }
+}
+function prev() { if (step > 0) { step--; applySteps(); ui(); } else if (pos() > 0) show(SEQ[pos() - 1], true); }
+function ui() {
+  $$('#progress svg').forEach((el, i) => el.setAttribute('class', i < pos() ? 'on' : i === pos() ? 'cur' : ''));
+  $('#bPrev').disabled = pos() === 0 && step === 0;
+  const n = stepsOf(cur);
+  $('#ringArc').setAttribute('stroke-dasharray', n ? `${step / n} 1` : '0 1');
+  const last = atLast();
+  $('#bNext').classList.toggle('restart', last);
+  $('#nextIco').innerHTML = `<use href="#${last ? 'i-restart' : 'i-next'}"/>`;
+  $('#bNext').title = last ? 'إعادة العرض' : 'التالي';
+  const left = n - step;
+  $('#hint').textContent = last ? 'إعادة العرض من البداية' : left > 0 ? `باقي ${ar(left)} ${left > 2 && left < 11 ? 'خطوات' : left === 2 ? 'خطوتين' : 'خطوة'} في هذي الشريحة` : '';
+  $('#ttl').innerHTML = `<b>${ar(pos() + 1)}</b>/ ${ar(SEQ.length)} · ${slides[cur].dataset.title}`;
+  $('#bignum').textContent = ar(String(pos() + 1).padStart(2, '0'));
+  updateNotes();
+}
+$('#bNext').onclick = next; $('#bPrev').onclick = prev;
+/* swipe on touch screens: swipe left = next (RTL reading), swipe right = back */
+let tx = 0, ty = 0;
+addEventListener('touchstart', e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+  if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) { dx < 0 ? next() : prev(); } }, { passive: true });
+
+/* ---------- keyboard: presentation clickers send PageDown/PageUp or arrows ---------- */
+addEventListener('keydown', e => {
+  const k = e.key;
+  if (['PageDown', 'ArrowLeft', 'ArrowDown', ' ', 'Enter'].includes(k)) { e.preventDefault(); next(); }
+  else if (['PageUp', 'ArrowRight', 'ArrowUp', 'Backspace'].includes(k)) { e.preventDefault(); prev(); }
+  else if (k === 'f' || k === 'F' || k === 'F5') { e.preventDefault(); toggleFull(); }
+  else if (k === 'n' || k === 'N') toggleNotes();
+  else if (k === 'Escape') $('#notes').classList.remove('open');
+  else if (k === 'Home') show(SEQ[0]); else if (k === 'End') show(SEQ[SEQ.length - 1]);
+});
+function toggleFull() { if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => toast('ملء الشاشة غير متاح هنا')); else document.exitFullscreen(); }
+function toggleNotes() { $('#notes').classList.toggle('open'); updateNotes(); }
+function updateNotes() { const n = $('template.note', slides[cur]); $('#notesT').textContent = `نص المتحدث · ${slides[cur].dataset.title}`; $('#notesB').textContent = n ? n.content.textContent.trim() : ''; }
+$('#bFull').onclick = toggleFull; $('#bNotes').onclick = toggleNotes;
+
+/* ---------- 0 cover: logo intro + balanced loop (GSAP timeline) ---------- */
+(function cover() {
+  const svg = $('#coverLogo'); if (!svg || !window.gsap) return;
+  const q = id => $('#' + id, svg);
+  const out = q('cvOut'), duo = q('cvDuo'), wr = q('cvWipe'), wm = q('cvWm'), dr = q('cvDrop'), dm = q('cvDropMask'), tag = q('cvTag'), shine = q('cvShine'), rip = q('cvRipple');
+  let intro, loop, placed = false;
+  function place() { if (placed) return; const bb = dr.getBBox(); if (!bb.width) return; rip.setAttribute('cx', bb.x + bb.width / 2); rip.setAttribute('cy', bb.y + bb.height * .72); placed = true; }
+  function build() {
+    intro && intro.kill(); loop && loop.kill(); place();
+    gsap.set(dr, { transformOrigin: '50% 100%' });
+    gsap.set(out, { strokeDashoffset: 1 }); gsap.set(duo, { strokeDashoffset: 1 }); gsap.set(wr, { attr: { x: 560, width: 0 } });
+    gsap.set(wm, { opacity: .2 }); gsap.set(dr, { y: -180, opacity: 0, scaleY: 1 }); gsap.set(dm, { strokeWidth: 0 }); gsap.set(tag, { opacity: 0, y: 14 });
+    gsap.set(shine, { attr: { 'stroke-dasharray': '0.07 1', 'stroke-dashoffset': 0.07 }, opacity: 0 }); gsap.set(rip, { attr: { r: 14 }, opacity: 0 });
+    loop = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 1.6, defaults: { ease: 'sine.inOut' } })
+      .to(shine, { opacity: .9, duration: .3 }, 0)
+      .to(shine, { attr: { 'stroke-dashoffset': -1 }, duration: 2.8, ease: 'power1.inOut' }, 0)
+      .to(shine, { opacity: 0, duration: .3 }, 2.5)
+      .addLabel('drip', 2.9)
+      .to(dr, { y: -26, scaleY: 1.08, duration: .45, ease: 'power2.out' }, 'drip')
+      .to(dr, { y: 0, scaleY: 1, duration: .7, ease: 'bounce.out' }, 'drip+=.45')
+      .fromTo(rip, { attr: { r: 12 }, opacity: .8 }, { attr: { r: 46 }, opacity: 0, duration: 1.1, ease: 'power2.out' }, 'drip+=.8')
+      .to(svg, { y: -6, duration: 1.4 }, 0).to(svg, { y: 0, duration: 1.4 }, 1.4);
+    intro = gsap.timeline({ defaults: { ease: 'power3.inOut' }, onComplete: () => { if (!reduce) loop.play(0); } })
+      .to(duo, { strokeDashoffset: 0, duration: 1.5 }, 0)
+      .to(out, { strokeDashoffset: 0, duration: 1.75 }, .15)
+      .addLabel('word', 1.5)
+      .to(wr, { attr: { x: 0, width: 560 }, duration: 1.2, ease: 'power3.out' }, 'word')
+      .to(wm, { opacity: 1, duration: 1.2, ease: 'power3.out' }, 'word')
+      .addLabel('drop', 2.6)
+      .to(dr, { opacity: 1, duration: .2, ease: 'none' }, 'drop')
+      .to(dr, { y: 0, duration: .9, ease: 'bounce.out' }, 'drop')
+      .to(dm, { strokeWidth: 18, duration: .3, ease: 'power2.out' }, 'drop+=.5')
+      .to(tag, { opacity: 1, y: 0, duration: .8, ease: 'power3.out' }, 'drop+=.9');
+  }
+  hooks[0] = {
+    enter() { build(); if (reduce) intro.progress(1); },
+    leave() { intro && intro.kill(); loop && loop.kill(); gsap.set(svg, { y: 0 }); }
+  };
+})();
+
+/* ---------- 1 counters ---------- */
+(function stats() {
+  const cards = $$('.stat');
+  cards.forEach(c => { const l = $('.lbl', c); l.dataset.q = l.textContent; });
+  function countUp(card) {
+    const target = +card.dataset.count, suf = card.dataset.suffix, num = $('.num', card), dec = String(target).includes('.') ? 1 : 0, lbl = $('.lbl', card);
+    card.classList.remove('hidden'); lbl.textContent = lbl.dataset.text; const t0 = performance.now();
+    (function loop(n) { const p = clamp((n - t0) / 1400); num.innerHTML = `${(target * ease(p)).toFixed(dec)}<small>${suf}</small>`; if (p < 1) requestAnimationFrame(loop); })(t0);
+  }
+  hooks[1] = { step(s) { cards.forEach(c => { const k = +c.dataset.revealStep;
+    if (k <= s && c.classList.contains('hidden')) countUp(c);
+    if (k > s) { c.classList.add('hidden'); $('.num', c).textContent = '؟'; $('.lbl', c).textContent = $('.lbl', c).dataset.q; } }); } };
+})();
+
+/* ---------- 2 insulin key scene ---------- */
+(function keyScene() {
+  const svg = $('#keyScene'), NS = 'http://www.w3.org/2000/svg';
+  const el = (n, a, p = svg) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
+  const g0 = el('g', {});
+  el('rect', { x: 0, y: 40, width: 800, height: 150, fill: '#7A1E3E', opacity: .55 }, g0);
+  el('rect', { x: 0, y: 40, width: 800, height: 10, fill: '#B03060', opacity: .6 }, g0);
+  el('rect', { x: 0, y: 180, width: 800, height: 10, fill: '#B03060', opacity: .6 }, g0);
+  const lab = (x, y, t, fs = 18, c = '#fff', p = svg) => { const e = el('text', { x, y, 'text-anchor': 'middle', 'font-size': fs, fill: c, 'font-weight': 700, 'font-family': 'Thmanyah Sans, Tahoma' }, p); e.textContent = t; return e; };
+  lab(720, 30, 'الدم', 18, '#FFB3C8');
+  const pg = el('g', { transform: 'translate(40 250)' });
+  const pin = el('g', { transform: 'translate(-6 -40) scale(.5)' }, pg);
+  el('path', { d: PANC_OUT, fill: 'none', stroke: '#4FB3FF', 'stroke-width': 11, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, pin);
+  el('path', { d: PANC_DUO, fill: 'none', stroke: '#4FB3FF', 'stroke-width': 11, 'stroke-linecap': 'round' }, pin);
+  lab(110, 150, 'البنكرياس', 18, '#AEB7DA', pg);
+  const cross = el('g', { opacity: 0 }, pg); el('path', { d: 'M40 20l120 100M160 20L40 120', stroke: '#FF5A6E', 'stroke-width': 8, 'stroke-linecap': 'round' }, cross);
+  const immune = el('g', { opacity: 0 }, pg);
+  [[30, 10], [170, 30], [100, 120]].forEach(([x, y]) => { const c = el('g', { transform: `translate(${x} ${y})` }, immune); el('circle', { r: 14, fill: '#FFD54F' }, c); for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; el('line', { x1: 14 * Math.cos(a), y1: 14 * Math.sin(a), x2: 22 * Math.cos(a), y2: 22 * Math.sin(a), stroke: '#FFD54F', 'stroke-width': 4, 'stroke-linecap': 'round' }, c); } });
+  const cg = el('g', { transform: 'translate(560 380)' });
+  const cellC = el('circle', { r: 130, fill: 'rgba(79,179,255,.10)', stroke: '#4FB3FF', 'stroke-width': 5 }, cg);
+  el('circle', { r: 40, cx: 30, cy: 30, fill: 'rgba(204,51,139,.35)' }, cg);
+  const energy = lab(0, 100, 'طاقة: ٠', 20, '#fff', cg);
+  lab(0, 156, 'خلية الجسم', 18, '#AEB7DA', cg);
+  const door = el('g', { transform: 'translate(560 252)' });
+  const lockBody = el('rect', { x: -26, y: -22, width: 52, height: 44, rx: 10, fill: '#FFD54F' }, door);
+  const shackle = el('path', { d: 'M-14 -22v-12a14 14 0 0 1 28 0v12', fill: 'none', stroke: '#FFD54F', 'stroke-width': 8 }, door);
+  el('circle', { r: 6, fill: '#1B1F5E' }, door);
+  const rust = el('g', { opacity: 0 }, door); [[-14, 10], [10, -8], [16, 12], [-8, -12]].forEach(([x, y]) => el('circle', { cx: x, cy: y, r: 6, fill: '#B36B2E' }, rust));
+  const glu = [], keys = []; const gLayer = el('g', {}), kLayer = el('g', {});
+  function sugar() { const g = el('g', {}, gLayer); el('rect', { x: -9, y: -9, width: 18, height: 18, rx: 4, fill: '#fff' }, g); el('rect', { x: -9, y: -9, width: 18, height: 6, rx: 3, fill: '#FFC2E3' }, g); return { g, x: -20 - Math.random() * 200, y: 70 + Math.random() * 90, vx: 3 + Math.random() * 2, state: 'flow' }; }
+  function key() { const g = el('g', {}, kLayer); el('circle', { r: 9, fill: 'none', stroke: '#4FB3FF', 'stroke-width': 5 }, g); el('path', { d: 'M9 0h22M24 0v7M31 0v6', stroke: '#4FB3FF', 'stroke-width': 5, 'stroke-linecap': 'round' }, g); return { g, x: 230, y: 300, t: 0 }; }
+  const texts = {
+    normal: '<b>الجسم السليم:</b> يرتفع السكر بعد الأكل، فيفرز البنكرياس الإنسولين (المفتاح)، فيفتح باب الخلية ويدخل الجلوكوز ويصير طاقة. والزائد يخزّنه الكبد.',
+    t1: '<b>النوع الأول:</b> الجهاز المناعي يهاجم خلايا بيتا، فلا يوجد إنسولين. الأبواب مقفلة، والسكر يتكدّس في الدم، والخلية جائعة.',
+    t2: '<b>النوع الثاني:</b> الإنسولين موجود لكن «القفل» لا يستجيب جيدًا (مقاومة الإنسولين)، فيدخل جزء بسيط ويبقى أغلب السكر في الدم.'
+  };
+  let mode = 'normal', raf, last = 0, spawn = 0, kspawn = 0, en = 0, open = 0;
+  function setMode(m) {
+    mode = m; $$('.mode').forEach(b => b.classList.toggle('on', b.dataset.mode === m)); $('#keyExplain').innerHTML = texts[m];
+    cross.setAttribute('opacity', m === 't1' ? 1 : 0); immune.setAttribute('opacity', m === 't1' ? 1 : 0); rust.setAttribute('opacity', m === 't2' ? 1 : 0);
+    glu.splice(0).forEach(s => s.g.remove()); keys.splice(0).forEach(k => k.g.remove()); en = 0;
+  }
+  function tick(n) {
+    const dt = Math.min(50, n - (last || n)); last = n; spawn += dt; kspawn += dt;
+    if (spawn > 260 && glu.length < (mode === 'normal' ? 26 : 60)) { glu.push(sugar()); spawn = 0; }
+    if (mode !== 't1' && kspawn > (mode === 'normal' ? 700 : 1600) && keys.length < 3) { keys.push(key()); kspawn = 0; }
+    keys.forEach(k => { k.t += dt / 1400; const p = ease(clamp(k.t)); k.x = 230 + 300 * p; k.y = 300 - 50 * Math.sin(p * Math.PI) - 48 * p; k.g.setAttribute('transform', `translate(${k.x} ${k.y})`); if (k.t >= 1) { open = mode === 't2' ? 500 : 1800; k.g.remove(); k.dead = 1; } });
+    for (let i = keys.length - 1; i >= 0; i--) if (keys[i].dead) keys.splice(i, 1);
+    open = Math.max(0, open - dt);
+    shackle.setAttribute('transform', open > 0 && mode !== 't1' ? 'translate(0 -10) rotate(-20 14 -22)' : '');
+    lockBody.setAttribute('fill', open > 0 ? '#2FD39A' : '#FFD54F');
+    glu.forEach(s => {
+      if (s.state === 'flow') { s.x += s.vx * dt / 16;
+        if (s.x > 520 && s.x < 620 && open > 0 && !s.tried) { s.tried = 1; if (mode === 'normal' || Math.random() < .3) s.state = 'in'; }
+        if (s.x > 820) { s.x = -20; s.tried = 0; } }
+      else { s.y += 3.2 * dt / 16; s.x += (560 - s.x) * .08; if (s.y > 360) { s.g.remove(); s.dead = 1; en++; } }
+      s.g.setAttribute('transform', `translate(${s.x} ${s.y})`);
+    });
+    for (let i = glu.length - 1; i >= 0; i--) if (glu[i].dead) glu.splice(i, 1);
+    energy.textContent = 'طاقة: ' + ar(en); cellC.setAttribute('fill', `rgba(79,179,255,${.08 + Math.min(.3, en * .01)})`);
+    raf = requestAnimationFrame(tick);
+  }
+  hooks[2] = {
+    enter() { setMode('normal'); cancelAnimationFrame(raf); last = 0; raf = requestAnimationFrame(tick); },
+    leave() { cancelAnimationFrame(raf); },
+    step(s) { const m = ['normal', 't1', 't2'][s]; if (m !== mode) setMode(m); }
+  };
+})();
+
+/* ---------- 4 risk ---------- */
+hooks[4] = { step(s) { $('#riskHand').style.display = s >= 5 ? 'none' : ''; } };
+
+/* ---------- 3 who am I ---------- */
+hooks[3] = { step(s) { $$('.who').forEach(w => w.classList.toggle('open', +w.dataset.revealStep <= s)); } };
+
+/* ---------- 5 the room: spotlight one sign per Next ---------- */
+(function room() {
+  const sc = $('#scene3d'); if (!sc) return;
+  const holes = JSON.parse('[' + sc.dataset.holes + ']');
+  const hole = $('#spotHole'), ring = $('#spotRing'), dim = $('#spotDim');
+  const names = $$('.pin', sc).map(p => $('.pl b', p).textContent);
+  let cur = { x: 768, y: 512, r: 0 }, raf;
+  function moveTo(t, show) {
+    cancelAnimationFrame(raf); const from = { ...cur }, t0 = performance.now(), D = reduce ? 1 : 650;
+    (function loop(n) { const p = ease(clamp((n - t0) / D));
+      cur = { x: from.x + (t.x - from.x) * p, y: from.y + (t.y - from.y) * p, r: from.r + (t.r - from.r) * p };
+      for (const el of [hole, ring]) { el.setAttribute('cx', cur.x); el.setAttribute('cy', cur.y); el.setAttribute('r', cur.r); }
+      if (p < 1) raf = requestAnimationFrame(loop); })(t0);
+    dim.style.transition = 'opacity .5s'; dim.setAttribute('opacity', show ? 1 : 0); ring.setAttribute('opacity', show ? 1 : 0);
+  }
+  hooks[5] = {
+    step(s) {
+      $$('.pin', sc).forEach(p => { const i = +p.dataset.i; p.classList.toggle('found', i < s); p.classList.toggle('cur', i === s - 1); });
+      $('#huntN').textContent = ar(s);
+      $('#roomFound').innerHTML = names.slice(0, s).map((n, i) => `<li class="${i === s - 1 ? 'now' : ''}"><b>${ar(i + 1)}</b>${n}</li>`).join('');
+      $('#roomAsk').textContent = s === 0 ? 'كم علامة تشوفون؟ قولوها بصوت عالي' : s < 7 ? 'وش العلامة اللي بعدها؟' : 'لقيتوها كلها!';
+      if (s === 0) moveTo({ x: 768, y: 512, r: 0 }, false);
+      else { const [x, y, r] = holes[s - 1]; moveTo({ x, y, r: r * 1.15 }, s < 7 || true); }
+      if (s === 7) { celebrate(); setTimeout(() => moveTo({ x: 768, y: 512, r: 1100 }, false), 900); }
+    },
+    leave() { cancelAnimationFrame(raf); }
+  };
+})();
+
+/* ---------- 6 glucose meter: show reading, then reveal ---------- */
+(function meter() {
+  const cfg = {
+    fast: { min: 40, max: 250, unit: 'mg/dL', tag: 'صائم ٨ ساعات', bands: [[40, 70, 'هبوط', 'var(--sky)', 'هبوط سكر! أقل من ٧٠: طبّق قاعدة ١٥×١٥'], [70, 100, 'طبيعي', 'var(--good)', 'طبيعي: من ٧٠ إلى ٩٩'], [100, 126, 'ما قبل السكري', 'var(--warn)', 'ما قبل السكري: ١٠٠–١٢٥'], [126, 251, 'سكري', 'var(--bad)', 'سكري: ١٢٦ فأكثر']] },
+    post: { min: 60, max: 320, unit: 'mg/dL', tag: 'بعد الأكل بساعتين', bands: [[60, 140, 'طبيعي', 'var(--good)', 'طبيعي: أقل من ١٤٠'], [140, 200, 'ما قبل السكري', 'var(--warn)', 'ما قبل السكري: ١٤٠–١٩٩'], [200, 321, 'سكري', 'var(--bad)', 'سكري: ٢٠٠ فأكثر']] },
+    a1c: { min: 4, max: 10, unit: '% HbA1c', tag: 'متوسط ٢–٣ أشهر', bands: [[4, 5.7, 'طبيعي', 'var(--good)', 'طبيعي: أقل من ٥٫٧٪'], [5.7, 6.5, 'ما قبل السكري', 'var(--warn)', 'ما قبل السكري: ٥٫٧–٦٫٤٪'], [6.5, 10.01, 'سكري', 'var(--bad)', 'سكري: ٦٫٥٪ فأكثر']] }
+  };
+  const rounds = [['fast', 92], ['post', 168], ['a1c', 6.9], ['fast', 62]];
+  function draw(t) {
+    const c = cfg[t];
+    $$('#gTabs .tab').forEach(x => x.classList.toggle('on', x.dataset.t === t));
+    $('#gBar').innerHTML = c.bands.map(b => `<span style="flex:${Math.min(b[1], c.max) - b[0]};background:${b[3]}"></span>`).join('');
+    $('#gTicks').innerHTML = [c.min, ...c.bands.slice(0, -1).map(b => b[1]), c.max].map(x => `<span>${x}</span>`).join('');
+    $('#gLegend').innerHTML = c.bands.filter(b => b[2] !== 'هبوط').map(b => `<div style="border-color:${b[3]}"><b style="color:${b[3]}">${b[2]}</b>${b[4].split(': ')[1]}</div>`).join('');
+    $('#gUnit').textContent = c.unit; $('#gTag').textContent = c.tag;
+  }
+  function setRound(i, reveal) {
+    const [t, v] = rounds[i], c = cfg[t]; draw(t);
+    $('#gVal').textContent = t === 'a1c' ? v.toFixed(1) : v;
+    const vd = $('#gVerdict'), mk = $('#gMark');
+    $('#gRound').innerHTML = `<div class="rd">${rounds.map((_, k) => `<i class="${k <= i ? 'on' : ''}">${ar(k + 1)}</i>`).join('')}<span style="margin-inline-start:8px">${reveal ? 'هل كان تصويتكم صحيح؟' : 'صوّتوا: طبيعي؟ ما قبل السكري؟ سكري؟'}</span></div>`;
+    if (!reveal) { vd.innerHTML = '؟ ارفعوا أيديكم وصوّتوا'; vd.style.background = 'rgba(255,255,255,.08)'; vd.style.border = '1px dashed rgba(255,255,255,.3)'; mk.style.display = 'none'; return; }
+    const b = c.bands.find(b => v >= b[0] && v < b[1]);
+    vd.innerHTML = `<svg class="icon"><use href="#i-drop"/></svg>${b[4]}`; vd.style.background = `color-mix(in srgb, ${b[3]} 22%, transparent)`; vd.style.border = `1px solid ${b[3]}`;
+    mk.style.display = 'block'; mk.style.left = `${(v - c.min) / (c.max - c.min) * 100}%`;
+  }
+  function reset() { draw('fast'); $('#gVal').textContent = '--'; $('#gTag').textContent = 'جاهز'; $('#gVerdict').innerHTML = 'نبدأ بأول قراءة…'; $('#gVerdict').style.cssText = 'background:rgba(255,255,255,.06)'; $('#gMark').style.display = 'none'; $('#gRound').innerHTML = ''; }
+  hooks[6] = { enter: reset, step(s) { if (s === 0) return reset(); setRound(Math.floor((s - 1) / 2), (s - 1) % 2 === 1); } };
+})();
+
+/* ---------- 7 hypo ---------- */
+(function hypo() {
+  let raf, ran = 0;
+  function runClock() { cancelAnimationFrame(raf); if (reduce) { $('#clockArc').setAttribute('stroke-dasharray', '1 1'); $('#clockT').textContent = '٠'; return; }
+    const t0 = performance.now(); (function loop(n) { const p = clamp((n - t0) / 5000); $('#clockArc').setAttribute('stroke-dasharray', `${p} 1`); $('#clockT').textContent = ar(Math.max(0, Math.ceil(15 - 15 * p))); if (p < 1) raf = requestAnimationFrame(loop); })(t0); }
+  hooks[7] = {
+    step(s) {
+      $$('#hypoChips .chip').forEach(c => { c.classList.toggle('ok', s >= 1 && c.dataset.ok === '1'); c.classList.toggle('dim', s >= 1 && c.dataset.ok === '0'); });
+      $('#hypoImg').style.opacity = s >= 1 ? 0 : 1; $('#juiceImg').style.opacity = s >= 1 ? 1 : 0;
+      if (s >= 2) { if (!ran) { runClock(); ran = 1; } } else { cancelAnimationFrame(raf); ran = 0; $('#clockArc').setAttribute('stroke-dasharray', '0 1'); $('#clockT').textContent = '١٥'; }
+    },
+    leave() { cancelAnimationFrame(raf); ran = 0; }
+  };
+})();
+
+/* ---------- 8 body ---------- */
+(function body() {
+  const order = ['eye', 'tooth', 'heart', 'kidney', 'nerve', 'foot'];
+  hooks[8] = { step(s) { const o = s ? order[s - 1] : null;
+    $$('.ocard').forEach(c => c.classList.toggle('hl', c.dataset.o === o));
+    $$('.organ').forEach(g => g.style.opacity = !o || g.dataset.o === o ? 1 : .3); } };
+})();
+
+/* ---------- 9 myths: highlight, then flip one per step ---------- */
+(function myths() {
+  const data = [
+    ['السكري سببه أكل السكر فقط', 0, 'السكر وحده لا يسبب المرض مباشرة. الإفراط في السعرات وزيادة الوزن يرفعان خطر النوع الثاني.'],
+    ['مريض السكري ممنوع من أي حلويات', 0, 'يقدر يتناول كميات محدودة ضمن نظام متوازن وبإشراف الطبيب أو أخصائي التغذية.'],
+    ['النوع الثاني قد يبدأ بدون أي أعراض', 1, 'قد يتطور ببطء لسنوات بلا أعراض واضحة، ولهذا الفحص الدوري مهم.'],
+    ['الأنسولين يسبب الإدمان', 0, 'الأنسولين هرمون طبيعي يحتاجه الجسم ليعيش، ولا يسبب أي إدمان.'],
+    ['استخدام الأنسولين يعني أن الحالة خطيرة', 0, 'الأنسولين علاج أساسي في بعض الحالات، وليس دليلًا على تدهور المرض.'],
+    ['الأعشاب والخلطات علاج للسكري', 0, 'لا يوجد دليل على ذلك، وقد تضر. لا تترك دواءك واستشر طبيبك.'],
+    ['الرياضة تساعد في ضبط السكر', 1, 'الرياضة المنتظمة تحسّن ضبط السكر وصحة القلب، مع قياس السكر قبل النشاط وبعده.'],
+    ['السكري مرض بسيط بلا مضاعفات', 0, 'إذا لم يُضبط قد يسبب مشاكل في القلب والكلى والعينين والأعصاب.']
+  ];
+  $('#myths').innerHTML = data.map((d, i) => `<div class="myth"><div class="in"><div class="face front"><span class="num">${ar(i + 1)}</span><p>«${d[0]}»</p><div class="vote"><span>✓ صح</span><span>✗ خطأ</span></div></div><div class="face back"><span class="badge" style="background:${d[1] ? 'var(--good)' : 'var(--bad)'};color:${d[1] ? '#06301F' : '#fff'}">${d[1] ? 'حقيقة ✓' : 'خرافة ✗'}</span><p>${d[2]}</p></div></div></div>`).join('');
+  hooks[9] = { step(s) { $$('.myth').forEach((m, i) => { m.classList.toggle('flip', i < s); m.classList.toggle('cur', i === s); }); } };
+})();
+
+/* ---------- 10 living: 3 seasons, then 6 bag items ---------- */
+(function living() {
+  const tips = {
+    ramadan: [['i-hand', 'راجع الطبيب قبل رمضان لمعرفة إمكانية الصيام وضبط الجرعات'], ['i-meter', 'افحص السكر قبل الإفطار وبعده بساعتين، وقبل السحور'], ['i-syringe', 'تناول الدواء بانتظام وحسب تعليمات الطبيب'], ['i-burger', 'قلّل السكريات والدهون، وقسّم الإفطار لعدة وجبات']],
+    hajj: [['i-walk', 'تجنب المشي الطويل والازدحام قدر الإمكان'], ['i-glass', 'اشرب الماء باستمرار'], ['i-syringe', 'خذ الدواء بانتظام في وقته'], ['i-juice', 'احمل وجبة خفيفة وسكرًا للطوارئ']],
+    travel: [['i-id', 'احمل بطاقة تعريف بالمرض'], ['i-snow', 'احفظ الإنسولين في مكان بارد'], ['i-meter', 'افحص السكر بانتظام أثناء السفر'], ['i-juice', 'احمل وجبات خفيفة وسكرًا للطوارئ']]
+  };
+  const imgs = { ramadan: 'assets/img/ramadan.webp', hajj: 'assets/img/hajj.webp', travel: 'assets/img/travel.webp' };
+  const items = [['i-snow', 'إنسولين في حافظة باردة', 1, 'يُحفظ باردًا بعيدًا عن الشمس.'], ['i-candy', 'علبة حلويات كبيرة', 0, 'الحلويات بكميات كبيرة ترفع السكر. يكفي سكر بسيط للطوارئ.'], ['i-meter', 'جهاز القياس والشرائح', 1, 'لقياس السكر بانتظام.'], ['i-foot', 'حذاء جديد ضيّق', 0, 'الحذاء الضيق يجرح القدم. اختر حذاءً مريحًا ومجرّبًا.'], ['i-id', 'بطاقة تعريف بالمرض', 1, 'تساعد المسعفين وقت الطوارئ.'], ['i-juice', 'عصير أو تمر للطوارئ', 1, 'لعلاج هبوط السكر بسرعة.']];
+  $('#items').innerHTML = items.map(it => `<div class="item"><svg class="icon"><use href="#${it[0]}"/></svg>${it[1]}</div>`).join('');
+  let shownTab = '';
+  function setTab(l) { if (l === shownTab) return; shownTab = l; $$('#ltabs .tab').forEach(b => b.classList.toggle('on', b.dataset.l === l)); $('#liveImg').src = imgs[l]; $('#tips').innerHTML = tips[l].map((t, i) => `<div class="tip" style="animation-delay:${i * 70}ms"><span class="ibox"><svg class="icon"><use href="#${t[0]}"/></svg></span>${t[1]}</div>`).join(''); }
+  hooks[10] = {
+    enter() { shownTab = ''; },
+    step(s) {
+      setTab(['ramadan', 'hajj', 'travel'][Math.min(s, 2)]);
+      const done = Math.max(0, s - 2);
+      let packed = '';
+      $$('#items .item').forEach((e, i) => { const it = items[i]; e.classList.toggle('cur', i === done && s >= 2); e.classList.toggle('ok', i < done && it[2] === 1); e.classList.toggle('no', i < done && it[2] === 0); if (i < done && it[2]) packed += `<span><svg class="icon"><use href="#${it[0]}"/></svg></span>`; });
+      $('#packed').innerHTML = packed; $('#bagN').textContent = ar(items.slice(0, done).filter(i => i[2]).length);
+      const fb = $('#bagFb');
+      if (s < 2) fb.textContent = '';
+      else if (done === 0) fb.innerHTML = '<b style="color:var(--warn)">الأداة المضيئة:</b> تدخل الشنطة أو لا؟';
+      else { const it = items[done - 1]; fb.innerHTML = it[2] ? `<b style="color:var(--good)">تدخل ✓</b> ${it[3]}` : `<b style="color:var(--bad)">لا تدخل ✗</b> ${it[3]}`; if (done === items.length) celebrate(); }
+    }
+  };
+})();
+
+/* ---------- 11 prevention ---------- */
+hooks[11] = { step(s) { $('#roadDone').setAttribute('stroke-dasharray', `${s / 5} 1`); } };
+
+/* ---------- confetti (drops) ---------- */
+const cv = $('#confetti'), cx = cv.getContext('2d'); let parts = [], craf;
+function celebrate() {
+  if (reduce) return;
+  cv.width = innerWidth; cv.height = innerHeight;
+  const c = ['#FF5DB1', '#4FB3FF', '#FFD54F', '#2FD39A', '#fff'];
+  for (let i = 0; i < 140; i++) parts.push({ x: innerWidth / 2, y: innerHeight * .45, vx: (Math.random() - .5) * 16, vy: -Math.random() * 16 - 4, s: 6 + Math.random() * 8, c: c[i % c.length], r: Math.random() * 6, life: 0, drop: Math.random() < .5 });
+  cancelAnimationFrame(craf);
+  (function loop() {
+    cx.clearRect(0, 0, cv.width, cv.height);
+    parts.forEach(p => { p.vy += .45; p.x += p.vx; p.y += p.vy; p.r += .1; p.life++;
+      cx.save(); cx.translate(p.x, p.y); cx.rotate(p.r); cx.fillStyle = p.c;
+      if (p.drop) { cx.beginPath(); cx.moveTo(0, -p.s); cx.quadraticCurveTo(p.s * .8, 0, 0, p.s * .6); cx.quadraticCurveTo(-p.s * .8, 0, 0, -p.s); cx.fill(); } else cx.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2);
+      cx.restore(); });
+    parts = parts.filter(p => p.y < cv.height + 40 && p.life < 220);
+    if (parts.length) craf = requestAnimationFrame(loop); else cx.clearRect(0, 0, cv.width, cv.height);
+  })();
+}
+
+/* ---------- start ---------- */
+const h = parseInt(location.hash.slice(1)); slides[cur].classList.add('active');
+show(SEQ[isNaN(h) ? 0 : clamp(h - 1, 0, SEQ.length - 1)]);
+})();
+
+</script>
+</body>
+</html>

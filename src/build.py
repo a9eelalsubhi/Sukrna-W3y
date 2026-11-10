@@ -16,4 +16,9 @@ cover = f'''<svg id="coverLogo" viewBox="28 50 520 330" role="img" aria-label="Ø
 slides = r("slides.html").replace("{{COVERLOGO}}", cover).replace("{{BODY}}", r("body.svg"))
 out = r("template.html").replace("{{SLIDES}}", slides).replace("{{SCRIPT}}", "const PANC_OUT=" + json.dumps(P["OUT"]) + ", PANC_DUO=" + json.dumps(P["DUO"]) + ";" + chr(10) + r("script.js"))
 open(os.path.join(root, "index.html"), "w", encoding="utf8").write(out)
+# two screens, each playing half the deck (both open on the cover)
+for n, seq in ((1, [0, 1, 2, 3, 4, 5, 6]), (2, [0, 7, 8, 9, 10, 11, 12])):
+    page = out.replace("const PANC_OUT=", f"window.SLIDE_SEQ={seq};" + chr(10) + "const PANC_OUT=", 1)
+    open(os.path.join(root, f"screen-{n}.html"), "w", encoding="utf8").write(page)
+    print(f"screen-{n}.html", seq)
 print("index.html", len(out))

@@ -896,9 +896,12 @@ let tt; function toast(msg) { const t = $('#toast'); t.textContent = msg; t.clas
 
 /* ---------- slides & steps ---------- */
 const slides = $$('.slide');
-let cur = 0, step = 0;
+/* a screen can show only part of the deck: SEQ lists the slide indexes it plays, in order */
+const SEQ = (window.SLIDE_SEQ || slides.map((_, i) => i)).filter(i => i < slides.length);
+const pos = () => SEQ.indexOf(cur);
+let cur = SEQ[0], step = 0;
 const prog = $('#progress');
-slides.forEach(() => { prog.insertAdjacentHTML('beforeend', '<svg viewBox="0 0 14 18"><path d="M7 0s7 7.6 7 11a7 7 0 0 1-14 0C0 7.6 7 0 7 0z"/></svg>'); });
+SEQ.forEach(() => { prog.insertAdjacentHTML('beforeend', '<svg viewBox="0 0 14 18"><path d="M7 0s7 7.6 7 11a7 7 0 0 1-14 0C0 7.6 7 0 7 0z"/></svg>'); });
 const hooks = {};
 const stepsOf = i => +(slides[i].dataset.steps || 0);
 function applySteps() {
@@ -907,21 +910,21 @@ function applySteps() {
 }
 function show(i, atEnd = false) {
   slides[cur].classList.remove('active'); hooks[cur]?.leave?.();
-  cur = clamp(i, 0, slides.length - 1); step = atEnd ? stepsOf(cur) : 0;
+  cur = SEQ.includes(i) ? i : SEQ[0]; step = atEnd ? stepsOf(cur) : 0;
   slides[cur].classList.add('active'); hooks[cur]?.enter?.();
   applySteps(); ui();
-  history.replaceState(null, '', '#' + (cur + 1));
+  history.replaceState(null, '', '#' + (pos() + 1));
 }
-const atLast = () => cur === slides.length - 1 && step >= stepsOf(cur);
+const atLast = () => pos() === SEQ.length - 1 && step >= stepsOf(cur);
 function next() {
   if (step < stepsOf(cur)) { step++; applySteps(); ui(); }
-  else if (cur < slides.length - 1) show(cur + 1);
-  else { show(0); toast('بدأنا من جديد'); }
+  else if (pos() < SEQ.length - 1) show(SEQ[pos() + 1]);
+  else { show(SEQ[0]); toast('بدأنا من جديد'); }
 }
-function prev() { if (step > 0) { step--; applySteps(); ui(); } else if (cur > 0) show(cur - 1, true); }
+function prev() { if (step > 0) { step--; applySteps(); ui(); } else if (pos() > 0) show(SEQ[pos() - 1], true); }
 function ui() {
-  $$('#progress svg').forEach((el, i) => el.setAttribute('class', i < cur ? 'on' : i === cur ? 'cur' : ''));
-  $('#bPrev').disabled = cur === 0 && step === 0;
+  $$('#progress svg').forEach((el, i) => el.setAttribute('class', i < pos() ? 'on' : i === pos() ? 'cur' : ''));
+  $('#bPrev').disabled = pos() === 0 && step === 0;
   const n = stepsOf(cur);
   $('#ringArc').setAttribute('stroke-dasharray', n ? `${step / n} 1` : '0 1');
   const last = atLast();
@@ -930,8 +933,8 @@ function ui() {
   $('#bNext').title = last ? 'إعادة العرض' : 'التالي';
   const left = n - step;
   $('#hint').textContent = last ? 'إعادة العرض من البداية' : left > 0 ? `باقي ${ar(left)} ${left > 2 && left < 11 ? 'خطوات' : left === 2 ? 'خطوتين' : 'خطوة'} في هذي الشريحة` : '';
-  $('#ttl').innerHTML = `<b>${ar(cur + 1)}</b>/ ${ar(slides.length)} · ${slides[cur].dataset.title}`;
-  $('#bignum').textContent = ar(String(cur + 1).padStart(2, '0'));
+  $('#ttl').innerHTML = `<b>${ar(pos() + 1)}</b>/ ${ar(SEQ.length)} · ${slides[cur].dataset.title}`;
+  $('#bignum').textContent = ar(String(pos() + 1).padStart(2, '0'));
   updateNotes();
 }
 $('#bNext').onclick = next; $('#bPrev').onclick = prev;
@@ -949,7 +952,7 @@ addEventListener('keydown', e => {
   else if (k === 'f' || k === 'F' || k === 'F5') { e.preventDefault(); toggleFull(); }
   else if (k === 'n' || k === 'N') toggleNotes();
   else if (k === 'Escape') $('#notes').classList.remove('open');
-  else if (k === 'Home') show(0); else if (k === 'End') show(slides.length - 1);
+  else if (k === 'Home') show(SEQ[0]); else if (k === 'End') show(SEQ[SEQ.length - 1]);
 });
 function toggleFull() { if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => toast('ملء الشاشة غير متاح هنا')); else document.exitFullscreen(); }
 function toggleNotes() { $('#notes').classList.toggle('open'); updateNotes(); }
@@ -1234,8 +1237,8 @@ function celebrate() {
 }
 
 /* ---------- start ---------- */
-const h = parseInt(location.hash.slice(1)); slides[0].classList.add('active');
-show(isNaN(h) ? 0 : h - 1);
+const h = parseInt(location.hash.slice(1)); slides[cur].classList.add('active');
+show(SEQ[isNaN(h) ? 0 : clamp(h - 1, 0, SEQ.length - 1)]);
 })();
 
 </script>

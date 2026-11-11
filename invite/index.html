@@ -349,7 +349,7 @@ function invitation(name, from) {
   } else $('#calBtn').classList.add('hidden');
 
   const pad = $('#pad'), ring = $('#ringFg');
-  const HOLD = reduce ? 0.01 : 1.5;
+  const HOLD = reduce ? 0.01 : 0.75;
   let fill = null, done = false;
 
   // idle: the strip slides out of the port

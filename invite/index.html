@@ -280,13 +280,13 @@ button{cursor:pointer}
 <script>
 /* ---------- event details: edit here ---------- */
 const EVENT = {
-  date: "",                      // e.g. "الأحد 23 نوفمبر 2026"; leave empty until it is confirmed
-  day: "",                       // optional second line under the date
-  iso: "",                       // e.g. "2026-11-23" enables the calendar button
+  date: "الاثنين 16 نوفمبر",
+  day: "2026",
+  iso: "2026-11-16",             // enables the calendar button
   time: "9:00 صباحًا – 1:00 ظهرًا",
   start: "09:00", end: "13:00",  // for the calendar file (Makkah time)
-  place: "المكتبة",
-  place2: "جامعة أم القرى",
+  place: "مكتبة الملك عبدالله بن عبدالعزيز",
+  place2: "رحمه الله · جامعة أم القرى",
   site: "https://a9eelalsubhi.github.io/Sukrna-W3y/invite/"
 };
 
@@ -341,9 +341,11 @@ function invitation(name, from) {
   $('#eDay').textContent = EVENT.day; $('#eTime').textContent = EVENT.time;
   $('#ePlace').textContent = EVENT.place; $('#ePlace2').textContent = EVENT.place2;
   if (EVENT.iso) {
-    const d = EVENT.iso.replace(/-/g, ''), t = s => s.replace(':', '') + '00';
+    const d = EVENT.iso.replace(/-/g, '');
+    // Makkah is UTC+3 all year: write UTC times so every calendar app reads them the same way
+    const utc = s => new Date(`${EVENT.iso}T${s}:00+03:00`).toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
     const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//sukkarna//invite//AR', 'BEGIN:VEVENT', 'UID:sukkarna-' + d + '@uqu',
-      `DTSTART;TZID=Asia/Riyadh:${d}T${t(EVENT.start)}`, `DTEND;TZID=Asia/Riyadh:${d}T${t(EVENT.end)}`,
+      `DTSTART:${utc(EVENT.start)}`, `DTEND:${utc(EVENT.end)}`, `DTSTAMP:${utc(EVENT.start)}`,
       'SUMMARY:حملة سكّرنا وعي', `LOCATION:${EVENT.place}، ${EVENT.place2}`, 'DESCRIPTION:دعوة خاصة لحملة التوعية بالسكري', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
     $('#calBtn').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
   } else $('#calBtn').classList.add('hidden');

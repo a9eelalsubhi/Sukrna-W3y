@@ -120,7 +120,12 @@ button{cursor:pointer}
   -webkit-mask:radial-gradient(9px at 50% 0,transparent 98%,#000) 0 0/22px 100% repeat-x;
           mask:radial-gradient(9px at 50% 0,transparent 98%,#000) 0 0/22px 100% repeat-x}
 .ticket h2{margin:0;font-family:"TSD";font-weight:900;font-size:26px;line-height:1.25}
-.ticket h2 em{font-style:normal;color:var(--pink)}
+.ticket h2 em{display:block;font-style:normal;color:var(--pink);overflow-wrap:anywhere}
+.tag{margin-top:18px;padding:14px 12px 12px;border-radius:16px;background:linear-gradient(135deg,#FFE3F1,#E1F1FF);text-align:center}
+.tag p{margin:0;font-size:14px;line-height:1.6;color:#33416B}
+.hash{display:inline-flex;align-items:center;gap:8px;margin-top:6px;min-height:44px;padding:4px 14px;border:0;border-radius:999px;background:#fff;color:var(--pink);font-family:"TSD";font-weight:900;font-size:22px;cursor:pointer;box-shadow:0 2px 8px rgba(20,37,122,.08)}
+.hash small{font-family:"TS";font-size:12px;font-weight:700;color:#5A6890}
+.mk .intro b{color:var(--pink2);white-space:nowrap}
 .ticket .lead{margin:10px 0 0;font-size:15px;line-height:1.7;color:#33416B}
 .ticket dl{margin:18px 0 0;display:grid;grid-template-columns:auto 1fr;column-gap:14px;row-gap:12px;align-items:center}
 .ticket dt{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#EEF3FF;color:var(--navy)}
@@ -232,6 +237,7 @@ button{cursor:pointer}
         <dt aria-hidden="true"><svg><use href="#i-clock"/></svg></dt><dd><b id="eTime"></b></dd>
         <dt aria-hidden="true"><svg><use href="#i-pin"/></svg></dt><dd><b id="ePlace"></b><span id="ePlace2"></span></dd>
       </dl>
+      <div class="tag"><p>صوّر لحظتك في الحملة وشاركها على</p><button class="hash" id="tagBtn" type="button">#سكرنا_وعي<small>انسخ</small></button></div>
       <div class="from hidden" id="from">الدعوة من: <b id="fromName"></b></div>
       <div class="acts">
         <a class="btn pri" id="calBtn" href="#" download="sukkarna-wa3i.ics"><svg><use href="#i-plus"/></svg>أضف الموعد للتقويم</a>      </div>
@@ -251,7 +257,7 @@ button{cursor:pointer}
     </div>
   </header>
   <h1>ادعُ شخصًا<br><em>بالاسم</em></h1>
-  <p class="intro">اكتب اسم من تريد دعوته، ويطلع لك رابط خاص فيه. لما يفتحه، يقيس «السكر» بإصبعه فتظهر له دعوته باسمه.</p>
+  <p class="intro">اكتب اسم من تريد دعوته، ويطلع لك رابط خاص فيه. لما يفتحه، يقيس «السكر» بإصبعه فتظهر له دعوته باسمه. وشاركونا يوم الحملة على <b>#سكرنا_وعي</b></p>
   <form class="form" id="form" novalidate>
     <div class="fld">
       <label for="fName">اسم المدعو</label>
@@ -313,7 +319,7 @@ function builder() {
     const o = { n }; const f = clean(fr.value); if (f) o.f = f;
     const url = EVENT.site + '#d=' + enc(o);
     $('#link').textContent = url;
-    const msg = `${n}، عندك دعوة خاصة لحملة «سكّرنا وعي» 💙\nافتحها من هنا:\n${url}`;
+    const msg = `${n}، عندك دعوة خاصة لحملة «سكّرنا وعي» 💙\nافتحها من هنا:\n${url}\n\nوشاركنا يوم الحملة على #سكرنا_وعي`;
     $('#waBtn').href = 'https://wa.me/?text=' + encodeURIComponent(msg);
     $('#pvBtn').href = url;
     $('#out').classList.remove('hidden');
@@ -333,7 +339,12 @@ function invitation(name, from) {
   document.title = `دعوة خاصة لـ ${name} · سكّرنا وعي`;
   $('#inv').classList.remove('hidden');
   $('#name').innerHTML = name.split(' ').map(w => `<span>${w.replace(/&/g, '&amp;')}</span>`).join(' ');
-  $('#tName').textContent = name.split(' ')[0];
+  $('#tName').textContent = name;
+  $('#tagBtn').addEventListener('click', async () => {
+    const lab = $('#tagBtn small');
+    try { await navigator.clipboard.writeText('#سكرنا_وعي'); lab.textContent = 'تم النسخ'; } catch (e) { lab.textContent = ''; }
+    setTimeout(() => lab.textContent = 'انسخ', 1800);
+  });
   if (from) { $('#from').classList.remove('hidden'); $('#fromName').textContent = from; }
   $('#eDate').textContent = EVENT.date || 'الموعد يُعلن قريبًا';
   $('#eDay').textContent = EVENT.day; $('#eTime').textContent = EVENT.time;

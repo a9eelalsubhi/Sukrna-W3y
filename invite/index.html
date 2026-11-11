@@ -122,7 +122,7 @@ button{cursor:pointer}
 .ticket h2{margin:0;font-family:"TSD";font-weight:900;font-size:26px;line-height:1.25}
 .ticket h2 em{font-style:normal;color:var(--pink)}
 .ticket .lead{margin:10px 0 0;font-size:15px;line-height:1.7;color:#33416B}
-.ticket dl{margin:18px 0 0;display:grid;grid-template-columns:auto 1fr;column-gap:14px;row-gap:12px;align-items:start}
+.ticket dl{margin:18px 0 0;display:grid;grid-template-columns:auto 1fr;column-gap:14px;row-gap:12px;align-items:center}
 .ticket dt{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#EEF3FF;color:var(--navy)}
 .ticket dt svg{width:18px;height:18px}
 .ticket dd{margin:0;padding-top:1px}
@@ -229,14 +229,12 @@ button{cursor:pointer}
       <p class="lead">لحملة «سكّرنا وعي» من كلية الطب بجامعة أم القرى. أنشطة تفاعلية، قياس سكر مجاني، ومعلومات تفرق في حياتك وحياة من تحب.</p>
       <dl>
         <dt aria-hidden="true"><svg><use href="#i-cal"/></svg></dt><dd><b id="eDate"></b><span id="eDay"></span></dd>
-        <dt aria-hidden="true"><svg><use href="#i-clock"/></svg></dt><dd><b id="eTime"></b><span>شفتين، تقدر تجي في أي وقت</span></dd>
+        <dt aria-hidden="true"><svg><use href="#i-clock"/></svg></dt><dd><b id="eTime"></b></dd>
         <dt aria-hidden="true"><svg><use href="#i-pin"/></svg></dt><dd><b id="ePlace"></b><span id="ePlace2"></span></dd>
       </dl>
       <div class="from hidden" id="from">الدعوة من: <b id="fromName"></b></div>
       <div class="acts">
-        <a class="btn pri" id="calBtn" href="#" download="sukkarna-wa3i.ics"><svg><use href="#i-plus"/></svg>أضف الموعد للتقويم</a>
-        <a class="btn sec" href="../"><svg><use href="#i-book"/></svg>تعرّف على الحملة</a>
-      </div>
+        <a class="btn pri" id="calBtn" href="#" download="sukkarna-wa3i.ics"><svg><use href="#i-plus"/></svg>أضف الموعد للتقويم</a>      </div>
     </article>
     <a class="again hidden" id="again" href="./">اصنع دعوة لشخص تحبه</a>
   </div>

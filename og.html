@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>صورة معاينة الموقع</title>
+<!-- source of og.jpg (the WhatsApp / social link preview for the main site). Render at 1200x630. -->
+<style>
+@font-face{font-family:"TS";src:url(assets/fonts/thmanyahsans-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:"TS";src:url(assets/fonts/thmanyahsans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:"TSD";src:url(assets/fonts/thmanyahserifdisplay-Black.woff2) format("woff2");font-weight:900}
+html,body{margin:0;background:#070A26}
+.og{position:relative;width:1200px;height:630px;overflow:hidden;color:#F4F7FF;font-family:"TS";
+  background:radial-gradient(720px 520px at 102% -12%,rgba(28,111,224,.45),transparent 62%),radial-gradient(620px 460px at 18% 112%,rgba(204,51,139,.34),transparent 64%),#060924}
+.docs{position:absolute;left:-30px;bottom:-4px;height:600px;
+  -webkit-mask-image:radial-gradient(70% 78% at 50% 60%,#000 62%,transparent 100%);mask-image:radial-gradient(70% 78% at 50% 60%,#000 62%,transparent 100%)}
+.uqu{position:absolute;right:76px;top:48px;height:104px}
+.copy{position:absolute;right:76px;top:178px;width:600px;text-align:right}
+.copy .lg{display:block;height:150px;margin-right:-6px}
+.copy h1{margin:18px 0 0;font-family:"TSD";font-weight:900;font-size:58px;line-height:1.15}
+.copy h1 em{font-style:normal;color:#FF5DB1}
+.copy p{margin:12px 0 0;font-size:27px;line-height:1.5;color:#C9D1EE}
+.pills{display:flex;gap:10px;margin-top:22px}
+.pills span{padding:8px 18px;border-radius:999px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.14);font-size:22px;font-weight:700;color:#F4F7FF}
+.pills span:first-child{background:#CC338B;box-shadow:none}
+</style>
+</head>
+<body>
+<div class="og">
+  <img class="docs" src="assets/img/family.webp" alt="">
+  <img class="uqu" src="assets/logos/uqu-med-white.png" alt="جامعة أم القرى، كلية الطب">
+  <div class="copy">
+    <img class="lg" src="assets/logos/sukkarna-white.svg" alt="سكّرنا وعي">
+    <h1>بخطوة وعي <em>نواجه السكري</em></h1>
+    <p>حملة توعوية من كلية الطب بجامعة أم القرى</p>
+    <div class="pills"><span>الأنواع</span><span>الأعراض</span><span>الأرقام</span><span>التصرّف الصحيح</span></div>
+  </div>
+</div>
+</body>
+</html>

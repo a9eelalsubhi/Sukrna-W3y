@@ -11,11 +11,15 @@ def relink(html):
 
 UQU = '<img src="assets/logos/uqu-med-white.png" alt="جامعة أم القرى، كلية الطب">'
 DW = '<span class="sep"></span><img class="dw" src="assets/logos/derham-white.png" alt="جمعية درهم وقاية">'
-CSS = ".partners img.dw{height:74px}body.portrait .partners img.dw{height:60px}"
+CSS = (".partners img.dw{height:74px}body.portrait .partners img.dw{height:60px}"
+       ".byline{margin-top:14px;font-size:17px;color:#C2C9E6}.byline b{color:#fff;font-weight:700}")
+SRC_END = "(ADA).</div>"
+BYLINE = '<div class="byline">إعداد: <b>أصيل الصبحي</b></div>'
 
 h = open(os.path.join(site, "index.html"), encoding="utf8").read()
 assert h.count(UQU) == 1, "partners block changed"
-h = h.replace(UQU, UQU + DW).replace("</style>", CSS + "</style>", 1)
+assert h.count(SRC_END) == 1, "last-slide sources line changed"
+h = h.replace(UQU, UQU + DW).replace("</style>", CSS + "</style>", 1).replace(SRC_END, SRC_END + BYLINE)
 h = h.replace(f'content="{BASE}"', f'content="{BASE}dw/"').replace(f"{BASE}og.jpg", f"{BASE}dw/og.jpg")
 open(os.path.join(site, "dw", "index.html"), "w", encoding="utf8").write(relink(h))
 
